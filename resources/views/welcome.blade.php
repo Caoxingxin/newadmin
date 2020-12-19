@@ -12,13 +12,12 @@
         <!-- Styles -->
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
         <!-- js -->
-        <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+{{--        <script type="text/javascript" src="{{asset('js/app.js')}}"></script>--}}
 
     </head>
     <body>
       <div id="app">
-          这是测试
-          <router-view />
       </div>
+      <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>

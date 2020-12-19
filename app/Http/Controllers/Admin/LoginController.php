@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -21,12 +22,13 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/test';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
@@ -35,20 +37,23 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:admin')->except('logout');
+    }
+    public function showLoginForm()
+    {
+        return view('Login.login');
+    }
+    protected function guard()
+    {
+        return auth()->guard('admin');
     }
     //重写用户退出
-//    public function logout(Request $request)
-//    {
-//        $this->guard()->logout();
-//
-//        $request->session()->invalidate();
-//
-//        return redirect('/');
-//    }
-    //重新登录在那个界面
-//    public function showLoginForm()
-//    {
-//        return view('/welcome2');
-//    }
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/admin/login');
+    }
 }

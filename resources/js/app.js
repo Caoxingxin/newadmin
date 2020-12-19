@@ -7,7 +7,21 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
 import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+import less from 'less'
+Vue.use(less)
+
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios,axios)
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,6 +35,8 @@ import VueRouter from 'vue-router';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+import router from "./router/test"
+import App from './App.vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,5 +45,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
+    el:"#app",
+    router,
+    //render:h=>h(App),
+    components: {App},
+    template: '<App/>'
 });

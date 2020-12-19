@@ -1,0 +1,46 @@
+/*全局样式表*/
+html, body, #app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    min-width: 1366px;
+}
+
+h1, h2, h3, h4, h5, h6, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+
+/*滚动条整体样式*/
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: 0 0;
+}
+
+/*滚动条滑块*/
+::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #ccc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+
+.el-card {
+    flex: 1;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+}
+
+.el-table {
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+.el-pagination {
+    margin-top: 15px;
+    float: right;
+}

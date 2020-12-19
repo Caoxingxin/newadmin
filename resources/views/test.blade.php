@@ -11,6 +11,7 @@
 </head>
 <body>
 <div id="app">
+    123
     <example-component></example-component>
 </div>
 <script src="{{ mix('js/app.js') }}"></script> <!--引入app.js-->
