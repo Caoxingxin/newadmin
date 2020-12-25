@@ -1,5 +1,6 @@
 <template>
     <el-menu
+        :default-active="this.$route.path"
         class="el-menu-vertical-demo"
         :router="true"
         text-color="black"
@@ -34,7 +35,9 @@
     </el-menu>
 </template>
 <script>
-
+    export default {
+        name: 'Aside',
+    }
 </script>
 <style scoped>
     .el-menu-item.is-active{

@@ -1,5 +1,5 @@
 <template>
-    <el-menu index="0" class="el-menu-demo" mode="horizontal" background-color="RGB(78,15,233,0.5)" text-color="#fff"
+    <el-menu index="0" class="el-menu-demo" mode="horizontal" background-color="RGB(7,71,166)" text-color="#fff"
              active-text-color="#ffd04b">
         <div class="menu_icon">
             <router-link to="/" active-class="_active">
@@ -70,7 +70,7 @@
         border-top: 1px solid #e8eaec;
     }
     ._active{
-        color: black;
+        color: darkturquoise;
         text-decoration: none;
     }
 

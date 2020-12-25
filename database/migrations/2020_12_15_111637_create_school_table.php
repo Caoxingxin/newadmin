@@ -23,7 +23,7 @@ class CreateSchoolTable extends Migration
             $table->string('address', 100)->comment('详细地址');
             $table->string('address_en', 100)->comment('英文地址');
             $table->string('description')->comment('描述')->nullable();
-            $table->tinyInteger('status')->comment('当前状态:10筹备中 20运营 -20暂停 默认10')->default(10)->nullable();
+            $table->tinyInteger('status')->comment('当前状态:10运营 -10暂停 默认-10')->default(-10)->nullable();
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class School extends Model
         'phone',
         'email',
         'address',
+        'address_en',
         'description',
         'status'
     ];
