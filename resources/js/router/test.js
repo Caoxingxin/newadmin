@@ -15,16 +15,19 @@ export default new VueRouter({
             path: '/',
             name: 'home',
             component: resolve => void(require(['../components/Head/Home.vue'], resolve)),
+            meta: {title: 'home'}
         },
         {
             path: '/school',
             name: 'school',
             component: resolve => void(require(['../components/Head/School.vue'], resolve)),
+            meta: {title: 'school'}
         },
         {
             path: '/course',
             name: 'course',
             component: resolve => void(require(['../components/Head/Course.vue'], resolve)),
+            meta: {title: 'course'}
         }
     ]
 });

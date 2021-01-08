@@ -21,11 +21,12 @@
             </el-menu-item>
         </el-submenu>
     </el-menu>
-
 </template>
 
 <script>
+    import RouteTag from "./RouteTag";
     export default {
+        components: RouteTag,
         data() {
             return {
                 Name: 123
@@ -33,11 +34,22 @@
         },
         methods: {
             onQuit() {
-                axios({
-                    method: 'post',
-                    url: '/admin/logout',
-                }).then(response => {
-                    location.reload();
+                this.$confirm('如果您准备退出当前用户，请选择下面的“登出”。', 'Ready to Leave?', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios({
+                        method: 'post',
+                        url: '/admin/logout',
+                    }).then(response => {
+                        location.reload();
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消退出'
+                    });
                 });
             },
         },

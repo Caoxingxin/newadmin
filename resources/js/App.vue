@@ -1,5 +1,6 @@
 <template>
     <el-container>
+        <RouteTag></RouteTag>
         <el-header>
             <AdminHeader></AdminHeader>
         </el-header>
@@ -7,11 +8,16 @@
             <el-aside width="200px">
                 <Aside></Aside>
             </el-aside>
-            <el-main class="animate_fix">        <!--添加动画效果-->
-                <transition name="fade">
-                    <router-view/>
-                </transition>
-            </el-main>
+            <el-container>
+                <el-main class="animate_fix">        <!--添加动画效果-->
+                    <transition name="fade">
+                        <router-view/>
+                    </transition>
+                </el-main>
+<!--                <el-footer height="30">-->
+<!--                    <Footer></Footer>-->
+<!--                </el-footer>-->
+            </el-container>
         </el-container>
     </el-container>
 </template>
@@ -19,10 +25,14 @@
 <script>
     import Aside from './components/Aside.vue'
     import AdminHeader from './components/Header.vue'
+    import Footer from "./components/Footer";
+    import RouteTag from "./components/RouteTag";
 
     export default {
         name: 'App',
         components: {
+            RouteTag,
+            Footer,
             Aside,
             AdminHeader
         },
@@ -45,9 +55,9 @@
     .el-menu {
         border: none;
     }
-
+    /*主体内容部分*/
     .el-main {
-        background-color: #dae1de;
+        background-color: rgb(240,242,246);
         color: #333;
         padding: 0;
     }
@@ -126,9 +136,10 @@
     }
 
     .el-footer {
-        margin-top: 30px;
+        margin: auto;
         text-align: center;
     }
+
     /*滚动条滑块*/
     ::-webkit-scrollbar-thumb {
         border-radius: 6px;

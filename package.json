@@ -28,6 +28,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "echarts": "^4.9.0",
         "element-ui": "^2.14.1",
         "less": "^3.13.0",
         "less-loader": "^7.1.0",

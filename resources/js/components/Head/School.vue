@@ -4,8 +4,8 @@
             <el-row :gutter="20">
                 <!--搜索框-->
                 <el-col :span="6" style="margin: 10px 10px 0 0">
-                    <el-input placeholder="请输入内容" size="small" v-model="searchSchoolName">
-                        <el-button slot="append" icon="el-icon-search" @click="list(currentPage)"></el-button>
+                    <el-input placeholder="请输入内容" size="small" v-model="searchSchoolName" clearable @clear="list(1)">
+                        <el-button slot="append" icon="el-icon-search" @click="list(1)"></el-button>
                     </el-input>
                 </el-col>
                 <!--添加-->
@@ -444,7 +444,7 @@
 <style scoped>
     .container {
         display: flex;
-        height: 100%;
+        height: 860px;
         max-width: 2250px;
     }
 
