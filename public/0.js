@@ -147,6 +147,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 var servicedata_pie = [];
 var servucedata_line = [];
@@ -159,7 +164,9 @@ var servucedata_line = [];
     return {
       Name: '',
       myChart_pie: '',
-      myChart_line: ''
+      myChart_line: '',
+      myChart_bar: '',
+      myChart_coolpie: ''
     };
   },
   methods: {
@@ -185,6 +192,10 @@ var servucedata_line = [];
         _this.piePhoto();
 
         _this.linePhoto();
+
+        _this.barPhoto();
+
+        _this.coolpiePhoto();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -288,6 +299,89 @@ var servucedata_line = [];
           type: 'line'
         }]
       });
+    },
+    barPhoto: function barPhoto() {
+      this.myChart_bar.setOption({
+        color: ['#3398DB'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [{
+          type: 'category',
+          data: servucedata_line,
+          axisTick: {
+            alignWithLabel: true
+          }
+        }],
+        yAxis: [{
+          type: 'value'
+        }],
+        series: [{
+          name: '直接访问',
+          type: 'bar',
+          barWidth: '60%',
+          data: servicedata_pie
+        }]
+      });
+    },
+    coolpiePhoto: function coolpiePhoto() {
+      this.myChart_coolpie.setOption({
+        title: {
+          text: '南丁格尔玫瑰图',
+          subtext: '纯属虚构',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          left: 'center',
+          top: 'bottom',
+          data: servicedata_pie
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: {
+              show: true
+            },
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            magicType: {
+              show: true,
+              type: ['pie', 'funnel']
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        series: [{
+          name: '面积模式',
+          type: 'pie',
+          radius: [30, 110],
+          center: ['50%', '50%'],
+          roseType: 'area',
+          data: servicedata_pie
+        }]
+      });
     }
   },
   computed: {
@@ -300,6 +394,8 @@ var servucedata_line = [];
     // 基于准备好的dom，初始化echarts实例
     this.myChart_pie = this.$echarts.init(document.getElementById("main1"));
     this.myChart_line = this.$echarts.init(document.getElementById("main2"));
+    this.myChart_bar = this.$echarts.init(document.getElementById("main3"));
+    this.myChart_coolpie = this.$echarts.init(document.getElementById("main4"));
     this.list();
   }
 });
@@ -502,11 +598,13 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
+      _c("github-corner", { staticClass: "github-corner" }),
+      _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
       _vm._m(2),
       _vm._v(" "),
-      _c("github-corner", { staticClass: "github-corner" })
+      _vm._m(3)
     ],
     1
   )
@@ -710,20 +808,49 @@ var staticRenderFns = [
         }),
         _vm._v(" "),
         _c("div", {
+          staticStyle: { width: "600px", height: "400px", margin: "20px" },
+          attrs: { id: "main3" }
+        }),
+        _vm._v(" "),
+        _c("div", {
+          staticStyle: { width: "600px", height: "400px", margin: "20px" },
+          attrs: { id: "main4" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { display: "flex", "flex-wrap": "nowrap" } },
+      [
+        _c("div", {
           staticStyle: {
-            width: "600px",
+            width: "1000px",
             height: "400px",
-            "background-color": "red",
-            margin: "20px"
+            margin: "20px",
+            "background-color": "red"
           }
         }),
         _vm._v(" "),
         _c("div", {
           staticStyle: {
-            width: "600px",
+            width: "400px",
             height: "400px",
-            "background-color": "deepskyblue",
-            margin: "20px"
+            margin: "20px",
+            "background-color": "cadetblue"
+          }
+        }),
+        _vm._v(" "),
+        _c("div", {
+          staticStyle: {
+            width: "400px",
+            height: "400px",
+            margin: "20px",
+            "background-color": "cadetblue"
           }
         })
       ]

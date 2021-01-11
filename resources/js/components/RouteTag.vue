@@ -161,6 +161,7 @@
         text-overflow: ellipsis;
         margin-right: 5px;
         color: #666;
+        padding-top: 3px;
     }
 
     .tags-li.active {

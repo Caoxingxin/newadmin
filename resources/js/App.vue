@@ -1,6 +1,5 @@
 <template>
     <el-container>
-        <RouteTag></RouteTag>
         <el-header>
             <AdminHeader></AdminHeader>
         </el-header>
@@ -9,14 +8,14 @@
                 <Aside></Aside>
             </el-aside>
             <el-container>
+                <el-header>
+                    <RouteTag></RouteTag>
+                </el-header>
                 <el-main class="animate_fix">        <!--添加动画效果-->
                     <transition name="fade">
                         <router-view/>
                     </transition>
                 </el-main>
-<!--                <el-footer height="30">-->
-<!--                    <Footer></Footer>-->
-<!--                </el-footer>-->
             </el-container>
         </el-container>
     </el-container>
@@ -81,6 +80,7 @@
 
     .el-container {
         height: 100%;
+        background-color: rgb(240,242,246);
     }
 
     .el-aside {

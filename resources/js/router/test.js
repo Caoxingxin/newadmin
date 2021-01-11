@@ -28,6 +28,18 @@ export default new VueRouter({
             name: 'course',
             component: resolve => void(require(['../components/Head/Course.vue'], resolve)),
             meta: {title: 'course'}
-        }
+        },
+        {
+            path: '/student',
+            name: 'student',
+            component: resolve => void(require(['../components/Head/Student.vue'], resolve)),
+            meta: {title: 'student'}
+        },
+        {
+            path: '/teacher',
+            name: 'teacher',
+            component: resolve => void(require(['../components/Head/Teacher.vue'], resolve)),
+            meta: {title: 'teacher'}
+        },
     ]
 });

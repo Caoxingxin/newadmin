@@ -7,17 +7,22 @@
         active-text-color="bule">
         <el-menu-item index="/school">
             <span slot="title">
-                <i class="el-icon-menu"></i><span style="font-size: 15px">学校管理</span>
+                <i class="el-icon-school"></i><span style="font-size: 15px">学校管理</span>
             </span>
         </el-menu-item>
         <el-menu-item index="/course">
             <span slot="title">
-                <i class="el-icon-menu"></i><span style="font-size: 15px">课程管理</span>
+                <i class="el-icon-notebook-1"></i><span style="font-size: 15px">课程管理</span>
             </span>
         </el-menu-item>
         <el-menu-item index="/student">
             <span slot="title">
-                <i class="el-icon-menu"></i><span style="font-size: 15px">学员管理</span>
+                <i class="el-icon-user"></i><span style="font-size: 15px">学员管理</span>
+            </span>
+        </el-menu-item>
+        <el-menu-item index="/teacher">
+            <span slot="title">
+                <i class="el-icon-user-solid"></i><span style="font-size: 15px">教师管理</span>
             </span>
         </el-menu-item>
         <el-submenu index="1">
