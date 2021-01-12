@@ -47,7 +47,6 @@
 
     .el-aside {
         color: #333;
-        text-align: center;
         background: white;
     }
 

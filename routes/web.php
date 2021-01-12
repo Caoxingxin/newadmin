@@ -39,10 +39,18 @@ Route::group(['namespace' => 'Admin' , 'prefix' => 'admin' ,],function (){
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['namespace' => 'Head' , 'prefix' => 'head' ,],function (){
+    //学校操作
     Route::get('/headSchool-list','HeadSchoolController@school_list')->name('headSchool-list');
     Route::post('/headSchool-status','HeadSchoolController@school_status')->name('headSchool-status');
     Route::post('/headSchool-create','HeadSchoolController@create')->name('headSchool-create');
     Route::post('/headSchool-detail','HeadSchoolController@detail')->name('headSchool-detail');
     Route::post('/headSchool-update','HeadSchoolController@update')->name('headSchool-update');
+
+    //课程
+    Route::get('/headCourse-list','HeadCourseController@list')->name('list');
+    Route::post('/headCourse-detail','HeadCourseController@detail')->name('detail');
+    Route::post('/headCourse-create','HeadCourseController@create')->name('create');
+    Route::post('/headCourse-update','HeadCourseController@update')->name('update');
+    Route::post('/headCourse-status','HeadCourseController@status')->name('status');
 });
 

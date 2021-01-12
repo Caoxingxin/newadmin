@@ -236,7 +236,10 @@
                 setTimeout(() => {
                     this.loading = false
                 }, 500);
-                this.clearFiles()
+                //加这个句话是为了避免$refs没有被渲染的情况
+                if (this.$refs['form'] !== undefined){
+                    this.clearFiles()
+                }
                 this.list(this.currentPage)
             },
             //请求list接口

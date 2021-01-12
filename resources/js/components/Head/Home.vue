@@ -12,7 +12,9 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings
+                                    (Monthly)
+                                </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                             </div>
                             <div class="col-auto">
@@ -29,7 +31,9 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings
+                                    (Annual)
+                                </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
                             </div>
                             <div class="col-auto">
@@ -53,7 +57,8 @@
                                     </div>
                                     <div class="col">
                                         <div class="progress progress-sm mr-2">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
+                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +77,9 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #E6A23C">Pending Requests</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #E6A23C">Pending
+                                    Requests
+                                </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                             </div>
                             <div class="col-auto">
@@ -93,27 +100,34 @@
             <div id="main4" style="width: 600px;height:400px;margin: 20px"></div>
         </div>
         <div style="display: flex;flex-wrap:nowrap;">
-            <div  style="width: 1000px;height:400px;margin: 20px;background-color: red"></div>
-            <div  style="width: 400px;height:400px;margin: 20px;background-color: cadetblue"></div>
-            <div  style="width: 400px;height:400px;margin: 20px;background-color: cadetblue"></div>
+            <div  style="width: 1000px;margin: 20px">
+                <financial></financial>
+            </div>
+            <div style="width: 400px;margin: 20px;">
+                <notice></notice>
+            </div>
+            <div style="width: 400px;height:400px;margin: 20px;background-color: cadetblue"></div>
         </div>
     </div>
 </template>
 
 <script>
     import GithubCorner from "../GithubCorner";
-    var servicedata_pie=[];
-    var servucedata_line=[];
+    import Financial from "./Home/Financial";
+    import Notice from "./Home/Notice";
+
+    var servicedata_pie = [];
+    var servucedata_line = [];
     export default {
         name: "Home",
-        components: {GithubCorner},
+        components: {Notice, Financial, GithubCorner},
         data() {
             return {
                 Name: '',
                 myChart_pie: '',
                 myChart_line: '',
-                myChart_bar : '',
-                myChart_coolpie : '',
+                myChart_bar: '',
+                myChart_coolpie: '',
             }
         },
         methods: {
@@ -124,10 +138,10 @@
                     var Data = response.data.data;
                     console.log(Data);
                     for (var i = 0; i < Data.length; i++) {
-                        var obj=new Object();
-                        obj.name=Data[i].name;
-                        obj.value=Data[i].id;
-                        servicedata_pie[i]=obj;
+                        var obj = new Object();
+                        obj.name = Data[i].name;
+                        obj.value = Data[i].id;
+                        servicedata_pie[i] = obj;
                         servucedata_line[i] = obj.name;
                     }
                     console.log(servicedata_pie)
@@ -139,7 +153,7 @@
                     console.log(error);
                 });
             },
-            piePhoto(){
+            piePhoto() {
                 this.myChart_pie.setOption({
                     tooltip: {
                         trigger: 'item',
@@ -175,7 +189,7 @@
                     ]
                 });
             },
-            linePhoto(){
+            linePhoto() {
                 console.log(servicedata_pie)
                 this.myChart_line.setOption({
                     tooltip: {
@@ -227,7 +241,7 @@
                             //symbol: ['none', 'none'],
                             label: {show: false},
                         },
-                        areaStyle: { color: 'blue',opacity: 0.05},
+                        areaStyle: {color: 'blue', opacity: 0.05},
                         itemStyle: {
                             color: "blue",
                         },
@@ -236,7 +250,7 @@
                     }]
                 });
             },
-            barPhoto(){
+            barPhoto() {
                 this.myChart_bar.setOption({
                     color: ['#3398DB'],
                     tooltip: {
@@ -275,8 +289,8 @@
                     ]
                 })
             },
-            coolpiePhoto(){
-                this.myChart_coolpie.setOption( {
+            coolpiePhoto() {
+                this.myChart_coolpie.setOption({
                     title: {
                         text: '南丁格尔玫瑰图',
                         subtext: '纯属虚构',
@@ -344,12 +358,14 @@
         width: 100%;
         background-color: white;
     }
-    .line-chart{
+
+    .line-chart {
         width: auto;
         height: 400px;
         background-color: white;
         margin-bottom: 30px;
     }
+
     .github-corner {
         position: absolute;
         top: 0;

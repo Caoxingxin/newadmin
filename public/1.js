@@ -256,8 +256,12 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       setTimeout(function () {
         _this2.loading = false;
-      }, 500);
-      this.clearFiles();
+      }, 500); //加这个句话是为了避免$refs没有被渲染的情况
+
+      if (this.$refs['form'] !== undefined) {
+        this.clearFiles();
+      }
+
       this.list(this.currentPage);
     },
     //请求list接口
