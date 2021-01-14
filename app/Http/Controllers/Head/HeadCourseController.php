@@ -14,12 +14,13 @@ class HeadCourseController extends Controller
 {
     public function list(){
         $searchData = \Request::all();
+        $page = $searchData['pageSize'] ?? 15;
         if (isset($searchData['searchCourseName']))
         {
-            $SchoolData = Course::query()->where('name','like','%'.$searchData['searchCourseName'].'%')->paginate(13);
+            $SchoolData = Course::query()->where('name','like','%'.$searchData['searchCourseName'].'%')->paginate($page);
         }else
         {
-            $SchoolData = Course::query()->paginate(13);
+            $SchoolData = Course::query()->paginate($page);
         }
         return $SchoolData;
     }
@@ -43,5 +44,9 @@ class HeadCourseController extends Controller
         $status = $request->input('status');
         $id = $request->input('id');
         return $services->status($status,$id);
+    }
+    public function delete(Request $request,HeadCourseServices $services){
+        $id = $request->input('id');
+        return $services->delete($id);
     }
 }

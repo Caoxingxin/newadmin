@@ -1,8 +1,8 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/School.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/Course.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Head/School.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Head/Course.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -137,13 +137,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "School",
+  name: "Course",
   data: function data() {
     return {
       index: 1,
-      searchSchoolName: '',
+      searchCourseName: '',
       currentPage: 1,
       //总条数
       total: 0,
@@ -153,24 +154,15 @@ __webpack_require__.r(__webpack_exports__);
       loading: false,
       dialogFormVisible: false,
       formLabelWidth: '120px',
-      tableData: [{
-        id: '',
-        name: '',
-        phone: '',
-        email: '',
-        address: '',
-        status: ''
-      }],
+      tableData: '',
       create_form: {
         id: '',
         name: '',
-        name_en: '',
+        type: '',
+        duration: '',
+        remark: '',
         picture: '',
-        phone: '',
-        email: '',
-        address: '',
-        address_en: '',
-        description: ''
+        examine: ''
       },
       rules: {
         name: [{
@@ -183,26 +175,14 @@ __webpack_require__.r(__webpack_exports__);
           message: '长度在 3 到 5 个字符',
           trigger: 'blur'
         }],
-        picture: [{
+        type: [{
           required: true,
-          message: '请上传图片',
+          message: '请输入课程类型',
           trigger: 'blur'
         }],
-        phone: [{
+        duration: [{
           required: true,
-          pattern: /^1[34578]\d{9}$/,
-          //可以写正则表达式呦呦呦
-          message: '目前只支持中国大陆的手机号码',
-          trigger: 'blur'
-        }],
-        email: [{
-          type: 'email',
-          message: '请输入正确的邮箱地址',
-          trigger: ['blur', 'change']
-        }],
-        address: [{
-          required: true,
-          message: '请输入详细地址',
+          message: '请输入时长',
           trigger: 'blur'
         }]
       }
@@ -217,25 +197,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     //设置状态值
     ListenStatus: function ListenStatus(row) {
-      if (row.status == 10) {
-        return "运营中";
+      if (row.status == 1) {
+        return "启用";
       } else {
-        return "暂停中";
+        return "禁用";
       }
     },
     //设置改变状态按钮值
     options: function options(row) {
-      if (row.status == 10) {
-        return "暂停使用";
+      if (row.status == 1) {
+        return "禁用";
       } else {
-        return "开始运营";
+        return "启用";
       }
     },
     //请求改变状态接口
     changeStatus: function changeStatus(row) {
       var _this = this;
 
-      var url = "head/headSchool-status";
+      var url = "head/headCourse-status";
       this.axios.post(url, {
         'status': row.status,
         'id': row.id
@@ -268,11 +248,21 @@ __webpack_require__.r(__webpack_exports__);
     list: function list(currentPage) {
       var _this3 = this;
 
-      var url = "head/headSchool-list?page=" + currentPage + "&searchSchoolName=" + this.searchSchoolName;
+      var pageSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+      if (pageSize) {
+        var url = "head/headCourse-list?page=" + currentPage + "&searchCourseName=" + this.searchCourseName + "&pageSize=" + pageSize;
+      } else {
+        var url = "head/headCourse-list?page=" + currentPage + "&searchCourseName=" + this.searchCourseName;
+      }
+
       this.axios.get(url).then(function (response) {
         _this3.currentPage = response.data.current_page;
         _this3.tableData = response.data.data;
         _this3.total = response.data.total;
+
+        _this3.cleanCreateFormData();
+
         console.log(_this3.tableData);
       })["catch"](function (error) {
         console.log(error);
@@ -286,33 +276,33 @@ __webpack_require__.r(__webpack_exports__);
         type: 'success'
       };
 
-      if (status == 10) {
-        this.$set(data, 'message', h('p', '暂停运营成功'));
+      if (status == 1) {
+        this.$set(data, 'message', h('p', '禁用成功'));
+      } else if (status == -1) {
+        this.$set(data, 'message', h('p', '启用成功'));
       } else {
-        this.$set(data, 'message', h('p', '恢复运营成功'));
+        this.$set(data, 'message', h('p', '删除成功'));
       }
 
       this.$notify(data);
     },
-    //请求学校创建接口
+    //请求课程创建接口
     submitForm: function submitForm(formName) {
       var _this4 = this;
 
       this.$refs[formName].validate(function (valid) {
         if (valid) {
           if (_this4.updateStatus) {
-            var url = 'head/headSchool-update';
+            var url = 'head/headCourse-update';
 
             _this4.axios.post(url, {
               id: _this4.create_form.id,
               name: _this4.create_form.name,
-              name_en: _this4.create_form.name_en,
               picture: _this4.create_form.picture,
-              phone: _this4.create_form.phone,
-              email: _this4.create_form.email,
-              address: _this4.create_form.address,
-              address_en: _this4.create_form.address_en,
-              description: _this4.create_form.description
+              type: _this4.create_form.type,
+              duration: _this4.create_form.duration,
+              remark: _this4.create_form.remark,
+              examine: _this4.create_form.examine
             }).then(function (response) {
               _this4.$refs[formName].resetFields();
 
@@ -332,7 +322,7 @@ __webpack_require__.r(__webpack_exports__);
               if (mes['name']) {
                 Object(element_ui__WEBPACK_IMPORTED_MODULE_0__["Notification"])({
                   title: '验证错误',
-                  message: '学校名不能重复',
+                  message: '课程名不能重复',
                   type: "error",
                   duration: 2000
                 });
@@ -349,17 +339,15 @@ __webpack_require__.r(__webpack_exports__);
             console.log('----------------');
             console.log(_this4.updateStatus);
           } else {
-            var _url = 'head/headSchool-create';
+            var _url = 'head/headCourse-create';
 
             _this4.axios.post(_url, {
               name: _this4.create_form.name,
-              name_en: _this4.create_form.name_en,
               picture: _this4.create_form.picture,
-              phone: _this4.create_form.phone,
-              email: _this4.create_form.email,
-              address: _this4.create_form.address,
-              address_en: _this4.create_form.address_en,
-              description: _this4.create_form.description
+              type: _this4.create_form.type,
+              duration: _this4.create_form.duration,
+              remark: _this4.create_form.remark,
+              examine: _this4.create_form.examine
             }).then(function (response) {
               _this4.$refs[formName].resetFields();
 
@@ -379,7 +367,7 @@ __webpack_require__.r(__webpack_exports__);
               if (mes['name']) {
                 Object(element_ui__WEBPACK_IMPORTED_MODULE_0__["Notification"])({
                   title: '验证错误',
-                  message: '学校名不能重复',
+                  message: '课程名不能重复',
                   type: "error",
                   duration: 2000
                 });
@@ -411,11 +399,11 @@ __webpack_require__.r(__webpack_exports__);
       this.cleanCreateFormData();
       this.refresh();
     },
-    //学校信息详情
+    //课程信息详情
     Deatil: function Deatil(id) {
       var _this5 = this;
 
-      var url = 'head/headSchool-detail';
+      var url = 'head/headCourse-detail';
       this.axios.post(url, {
         id: id
       }).then(function (response) {
@@ -423,6 +411,7 @@ __webpack_require__.r(__webpack_exports__);
         _this5.create_form = response.data;
         _this5.imageUrl = _this5.create_form.picture;
         _this5.updateStatus = true;
+        console.log(_this5.create_form.examine);
       })["catch"](function (error) {
         alert('错误');
       });
@@ -430,13 +419,11 @@ __webpack_require__.r(__webpack_exports__);
     //清空表单值
     cleanCreateFormData: function cleanCreateFormData() {
       this.create_form.name = '';
-      this.create_form.name_en = '';
       this.create_form.picture = '';
-      this.create_form.phone = '';
-      this.create_form.email = '';
-      this.create_form.address = '';
-      this.create_form.address_en = '';
-      this.create_form.description = '';
+      this.create_form.type = '';
+      this.create_form.duration = '';
+      this.create_form.remark = '';
+      this.create_form.examine = '';
     },
     //上传图片
     handleAvatarSuccess: function handleAvatarSuccess(response) {
@@ -464,7 +451,7 @@ __webpack_require__.r(__webpack_exports__);
     page: function page(value) {
       var _this6 = this;
 
-      var url = 'head/headSchool-list?page=' + value;
+      var url = 'head/headCourse-list?page=' + value;
       this.axios.get(url).then(function (response) {
         _this6.currentPage = response.data.current_page;
         _this6.tableData = response.data.data;
@@ -479,6 +466,25 @@ __webpack_require__.r(__webpack_exports__);
 
       var limitpage = 13;
       return index + 1 + (curpage - 1) * limitpage;
+    },
+    changePageSize: function changePageSize(value) {
+      this.list(this.currentPage, value);
+    },
+    Delete: function Delete(row) {
+      var _this7 = this;
+
+      var url = "head/headCourse-delete";
+      this.axios.post(url, {
+        'id': row.id
+      }).then(function (response) {
+        _this7.open1(0);
+
+        _this7.list(_this7.currentPage);
+
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   //默认直接请求list接口
@@ -489,9 +495,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css&":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css& ***!
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css& ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -501,22 +507,22 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-9f441ff0] {\n    display: flex;\n    height: 860px;\n    max-width: 2250px;\n}\n.form-search[data-v-9f441ff0] {\n    display: flex;\n}\n.search[data-v-9f441ff0] {\n    width: 300px;\n    margin-right: 10px;\n}\n.el-form-item[data-v-9f441ff0]{\n    margin-bottom: 15px;\n    margin-left: 20px;\n}\na[data-v-9f441ff0]{\n    color: #3490dc !important;\n}\n.avatar-uploader .el-upload[data-v-9f441ff0] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-9f441ff0]:hover {\n    border-color: #409EFF;\n}\n.avatar-uploader-icon[data-v-9f441ff0] {\n    background-color: rgb(250,250,250);\n    font-size: 28px;\n    color: #8c939d;\n    width: 128px;\n    height: 128px;\n    line-height: 128px;\n    text-align: center;\n    border: 1px dashed  #d9d9d9;\n}\n.avatar[data-v-9f441ff0] {\n    background-color: rgb(250,250,250);\n    border: 1px dashed  #d9d9d9;\n    padding: 10px;\n    width: 128px;\n    height: 128px;\n    display: block;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-4a8ec92f] {\n    display: flex;\n    /*height: 860px;*/\n    max-width: 2250px;\n}\n.form-search[data-v-4a8ec92f] {\n    display: flex;\n}\n.search[data-v-4a8ec92f] {\n    width: 300px;\n    margin-right: 10px;\n}\n.el-form-item[data-v-4a8ec92f]{\n    margin-bottom: 15px;\n    margin-left: 20px;\n}\na[data-v-4a8ec92f]{\n    color: #3490dc !important;\n}\n.avatar-uploader .el-upload[data-v-4a8ec92f] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-4a8ec92f]:hover {\n    border-color: #409EFF;\n}\n.avatar-uploader-icon[data-v-4a8ec92f] {\n    background-color: rgb(250,250,250);\n    font-size: 28px;\n    color: #8c939d;\n    width: 128px;\n    height: 128px;\n    line-height: 128px;\n    text-align: center;\n    border: 1px dashed  #d9d9d9;\n}\n.avatar[data-v-4a8ec92f] {\n    background-color: rgb(250,250,250);\n    border: 1px dashed  #d9d9d9;\n    padding: 10px;\n    width: 128px;\n    height: 128px;\n    display: block;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css&":
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css& ***!
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css& ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css&");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -538,9 +544,9 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/School.vue?vue&type=template&id=9f441ff0&scoped=true&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/Course.vue?vue&type=template&id=4a8ec92f&scoped=true&":
 /*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Head/School.vue?vue&type=template&id=9f441ff0&scoped=true& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Head/Course.vue?vue&type=template&id=4a8ec92f&scoped=true& ***!
   \**************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -586,11 +592,11 @@ var render = function() {
                         }
                       },
                       model: {
-                        value: _vm.searchSchoolName,
+                        value: _vm.searchCourseName,
                         callback: function($$v) {
-                          _vm.searchSchoolName = $$v
+                          _vm.searchCourseName = $$v
                         },
-                        expression: "searchSchoolName"
+                        expression: "searchCourseName"
                       }
                     },
                     [
@@ -624,7 +630,7 @@ var render = function() {
                       },
                       on: { click: _vm.add }
                     },
-                    [_vm._v("添加\n                    ")]
+                    [_vm._v("添加\n                ")]
                   )
                 ],
                 1
@@ -649,12 +655,15 @@ var render = function() {
               _c("el-pagination", {
                 staticStyle: { "margin-right": "10px" },
                 attrs: {
-                  "page-sizes": [10, 20, 30, 40],
+                  "page-sizes": [15, 30, 40, 50],
                   layout: "total, sizes, prev, pager, next, jumper",
                   total: this.total,
                   "current-page": _vm.currentPage
                 },
-                on: { "current-change": _vm.list }
+                on: {
+                  "current-change": _vm.list,
+                  "size-change": _vm.changePageSize
+                }
               })
             ],
             1
@@ -680,7 +689,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "name", label: "名称" },
+                attrs: { prop: "name", label: "课程名称" },
                 scopedSlots: _vm._u([
                   {
                     key: "default",
@@ -697,8 +706,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              _vm._s(scope.row.name) +
-                                "\n                        "
+                              _vm._s(scope.row.name) + "\n                    "
                             )
                           ]
                         )
@@ -709,23 +717,61 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "phone", label: "联系方式" }
+                attrs: { prop: "type", label: "课程类型" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "email", label: "邮箱" }
+                attrs: { prop: "duration", label: "时长(分)" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "address", label: "地址" }
+                attrs: { prop: "created_at", label: "创建时间" }
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: {
-                  prop: "status",
-                  label: "状态",
-                  formatter: _vm.ListenStatus
-                }
+                attrs: { prop: "examine", label: "是否考核" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        scope.row.examine === 1
+                          ? _c("p", [_vm._v("考核")])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        scope.row.examine === 0
+                          ? _c("p", { staticStyle: { color: "red" } }, [
+                              _vm._v("不考核")
+                            ])
+                          : _vm._e()
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { prop: "status", label: "状态" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        scope.row.status === 1
+                          ? _c("p", [
+                              _vm._v(_vm._s(_vm.ListenStatus(scope.row)))
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        scope.row.status === -1
+                          ? _c("p", { staticStyle: { color: "red" } }, [
+                              _vm._v(_vm._s(_vm.ListenStatus(scope.row)))
+                            ])
+                          : _vm._e()
+                      ]
+                    }
+                  }
+                ])
               }),
               _vm._v(" "),
               _c("el-table-column", {
@@ -738,7 +784,7 @@ var render = function() {
                         _c(
                           "el-button",
                           {
-                            attrs: { type: "text", size: "mini" },
+                            attrs: { type: "success", size: "mini" },
                             on: {
                               click: function($event) {
                                 return _vm.changeStatus(scope.row)
@@ -748,9 +794,22 @@ var render = function() {
                           [
                             _vm._v(
                               _vm._s(_vm.options(scope.row)) +
-                                "\n                        "
+                                "\n                    "
                             )
                           ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-button",
+                          {
+                            attrs: { type: "danger", size: "mini" },
+                            on: {
+                              click: function($event) {
+                                return _vm.Delete(scope.row)
+                              }
+                            }
+                          },
+                          [_vm._v("删除\n                    ")]
                         )
                       ]
                     }
@@ -768,7 +827,7 @@ var render = function() {
         "el-dialog",
         {
           attrs: {
-            title: "添加学校",
+            title: "添加课程",
             visible: _vm.dialogFormVisible,
             width: "800px",
             top: "20px",
@@ -796,13 +855,13 @@ var render = function() {
             [
               _c(
                 "el-form-item",
-                { attrs: { label: "学校名称:", prop: "name" } },
+                { attrs: { label: "课程名称:", prop: "name" } },
                 [
                   _c("el-input", {
                     staticStyle: { width: "200px !important" },
                     attrs: {
                       autocomplete: "off",
-                      placeholder: "请输入学校名称",
+                      placeholder: "请输入课程名称",
                       size: "small"
                     },
                     model: {
@@ -819,21 +878,21 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "英文名称:", prop: "name_en" } },
+                { attrs: { label: "课程类型:", prop: "type" } },
                 [
                   _c("el-input", {
                     staticStyle: { width: "200px !important" },
                     attrs: {
                       autocomplete: "off",
-                      placeholder: "请输入学校名称",
+                      placeholder: "请输入课程类型",
                       size: "small"
                     },
                     model: {
-                      value: _vm.create_form.name_en,
+                      value: _vm.create_form.type,
                       callback: function($$v) {
-                        _vm.$set(_vm.create_form, "name_en", $$v)
+                        _vm.$set(_vm.create_form, "type", $$v)
                       },
-                      expression: "create_form.name_en"
+                      expression: "create_form.type"
                     }
                   })
                 ],
@@ -873,21 +932,21 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "联系电话:", prop: "phone" } },
+                { attrs: { label: "时长(分):", prop: "duration" } },
                 [
                   _c("el-input", {
                     staticStyle: { width: "200px !important" },
                     attrs: {
                       autocomplete: "off",
-                      placeholder: "请输入电话",
+                      placeholder: "请输入时长",
                       size: "small"
                     },
                     model: {
-                      value: _vm.create_form.phone,
+                      value: _vm.create_form.duration,
                       callback: function($$v) {
-                        _vm.$set(_vm.create_form, "phone", $$v)
+                        _vm.$set(_vm.create_form, "duration", $$v)
                       },
-                      expression: "create_form.phone"
+                      expression: "create_form.duration"
                     }
                   })
                 ],
@@ -896,69 +955,26 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-form-item",
-                { attrs: { label: "邮箱地址:", prop: "email" } },
+                { attrs: { label: "是否考核:", prop: "description" } },
                 [
-                  _c("el-input", {
-                    staticStyle: { width: "200px !important" },
-                    attrs: {
-                      autocomplete: "off",
-                      placeholder: "请输入邮箱",
-                      size: "small"
+                  _c(
+                    "el-radio-group",
+                    {
+                      model: {
+                        value: _vm.create_form.examine,
+                        callback: function($$v) {
+                          _vm.$set(_vm.create_form, "examine", $$v)
+                        },
+                        expression: "create_form.examine"
+                      }
                     },
-                    model: {
-                      value: _vm.create_form.email,
-                      callback: function($$v) {
-                        _vm.$set(_vm.create_form, "email", $$v)
-                      },
-                      expression: "create_form.email"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "详细地址:", prop: "address" } },
-                [
-                  _c("el-input", {
-                    staticStyle: { width: "500px !important" },
-                    attrs: {
-                      autocomplete: "off",
-                      placeholder: "请输入详细地址",
-                      size: "small"
-                    },
-                    model: {
-                      value: _vm.create_form.address,
-                      callback: function($$v) {
-                        _vm.$set(_vm.create_form, "address", $$v)
-                      },
-                      expression: "create_form.address"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-form-item",
-                { attrs: { label: "英文地址:", prop: "address_en" } },
-                [
-                  _c("el-input", {
-                    staticStyle: { width: "500px !important" },
-                    attrs: {
-                      autocomplete: "off",
-                      placeholder: "请输入英文地址",
-                      size: "small"
-                    },
-                    model: {
-                      value: _vm.create_form.address_en,
-                      callback: function($$v) {
-                        _vm.$set(_vm.create_form, "address_en", $$v)
-                      },
-                      expression: "create_form.address_en"
-                    }
-                  })
+                    [
+                      _c("el-radio", { attrs: { label: 1 } }, [_vm._v("是")]),
+                      _vm._v(" "),
+                      _c("el-radio", { attrs: { label: 0 } }, [_vm._v("否")])
+                    ],
+                    1
+                  )
                 ],
                 1
               ),
@@ -976,11 +992,11 @@ var render = function() {
                       size: "small"
                     },
                     model: {
-                      value: _vm.create_form.description,
+                      value: _vm.create_form.remark,
                       callback: function($$v) {
-                        _vm.$set(_vm.create_form, "description", $$v)
+                        _vm.$set(_vm.create_form, "remark", $$v)
                       },
-                      expression: "create_form.description"
+                      expression: "create_form.remark"
                     }
                   })
                 ],
@@ -1039,18 +1055,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/Head/School.vue":
+/***/ "./resources/js/components/Head/Course.vue":
 /*!*************************************************!*\
-  !*** ./resources/js/components/Head/School.vue ***!
+  !*** ./resources/js/components/Head/Course.vue ***!
   \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _School_vue_vue_type_template_id_9f441ff0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./School.vue?vue&type=template&id=9f441ff0&scoped=true& */ "./resources/js/components/Head/School.vue?vue&type=template&id=9f441ff0&scoped=true&");
-/* harmony import */ var _School_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./School.vue?vue&type=script&lang=js& */ "./resources/js/components/Head/School.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _School_vue_vue_type_style_index_0_id_9f441ff0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css& */ "./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css&");
+/* harmony import */ var _Course_vue_vue_type_template_id_4a8ec92f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Course.vue?vue&type=template&id=4a8ec92f&scoped=true& */ "./resources/js/components/Head/Course.vue?vue&type=template&id=4a8ec92f&scoped=true&");
+/* harmony import */ var _Course_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Course.vue?vue&type=script&lang=js& */ "./resources/js/components/Head/Course.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Course_vue_vue_type_style_index_0_id_4a8ec92f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css& */ "./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1061,66 +1077,66 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _School_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _School_vue_vue_type_template_id_9f441ff0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _School_vue_vue_type_template_id_9f441ff0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Course_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Course_vue_vue_type_template_id_4a8ec92f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Course_vue_vue_type_template_id_4a8ec92f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "9f441ff0",
+  "4a8ec92f",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/Head/School.vue"
+component.options.__file = "resources/js/components/Head/Course.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/Head/School.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/components/Head/Course.vue?vue&type=script&lang=js&":
 /*!**************************************************************************!*\
-  !*** ./resources/js/components/Head/School.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/components/Head/Course.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./School.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/School.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Course.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/Course.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css&":
+/***/ "./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css&":
 /*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css& ***!
+  !*** ./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css& ***!
   \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_style_index_0_id_9f441ff0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/School.vue?vue&type=style&index=0&id=9f441ff0&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_style_index_0_id_9f441ff0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_style_index_0_id_9f441ff0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_style_index_0_id_9f441ff0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_style_index_0_id_9f441ff0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_style_index_0_id_4a8ec92f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/Course.vue?vue&type=style&index=0&id=4a8ec92f&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_style_index_0_id_4a8ec92f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_style_index_0_id_4a8ec92f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_style_index_0_id_4a8ec92f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_style_index_0_id_4a8ec92f_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ "./resources/js/components/Head/School.vue?vue&type=template&id=9f441ff0&scoped=true&":
+/***/ "./resources/js/components/Head/Course.vue?vue&type=template&id=4a8ec92f&scoped=true&":
 /*!********************************************************************************************!*\
-  !*** ./resources/js/components/Head/School.vue?vue&type=template&id=9f441ff0&scoped=true& ***!
+  !*** ./resources/js/components/Head/Course.vue?vue&type=template&id=4a8ec92f&scoped=true& ***!
   \********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_template_id_9f441ff0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./School.vue?vue&type=template&id=9f441ff0&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/School.vue?vue&type=template&id=9f441ff0&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_template_id_9f441ff0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_template_id_4a8ec92f_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Course.vue?vue&type=template&id=4a8ec92f&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Head/Course.vue?vue&type=template&id=4a8ec92f&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_template_id_4a8ec92f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_School_vue_vue_type_template_id_9f441ff0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Course_vue_vue_type_template_id_4a8ec92f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

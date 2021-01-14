@@ -23,11 +23,12 @@
                 </el-col>
                 <!--分页-->
                 <el-pagination
-                    :page-sizes="[10, 20, 30, 40]"
+                    :page-sizes="[15, 30, 40, 50]"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="this.total"
                     style="margin-right: 10px"
                     @current-change="list"
+                    @size-change = "changePageSize"
                     :current-page="currentPage"
                 >
                 </el-pagination>
@@ -49,13 +50,23 @@
                 <el-table-column prop="type" label="课程类型"></el-table-column>
                 <el-table-column prop="duration" label="时长(分)"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间"></el-table-column>
-                <el-table-column prop="examine" label="是否考核"></el-table-column>
-                <el-table-column prop="status" label="状态" :formatter="ListenStatus"></el-table-column>
+                <el-table-column prop="examine" label="是否考核">
+                    <template slot-scope="scope">
+                        <p v-if="scope.row.examine === 1">考核</p>
+                        <p style="color:red" v-if="scope.row.examine === 0">不考核</p>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="status" label="状态" >
+                    <template slot-scope="scope">
+                        <p v-if="scope.row.status === 1">{{ListenStatus(scope.row) }}</p>
+                        <p style="color:red" v-if="scope.row.status === -1">{{ListenStatus(scope.row) }}</p>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button type="success" size="mini" @click="changeStatus(scope.row)">{{options(scope.row)}}
                         </el-button>
-                        <el-button type="danger" size="mini" @click="changeStatus(scope.row)">删除
+                        <el-button type="danger" size="mini" @click="Delete(scope.row)">删除
                         </el-button>
                     </template>
                 </el-table-column>
@@ -206,12 +217,17 @@
                 this.list(this.currentPage)
             },
             //请求list接口
-            list(currentPage) {
-                let url = "head/headCourse-list?page=" + currentPage + "&searchCourseName=" + this.searchCourseName;
+            list(currentPage,pageSize =null) {
+                if (pageSize){
+                    var url = "head/headCourse-list?page="+currentPage+"&searchCourseName="+this.searchCourseName+"&pageSize="+pageSize;
+                }else {
+                    var url = "head/headCourse-list?page="+currentPage+"&searchCourseName="+this.searchCourseName;
+                }
                 this.axios.get(url).then(response => {
                     this.currentPage = response.data.current_page
                     this.tableData = response.data.data;
                     this.total = response.data.total;
+                    this.cleanCreateFormData()
                     console.log(this.tableData);
                 }).catch(function (error) {
                     console.log(error);
@@ -225,10 +241,13 @@
                     type: 'success',
                 }
                 if (status == 1) {
-                    this.$set(data, 'message', h('p', '启用成功'))
-                } else {
                     this.$set(data, 'message', h('p', '禁用成功'))
+                } else if(status == -1){
+                    this.$set(data, 'message', h('p', '启用成功'))
+                }else{
+                    this.$set(data, 'message', h('p', '删除成功'))
                 }
+
                 this.$notify(data);
             },
             //请求课程创建接口
@@ -392,6 +411,21 @@
                 //每页条数，具体是组件取值
                 let limitpage = 13
                 return (index + 1) + (curpage - 1) * limitpage
+            },
+            changePageSize(value){
+                this.list(this.currentPage,value);
+            },
+            Delete(row){
+                let url = "head/headCourse-delete"
+                this.axios.post(url, {
+                    'id': row.id,
+                }).then(response => {
+                    this.open1(0);
+                    this.list(this.currentPage);
+                    console.log(response);
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         },
         //默认直接请求list接口
@@ -402,5 +436,53 @@
 </script>
 
 <style scoped>
+    .container {
+        display: flex;
+        /*height: 860px;*/
+        max-width: 2250px;
+    }
 
+    .form-search {
+        display: flex;
+    }
+
+    .search {
+        width: 300px;
+        margin-right: 10px;
+    }
+    .el-form-item{
+        margin-bottom: 15px;
+        margin-left: 20px;
+    }
+    a{
+        color: #3490dc !important;
+    }
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        background-color: rgb(250,250,250);
+        font-size: 28px;
+        color: #8c939d;
+        width: 128px;
+        height: 128px;
+        line-height: 128px;
+        text-align: center;
+        border: 1px dashed  #d9d9d9;
+    }
+    .avatar {
+        background-color: rgb(250,250,250);
+        border: 1px dashed  #d9d9d9;
+        padding: 10px;
+        width: 128px;
+        height: 128px;
+        display: block;
+    }
 </style>

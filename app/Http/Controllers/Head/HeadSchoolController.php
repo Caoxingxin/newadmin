@@ -15,12 +15,13 @@ class HeadSchoolController extends Controller
 {
     public function school_list(){
         $searchData = \Request::all();
+        $page = $searchData['pageSize'] ?? 15;
         if (isset($searchData['searchSchoolName']))
         {
-            $SchoolData = School::query()->where('name','like','%'.$searchData['searchSchoolName'].'%')->paginate(13);
+            $SchoolData = School::query()->where('name','like','%'.$searchData['searchSchoolName'].'%')->paginate($page);
         }else
         {
-            $SchoolData = School::query()->paginate(13);
+            $SchoolData = School::query()->paginate($page);
         }
         return $SchoolData;
     }

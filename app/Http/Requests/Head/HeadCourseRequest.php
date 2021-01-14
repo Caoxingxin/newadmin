@@ -22,23 +22,26 @@ class HeadCourseRequest extends FormRequest
      *
      * @return array
      */
-    public function rules($id = null)
+    public function rules()
     {
-        if (empty($id)){
+        $id = $this->input('id');
+        if (!isset($id)){
             return [
-                "name" =>  "required | unique:course,name,$id,id",
+                "name" =>  "required|unique:course,name,$id,id",
+                "type" => "required",
+                "duration" => "required",
+                "remark" => "nullable|string",
+            ];
+        }else{
+            return [
+                "id" => "required|integer",
+                "name" =>  "required|unique:course,name,$id,id",
                 "type" => "required",
                 "duration" => "required",
                 "remark" => "nullable|string",
             ];
         }
-        return [
-            "id" => "required|integer",
-            "name" =>  "required | unique:course,name,$id,id",
-            "type" => "required",
-            "duration" => "required",
-            "remark" => "nullable|string",
-        ];
+
     }
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)

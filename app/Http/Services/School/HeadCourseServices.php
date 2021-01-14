@@ -58,4 +58,18 @@ class HeadCourseServices
             DB::rollBack();
         }
     }
+
+    public function delete($id){
+        try {
+            DB::beginTransaction();
+            $query = Course::query()->find($id);
+            $query->delete();
+            DB::commit();
+
+            return 'success';
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+    }
 }

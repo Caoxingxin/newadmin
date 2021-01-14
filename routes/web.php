@@ -52,5 +52,19 @@ Route::group(['namespace' => 'Head' , 'prefix' => 'head' ,],function (){
     Route::post('/headCourse-create','HeadCourseController@create')->name('create');
     Route::post('/headCourse-update','HeadCourseController@update')->name('update');
     Route::post('/headCourse-status','HeadCourseController@status')->name('status');
+    Route::post('headCourse-delete','HeadCourseController@delete')->name('delete');
+
+    //学生
+    Route::get('/headStudent-list','HeadStudentController@list')->name('list');
+    Route::post('/headStudent-detail','HeadStudentController@detail')->name('detail');
+    Route::post('/headStudent-update','HeadStudentController@update')->name('update');
+
+    //教师
+    Route::get('/headTeacher-list','HeadTeacherController@list')->name('list');
+    Route::post('/headTeacher-detail','HeadTeacherController@detail')->name('detail');
+    Route::post('/headTeacher-update','HeadTeacherController@update')->name('update');
+    Route::post('/headTeacher-create','HeadTeacherController@create')->name('create');
+    Route::post('/headTeacher-delete','HeadTeacherController@delete')->name('delete');
+    Route::post('/headTeacher-status','HeadTeacherController@status')->name('status');
 });
 

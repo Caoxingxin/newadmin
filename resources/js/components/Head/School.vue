@@ -23,11 +23,12 @@
                 </el-col>
                 <!--分页-->
                 <el-pagination
-                    :page-sizes="[10, 20, 30, 40]"
+                    :page-sizes="[15, 30, 40, 50]"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="this.total"
                     style="margin-right: 10px"
                     @current-change="list"
+                    @size-change = "changePageSize"
                     :current-page="currentPage"
                 >
                 </el-pagination>
@@ -243,12 +244,17 @@
                 this.list(this.currentPage)
             },
             //请求list接口
-            list(currentPage) {
-                let url = "head/headSchool-list?page="+currentPage+"&searchSchoolName="+this.searchSchoolName;
+            list(currentPage,pageSize =null) {
+                if (pageSize){
+                    var url = "head/headSchool-list?page="+currentPage+"&searchSchoolName="+this.searchSchoolName+"&pageSize="+pageSize;
+                }else {
+                    var url = "head/headSchool-list?page="+currentPage+"&searchSchoolName="+this.searchSchoolName;
+                }
                 this.axios.get(url).then(response => {
                     this.currentPage =  response.data.current_page
                     this.tableData = response.data.data;
                     this.total = response.data.total;
+                    this.cleanCreateFormData()
                     console.log(this.tableData);
                 }).catch(function (error) {
                     console.log(error);
@@ -435,6 +441,9 @@
                 //每页条数，具体是组件取值
                 let limitpage = 13
                 return (index+1) + (curpage-1)*limitpage
+            },
+            changePageSize(value){
+                this.list(this.currentPage,value);
             }
         },
         //默认直接请求list接口
@@ -447,7 +456,7 @@
 <style scoped>
     .container {
         display: flex;
-        height: 860px;
+        /*height: 860px;*/
         max-width: 2250px;
     }
 

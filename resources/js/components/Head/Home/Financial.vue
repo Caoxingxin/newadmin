@@ -41,7 +41,7 @@
         filters: {
             statusFilter(status) {
                 const statusMap = {
-                    '10': 'success',
+                    '10': '',
                     '-10': 'danger'
                 }
                 return statusMap[status]

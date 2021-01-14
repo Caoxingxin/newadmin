@@ -470,7 +470,7 @@ __webpack_require__.r(__webpack_exports__);
   filters: {
     statusFilter: function statusFilter(status) {
       var statusMap = {
-        '10': 'success',
+        '10': '',
         '-10': 'danger'
       };
       return statusMap[status];
