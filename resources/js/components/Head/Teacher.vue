@@ -48,7 +48,12 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="mobile" label="手机号"></el-table-column>
-                <el-table-column prop="gender" label="性别"></el-table-column>
+                <el-table-column prop="gender" label="性别">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.gender === 1">男</span>
+                        <span v-else>女</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="entry_time" label="入职日期"></el-table-column>
                 <el-table-column prop="status" label="岗位状态">
                     <template slot-scope="scope">
@@ -148,7 +153,7 @@
             :visible.sync="dialogVisible"
             width="30%">
             <el-form ref="form_status" :rules="status_rules" :model="create_form" :label-position="labelPosition" label-width="100px">
-                <el-form-item label="转正日期:" prop="full_time">
+                <el-form-item label="转正日期:"  prop="full_time">
                     <el-date-picker
                         v-model="create_form.full_time"
                         type="date"

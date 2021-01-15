@@ -44,9 +44,19 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="mobile" label="联系方式"></el-table-column>
-                <el-table-column prop="gender" label="性别"></el-table-column>
+                <el-table-column prop="gender" label="性别">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.gender === 1">男</span>
+                        <span v-else>女</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="status" label="状态" :formatter="ListenStatus"></el-table-column>
-                <el-table-column prop="degree" label="注册等级"></el-table-column>
+                <el-table-column prop="degree" label="注册等级">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.degree === 10">普通</span>
+                        <span v-else>高级</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="company" label="工作单位"></el-table-column>
                 <el-table-column prop="remark" label="备注"></el-table-column>
             </el-table>

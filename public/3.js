@@ -140,6 +140,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Student",
@@ -624,7 +634,19 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "gender", label: "性别" }
+                attrs: { prop: "gender", label: "性别" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        scope.row.gender === 1
+                          ? _c("span", [_vm._v("男")])
+                          : _c("span", [_vm._v("女")])
+                      ]
+                    }
+                  }
+                ])
               }),
               _vm._v(" "),
               _c("el-table-column", {
@@ -636,7 +658,19 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { prop: "degree", label: "注册等级" }
+                attrs: { prop: "degree", label: "注册等级" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        scope.row.degree === 10
+                          ? _c("span", [_vm._v("普通")])
+                          : _c("span", [_vm._v("高级")])
+                      ]
+                    }
+                  }
+                ])
               }),
               _vm._v(" "),
               _c("el-table-column", {

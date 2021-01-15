@@ -26,7 +26,7 @@
 <script>
     import RouteTag from "./RouteTag";
     export default {
-        components: RouteTag,
+        components: {RouteTag},
         data() {
             return {
                 Name: 123

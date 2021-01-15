@@ -100,7 +100,7 @@
     }
 
     .has-gutter th div.cell {
-        text-align: center;
+        /*text-align: center;*/
     }
 
     .animate_fix {

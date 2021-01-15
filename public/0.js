@@ -1142,9 +1142,7 @@ var render = function() {
                   return [
                     _vm._v(
                       "\n                ¥" +
-                        _vm._s(
-                          _vm._f("toThousandFilter")(scope.row.address_en)
-                        ) +
+                        _vm._s(scope.row.address_en) +
                         "\n            "
                     )
                   ]

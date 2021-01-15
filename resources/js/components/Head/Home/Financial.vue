@@ -12,7 +12,7 @@
             </el-table-column>
             <el-table-column label="Price" width="195" align="center">
                 <template slot-scope="scope">
-                    ¥{{ scope.row.address_en | toThousandFilter }}
+                    ¥{{ scope.row.address_en}}
                 </template>
             </el-table-column>
             <el-table-column label="Status" width="100" align="center">

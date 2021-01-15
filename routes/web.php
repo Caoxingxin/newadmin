@@ -68,3 +68,12 @@ Route::group(['namespace' => 'Head' , 'prefix' => 'head' ,],function (){
     Route::post('/headTeacher-status','HeadTeacherController@status')->name('status');
 });
 
+Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
+    //学期操作
+    Route::get('/schoolSemester-list','SchoolSemesterController@list')->name('list');
+    Route::post('/schoolSemester-status','SchoolSemesterController@status')->name('status');
+    Route::post('/schoolSemester-create','SchoolSemesterController@create')->name('create');
+    Route::post('/schoolSemester-detail','SchoolSemesterController@detail')->name('detail');
+    Route::post('/schoolSemester-update','SchoolSemesterController@update')->name('update');
+    Route::post('/schoolSemester-delete','SchoolSemesterController@delete')->name('delete');
+});
