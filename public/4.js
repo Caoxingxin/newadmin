@@ -150,39 +150,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Teacher",
@@ -599,7 +566,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-71ca80fe] {\n    display: flex;\n    /*height: 860px;*/\n    max-width: 2250px;\n}\n.form-search[data-v-71ca80fe] {\n    display: flex;\n}\n.search[data-v-71ca80fe] {\n    width: 300px;\n    margin-right: 10px;\n}\n.el-form-item[data-v-71ca80fe] {\n    margin-bottom: 15px;\n    margin-left: 20px;\n}\na[data-v-71ca80fe] {\n    color: #3490dc !important;\n}\n.avatar-uploader .el-upload[data-v-71ca80fe] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-71ca80fe]:hover {\n    border-color: #409EFF;\n}\n.avatar-uploader-icon[data-v-71ca80fe] {\n    background-color: rgb(250, 250, 250);\n    font-size: 28px;\n    color: #8c939d;\n    width: 128px;\n    height: 128px;\n    line-height: 128px;\n    text-align: center;\n    border: 1px dashed #d9d9d9;\n}\n.avatar[data-v-71ca80fe] {\n    background-color: rgb(250, 250, 250);\n    border: 1px dashed #d9d9d9;\n    padding: 10px;\n    width: 128px;\n    height: 128px;\n    display: block;\n}\n", ""]);
+exports.push([module.i, "\n.teacher-wrap[data-v-71ca80fe] {\n    flex: 1;\n    display: flex;\n    overflow: auto;\n}\n.form-search[data-v-71ca80fe] {\n    display: flex;\n}\n.search[data-v-71ca80fe] {\n    width: 300px;\n    margin-right: 10px;\n}\n.el-form-item[data-v-71ca80fe] {\n    margin-bottom: 15px;\n    margin-left: 20px;\n}\na[data-v-71ca80fe] {\n    color: #3490dc !important;\n}\n.avatar-uploader .el-upload[data-v-71ca80fe] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-71ca80fe]:hover {\n    border-color: #409eff;\n}\n.avatar-uploader-icon[data-v-71ca80fe] {\n    background-color: rgb(250, 250, 250);\n    font-size: 28px;\n    color: #8c939d;\n    width: 128px;\n    height: 128px;\n    line-height: 128px;\n    text-align: center;\n    border: 1px dashed #d9d9d9;\n}\n.avatar[data-v-71ca80fe] {\n    background-color: rgb(250, 250, 250);\n    border: 1px dashed #d9d9d9;\n    padding: 10px;\n    width: 128px;\n    height: 128px;\n    display: block;\n}\n", ""]);
 
 // exports
 
@@ -653,250 +620,260 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
+    { staticClass: "teacher-wrap" },
     [
-      _c(
-        "el-card",
-        { staticClass: "box-card" },
-        [
-          _c(
-            "el-row",
-            { attrs: { gutter: 20 } },
-            [
-              _c(
-                "el-col",
-                {
-                  staticStyle: { margin: "10px 10px 0 0" },
-                  attrs: { span: 6 }
-                },
-                [
-                  _c(
-                    "el-input",
-                    {
-                      attrs: {
-                        placeholder: "请输入电话",
-                        size: "small",
-                        clearable: ""
-                      },
-                      on: {
-                        clear: function($event) {
-                          return _vm.list(1)
-                        }
-                      },
-                      model: {
-                        value: _vm.searchTeacherMobile,
-                        callback: function($$v) {
-                          _vm.searchTeacherMobile = $$v
+      _c("el-card", { staticClass: "box-card" }, [
+        _c(
+          "div",
+          { staticClass: "search-main" },
+          [
+            _c(
+              "el-row",
+              { staticClass: "elRow" },
+              [
+                _c(
+                  "el-col",
+                  { attrs: { span: 7 } },
+                  [
+                    _c(
+                      "el-input",
+                      {
+                        attrs: {
+                          placeholder: "请输入内容",
+                          size: "small",
+                          clearable: ""
                         },
-                        expression: "searchTeacherMobile"
-                      }
-                    },
-                    [
-                      _c("el-button", {
-                        attrs: { slot: "append", icon: "el-icon-search" },
                         on: {
-                          click: function($event) {
+                          clear: function($event) {
                             return _vm.list(1)
                           }
                         },
-                        slot: "append"
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { staticStyle: { "margin-top": "10px" }, attrs: { span: 1.5 } },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: {
-                        type: "primary",
-                        size: "small",
-                        icon: "el-icon-plus"
+                        model: {
+                          value: _vm.searchCourseName,
+                          callback: function($$v) {
+                            _vm.searchCourseName = $$v
+                          },
+                          expression: "searchCourseName"
+                        }
                       },
-                      on: { click: _vm.add }
-                    },
-                    [_vm._v("添加\n                ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { staticStyle: { "margin-top": "10px" }, attrs: { span: 4 } },
-                [
-                  _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary", size: "small" },
-                      on: { click: _vm.refresh }
-                    },
-                    [_c("i", { staticClass: "el-icon-refresh" })]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("el-pagination", {
-                staticStyle: { "margin-right": "10px" },
-                attrs: {
-                  "page-sizes": [15, 30, 40, 50],
-                  layout: "total, sizes, prev, pager, next, jumper",
-                  total: this.total,
-                  "current-page": _vm.currentPage
-                },
-                on: {
-                  "current-change": _vm.list,
-                  "size-change": _vm.changePageSize
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-table",
-            {
-              directives: [
-                {
-                  name: "loading",
-                  rawName: "v-loading",
-                  value: _vm.loading,
-                  expression: "loading"
-                }
+                      [
+                        _c("el-button", {
+                          attrs: { slot: "append", icon: "el-icon-search" },
+                          on: {
+                            click: function($event) {
+                              return _vm.list(1)
+                            }
+                          },
+                          slot: "append"
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-col",
+                  {
+                    staticStyle: { "margin-left": "16px" },
+                    attrs: { span: 2 }
+                  },
+                  [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: {
+                          type: "primary",
+                          size: "small",
+                          icon: "el-icon-plus"
+                        },
+                        on: { click: _vm.add }
+                      },
+                      [_vm._v("添加\n                    ")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "el-col",
+                  { attrs: { span: 1 } },
+                  [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "primary", size: "small" },
+                        on: { click: _vm.refresh }
+                      },
+                      [_c("i", { staticClass: "el-icon-refresh" })]
+                    )
+                  ],
+                  1
+                )
               ],
-              staticStyle: { width: "100%" },
-              attrs: { data: _vm.tableData, border: "", stripe: "" }
-            },
-            [
-              _c("el-table-column", {
-                attrs: { type: "index", index: _vm.indexMethod, width: "50" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "name", label: "姓名" },
-                scopedSlots: _vm._u([
+              1
+            ),
+            _vm._v(" "),
+            _c("el-pagination", {
+              staticStyle: { "margin-right": "10px" },
+              attrs: {
+                "page-sizes": [15, 30, 40, 50],
+                layout: "total, sizes, prev, pager, next, jumper",
+                total: this.total,
+                "current-page": _vm.currentPage
+              },
+              on: {
+                "current-change": _vm.list,
+                "size-change": _vm.changePageSize
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "table-main" },
+          [
+            _c(
+              "el-table",
+              {
+                directives: [
                   {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        _c(
-                          "a",
-                          {
-                            on: {
-                              click: function($event) {
-                                return _vm.Deatil(scope.row.id)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(scope.row.name) + "\n                    "
-                            )
-                          ]
-                        )
-                      ]
-                    }
+                    name: "loading",
+                    rawName: "v-loading",
+                    value: _vm.loading,
+                    expression: "loading"
                   }
-                ])
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "mobile", label: "手机号" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "gender", label: "性别" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        scope.row.gender === 1
-                          ? _c("span", [_vm._v("男")])
-                          : _c("span", [_vm._v("女")])
-                      ]
-                    }
-                  }
-                ])
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "entry_time", label: "入职日期" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "status", label: "岗位状态" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        scope.row.status === 10
-                          ? _c("span", [_vm._v("试用期")])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        scope.row.status === 20
-                          ? _c("span", [_vm._v("正式员工")])
-                          : _vm._e()
-                      ]
-                    }
-                  }
-                ])
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { label: "操作" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        scope.row.status === 10
-                          ? _c(
-                              "el-button",
-                              {
-                                attrs: { type: "success", size: "mini" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.statusDialog(scope.row)
-                                  }
+                ],
+                staticStyle: { width: "100%" },
+                attrs: { data: _vm.tableData, border: "", stripe: "" }
+              },
+              [
+                _c("el-table-column", {
+                  attrs: { type: "index", index: _vm.indexMethod, width: "50" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "name", label: "姓名" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.Deatil(scope.row.id)
                                 }
-                              },
-                              [_vm._v("转正\n                    ")]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "el-button",
-                          {
-                            attrs: { type: "danger", size: "mini" },
-                            on: {
-                              click: function($event) {
-                                return _vm.Delete(scope.row)
                               }
-                            }
-                          },
-                          [_vm._v("删除\n                    ")]
-                        )
-                      ]
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(scope.row.name) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        ]
+                      }
                     }
-                  }
-                ])
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "mobile", label: "手机号" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "gender", label: "性别" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          scope.row.gender === 1
+                            ? _c("span", [_vm._v("男")])
+                            : _c("span", [_vm._v("女")])
+                        ]
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "entry_time", label: "入职日期" }
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { prop: "status", label: "岗位状态" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          scope.row.status === 10
+                            ? _c("span", [_vm._v("试用期")])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          scope.row.status === 20
+                            ? _c("span", [_vm._v("正式员工")])
+                            : _vm._e()
+                        ]
+                      }
+                    }
+                  ])
+                }),
+                _vm._v(" "),
+                _c("el-table-column", {
+                  attrs: { label: "操作" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          scope.row.status === 10
+                            ? _c(
+                                "el-button",
+                                {
+                                  attrs: { type: "success", size: "mini" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.statusDialog(scope.row)
+                                    }
+                                  }
+                                },
+                                [_vm._v("转正\n                        ")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "el-button",
+                            {
+                              attrs: { type: "danger", size: "mini" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.Delete(scope.row)
+                                }
+                              }
+                            },
+                            [_vm._v("删除\n                        ")]
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
       _c(
         "el-dialog",

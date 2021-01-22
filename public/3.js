@@ -134,22 +134,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Student",
@@ -440,7 +424,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.container[data-v-c99b3a52] {\n    display: flex;\n    /*height: 860px;*/\n    max-width: 2250px;\n}\n.form-search[data-v-c99b3a52] {\n    display: flex;\n}\n.search[data-v-c99b3a52] {\n    width: 300px;\n    margin-right: 10px;\n}\n.el-form-item[data-v-c99b3a52] {\n    margin-bottom: 15px;\n    margin-left: 20px;\n}\na[data-v-c99b3a52] {\n    color: #3490dc !important;\n}\n.avatar-uploader .el-upload[data-v-c99b3a52] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-c99b3a52]:hover {\n    border-color: #409EFF;\n}\n.avatar-uploader-icon[data-v-c99b3a52] {\n    background-color: rgb(250, 250, 250);\n    font-size: 28px;\n    color: #8c939d;\n    width: 128px;\n    height: 128px;\n    line-height: 128px;\n    text-align: center;\n    border: 1px dashed #d9d9d9;\n}\n.avatar[data-v-c99b3a52] {\n    background-color: rgb(250, 250, 250);\n    border: 1px dashed #d9d9d9;\n    padding: 10px;\n    width: 128px;\n    height: 128px;\n    display: block;\n}\n", ""]);
+exports.push([module.i, "\n.student-wrap[data-v-c99b3a52] {\n    flex: 1;\n    display: flex;\n    overflow: auto;\n}\n.form-search[data-v-c99b3a52] {\n    display: flex;\n}\n.search[data-v-c99b3a52] {\n    width: 300px;\n    margin-right: 10px;\n}\n.el-form-item[data-v-c99b3a52] {\n    margin-bottom: 15px;\n    margin-left: 20px;\n}\na[data-v-c99b3a52] {\n    color: #3490dc !important;\n}\n.avatar-uploader .el-upload[data-v-c99b3a52] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-c99b3a52]:hover {\n    border-color: #409eff;\n}\n.avatar-uploader-icon[data-v-c99b3a52] {\n    background-color: rgb(250, 250, 250);\n    font-size: 28px;\n    color: #8c939d;\n    width: 128px;\n    height: 128px;\n    line-height: 128px;\n    text-align: center;\n    border: 1px dashed #d9d9d9;\n}\n.avatar[data-v-c99b3a52] {\n    background-color: rgb(250, 250, 250);\n    border: 1px dashed #d9d9d9;\n    padding: 10px;\n    width: 128px;\n    height: 128px;\n    display: block;\n}\n", ""]);
 
 // exports
 
@@ -494,72 +478,100 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
+    { staticClass: "student-wrap" },
     [
       _c(
         "el-card",
-        { staticClass: "box-card" },
         [
           _c(
-            "el-row",
-            { attrs: { gutter: 20 } },
+            "el-select",
+            {
+              on: {
+                change: function($event) {
+                  return _vm.changeSchoolId(_vm.schoolValue)
+                }
+              },
+              model: {
+                value: _vm.schoolValue,
+                callback: function($$v) {
+                  _vm.schoolValue = $$v
+                },
+                expression: "schoolValue"
+              }
+            },
+            _vm._l(_vm.schoolData, function(item) {
+              return _c("el-option", {
+                key: item.id,
+                attrs: { label: item.name, value: item.id }
+              })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "search-main" },
             [
               _c(
-                "el-col",
-                {
-                  staticStyle: { margin: "10px 10px 0 0" },
-                  attrs: { span: 6 }
-                },
+                "el-row",
+                { staticClass: "elRow" },
                 [
                   _c(
-                    "el-input",
-                    {
-                      attrs: {
-                        placeholder: "请输入电话",
-                        size: "small",
-                        clearable: ""
-                      },
-                      on: {
-                        clear: function($event) {
-                          return _vm.list(1)
-                        }
-                      },
-                      model: {
-                        value: _vm.searchStudentMobile,
-                        callback: function($$v) {
-                          _vm.searchStudentMobile = $$v
-                        },
-                        expression: "searchStudentMobile"
-                      }
-                    },
+                    "el-col",
+                    { attrs: { span: 7 } },
                     [
-                      _c("el-button", {
-                        attrs: { slot: "append", icon: "el-icon-search" },
-                        on: {
-                          click: function($event) {
-                            return _vm.list(1)
+                      _c(
+                        "el-input",
+                        {
+                          attrs: {
+                            placeholder: "请输入电话",
+                            size: "small",
+                            clearable: ""
+                          },
+                          on: {
+                            clear: function($event) {
+                              return _vm.list(1)
+                            }
+                          },
+                          model: {
+                            value: _vm.searchStudentMobile,
+                            callback: function($$v) {
+                              _vm.searchStudentMobile = $$v
+                            },
+                            expression: "searchStudentMobile"
                           }
                         },
-                        slot: "append"
-                      })
+                        [
+                          _c("el-button", {
+                            attrs: { slot: "append", icon: "el-icon-search" },
+                            on: {
+                              click: function($event) {
+                                return _vm.list(1)
+                              }
+                            },
+                            slot: "append"
+                          })
+                        ],
+                        1
+                      )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { staticStyle: { "margin-top": "10px" }, attrs: { span: 4 } },
-                [
+                  ),
+                  _vm._v(" "),
                   _c(
-                    "el-button",
-                    {
-                      attrs: { type: "primary", size: "small" },
-                      on: { click: _vm.refresh }
-                    },
-                    [_c("i", { staticClass: "el-icon-refresh" })]
+                    "el-col",
+                    { attrs: { span: 1 } },
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary", size: "small" },
+                          on: { click: _vm.refresh }
+                        },
+                        [_c("i", { staticClass: "el-icon-refresh" })]
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
@@ -583,103 +595,115 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "el-table",
-            {
-              directives: [
-                {
-                  name: "loading",
-                  rawName: "v-loading",
-                  value: _vm.loading,
-                  expression: "loading"
-                }
-              ],
-              staticStyle: { width: "100%" },
-              attrs: { data: _vm.tableData, border: "", stripe: "" }
-            },
+            "div",
+            { staticClass: "table-main" },
             [
-              _c("el-table-column", {
-                attrs: { type: "index", index: _vm.indexMethod, width: "50" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "name", label: "姓名" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        _c(
-                          "a",
-                          {
-                            on: {
-                              click: function($event) {
-                                return _vm.Deatil(scope.row.id)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(scope.row.name) + "\n                    "
+              _c(
+                "el-table",
+                {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.loading,
+                      expression: "loading"
+                    }
+                  ],
+                  staticStyle: { width: "100%" },
+                  attrs: { data: _vm.tableData, border: "", stripe: "" }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: {
+                      type: "index",
+                      index: _vm.indexMethod,
+                      width: "50"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "name", label: "姓名" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "a",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    return _vm.Deatil(scope.row.id)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(scope.row.name) +
+                                    "\n                        "
+                                )
+                              ]
                             )
                           ]
-                        )
-                      ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "mobile", label: "联系方式" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "gender", label: "性别" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row.gender === 1
+                              ? _c("span", [_vm._v("男")])
+                              : _c("span", [_vm._v("女")])
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "status",
+                      label: "状态",
+                      formatter: _vm.ListenStatus
                     }
-                  }
-                ])
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "mobile", label: "联系方式" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "gender", label: "性别" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        scope.row.gender === 1
-                          ? _c("span", [_vm._v("男")])
-                          : _c("span", [_vm._v("女")])
-                      ]
-                    }
-                  }
-                ])
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: {
-                  prop: "status",
-                  label: "状态",
-                  formatter: _vm.ListenStatus
-                }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "degree", label: "注册等级" },
-                scopedSlots: _vm._u([
-                  {
-                    key: "default",
-                    fn: function(scope) {
-                      return [
-                        scope.row.degree === 10
-                          ? _c("span", [_vm._v("普通")])
-                          : _c("span", [_vm._v("高级")])
-                      ]
-                    }
-                  }
-                ])
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "company", label: "工作单位" }
-              }),
-              _vm._v(" "),
-              _c("el-table-column", {
-                attrs: { prop: "remark", label: "备注" }
-              })
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "degree", label: "注册等级" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row.degree === 10
+                              ? _c("span", [_vm._v("普通")])
+                              : _c("span", [_vm._v("高级")])
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "company", label: "工作单位" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "remark", label: "备注" }
+                  })
+                ],
+                1
+              )
             ],
             1
           )

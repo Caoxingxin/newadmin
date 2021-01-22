@@ -5,6 +5,7 @@ namespace App\Http\Services\School;
 
 
 use App\Http\Models\Head\Student;
+use App\Http\Models\School\Student_School;
 use Illuminate\Support\Facades\DB;
 
 class HeadStudentServices
@@ -27,5 +28,16 @@ class HeadStudentServices
         }
     }
 
+    public function create($data){
+        try {
+            DB::beginTransaction();
+            $studentData = Student::query()->create($data);
+            Student_School::query()->create(['school_id'=>$data['school_id'],'student_id'=>$studentData['id']]);
+            DB::commit();
+            return $studentData->toArray();
 
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+    }
 }

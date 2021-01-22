@@ -21,7 +21,7 @@ class CreateSchoolTable extends Migration
             $table->string('phone', 20)->comment('电话');
             $table->string('email', 30)->comment('邮箱')->nullable();
             $table->string('address', 100)->comment('详细地址');
-            $table->string('address_en', 100)->comment('英文地址');
+            $table->string('address_en', 100)->comment('英文地址')->nullable();
             $table->string('description')->comment('描述')->nullable();
             $table->tinyInteger('status')->comment('当前状态:10运营 -10暂停 默认-10')->default(-10)->nullable();
             $table->timestamps();

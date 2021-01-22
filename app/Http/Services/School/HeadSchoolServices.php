@@ -34,7 +34,7 @@ class HeadSchoolServices
     public function create($data){
         try {
             DB::beginTransaction();
-            $school = School::query()->create($data);
+            $school = School::create($data);
             DB::commit();
             return $school->toArray();
 

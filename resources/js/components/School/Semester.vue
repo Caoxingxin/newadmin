@@ -1,5 +1,5 @@
 <template>
-    <div class="container" v-if="schoolData">
+    <div class="semester-wrap" v-if="schoolData">
         <el-card class="box-card">
             <el-select v-model="schoolValue" @change="changeSchoolId(schoolValue)">
                 <el-option
@@ -10,76 +10,81 @@
                 >
                 </el-option>
             </el-select>
-            <el-row :gutter="20">
-                <!--搜索框-->
-                <el-col :span="6" style="margin: 10px 10px 0 0">
-                    <el-input placeholder="请输入内容" size="small" v-model="searchSemesterName" clearable
-                              @clear="list(1,null,schoolValue)">
-                        <el-button slot="append" icon="el-icon-search" @click="list(1,null,schoolValue)"></el-button>
-                    </el-input>
-                </el-col>
-                <!--添加-->
-                <el-col :span="1.5" style="margin-top: 10px">
-                    <el-button type="primary" size="small" @click="add" icon="el-icon-plus">添加
-                    </el-button>
-                </el-col>
-                <el-col :span="4" style="margin-top: 10px">
-                    <el-button
-                        type="primary"
-                        size="small"
-                        @click="refresh">
-                        <i class="el-icon-refresh"></i>
-                    </el-button>
-                </el-col>
-                <!--分页-->
+            <div class="search-main">
+                <el-row class="elRow">
+                    <!--搜索框-->
+                    <el-col :span="7" style="margin: 10px 10px 0 0">
+                        <el-input placeholder="请输入内容" size="small" v-model="searchSemesterName" clearable
+                                  @clear="list(1,null,schoolValue)">
+                            <el-button slot="append" icon="el-icon-search"
+                                       @click="list(1,null,schoolValue)"></el-button>
+                        </el-input>
+                    </el-col>
+                    <!--添加-->
+                    <el-col :span="2" style="margin-top: 10px">
+                        <el-button type="primary" size="small" @click="add" icon="el-icon-plus">添加
+                        </el-button>
+                    </el-col>
+                    <el-col :span="1" style="margin-top: 10px">
+                        <el-button
+                            type="primary"
+                            size="small"
+                            @click="refresh">
+                            <i class="el-icon-refresh"></i>
+                        </el-button>
+                    </el-col>
+                    <!--分页-->
+
+                </el-row>
                 <el-pagination
                     :page-sizes="[15, 30, 40, 50]"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="this.total"
                     style="margin-right: 10px"
-                    @current-change="list"
+                    @current-change="page"
                     @size-change="changePageSize"
                     :current-page="currentPage"
                 >
                 </el-pagination>
-            </el-row>
+            </div>
 
-
-            <el-table :data="tableData" style="width: 100%" border stripe v-loading="loading">
-                <el-table-column
-                    type="index"
-                    :index="indexMethod"
-                    width="50">
-                </el-table-column>
-                <el-table-column prop="name" label="学期名称">
-                    <template slot-scope="scope">
-                        <a @click="Deatil(scope.row.id)">{{scope.row.name}}
-                        </a>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="registered_number" label="已报名">
-                    <template slot-scope="scope">
-                        <span>{{scope.row.registered_number}}/{{scope.row.number}}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="number" label="报名名额"></el-table-column>
-                <el-table-column prop="contact" label="联系电话"></el-table-column>
-                <el-table-column prop="status" label="状态">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.status === 1">上线</span>
-                        <span style="color:red" v-if="scope.row.status === -1">下线</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作">
-                    <template slot-scope="scope">
-                        <el-button type="success" size="mini" @click="changeStatus(scope.row)">{{options(scope.row)}}
-                        </el-button>
-                        <el-button type="danger" size="mini" @click="Delete(scope.row)">删除
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-
+            <div class="table-main">
+                <el-table :data="tableData" style="width: 100%" border stripe v-loading="loading">
+                    <el-table-column
+                        type="index"
+                        :index="indexMethod"
+                        width="50">
+                    </el-table-column>
+                    <el-table-column prop="name" label="学期名称">
+                        <template slot-scope="scope">
+                            <a @click="Deatil(scope.row.id)">{{scope.row.name}}
+                            </a>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="registered_number" label="已报名">
+                        <template slot-scope="scope">
+                            <span>{{scope.row.registered_number}}/{{scope.row.number}}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="number" label="报名名额"></el-table-column>
+                    <el-table-column prop="contact" label="联系电话"></el-table-column>
+                    <el-table-column prop="status" label="状态">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.status === 1">上线</span>
+                            <span style="color:red" v-if="scope.row.status === -1">下线</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="success" size="mini" @click="changeStatus(scope.row)">
+                                {{options(scope.row)}}
+                            </el-button>
+                            <el-button type="danger" size="mini" @click="Delete(scope.row)">删除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
         </el-card>
 
         <el-dialog title="添加学期" :visible.sync="dialogFormVisible" width="800px" top="20px" :close-on-click-modal="false"
@@ -121,7 +126,9 @@
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         value-format="yyyy-MM-dd"
-                        >
+                        :picker-options="pickerOptionsTime"
+
+                    >
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="报名时间:" prop="register_time">
@@ -132,6 +139,7 @@
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         value-format="yyyy-MM-dd"
+                        :picker-options="pickerOptionsTime"
                     >
                     </el-date-picker>
                 </el-form-item>
@@ -205,18 +213,38 @@
                         {required: true, message: '请输入名称', trigger: 'blur'},
                         {min: 2, max: 200, message: '长度在 3 到 5 个字符', trigger: 'blur'}
                     ],
-                    type: [
-                        {required: true, message: '请输入课程类型', trigger: 'blur'},
+                    contact: [
+                        {
+                            required: true,
+                            pattern: /^1[34578]\d{9}$/,//可以写正则表达式呦呦呦
+                            message: '目前只支持中国大陆的手机号码',
+                            trigger: 'blur'
+                        }
                     ],
-                    duration: [
-                        {required: true, message: '请输入时长', trigger: 'blur'},
+                    train_time:[
+                        { required: true, message: '请填写培训时间' },
                     ],
-                }
+                    register_time:[
+                        { required: true, message: '请填写报名时间' },
+                    ],
+                    number:[
+                        { required: true, message: '请填写报名名额' },
+                    ],
+                    tuition:[
+                        { required: true, message: '请填写学费金额' },
+                    ],
+                },
+                pickerOptionsTime:{
+                    disabledDate(time) {
+                        return time.getTime() < Date.now() - 8.64e7;
+                    }
+                },
             };
         },
         methods: {
+
             listSchoolData() {
-                let url = "head/headSchool-list";
+                let url = "head/headSchool-list?status=1";
                 this.axios.get(url).then(response => {
                     this.schoolData = response.data.data
                     this.schoolValue = this.schoolData[0]['id'];
@@ -248,7 +276,7 @@
                     'id': row.id,
                 }).then(response => {
                     this.open1(row.status);
-                    this.list(this.currentPage,null,this.schoolValue);
+                    this.list(this.currentPage, null, this.schoolValue);
                     console.log(response);
                 }).catch(function (error) {
                     console.log(error);
@@ -305,7 +333,7 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.create_form.start_date = this.create_form.train_time[0];
-                        this.create_form.end_date =  this.create_form.train_time[1];
+                        this.create_form.end_date = this.create_form.train_time[1];
                         this.create_form.register_start_at = this.create_form.register_time[0];
                         this.create_form.register_end_at = this.create_form.register_time[1];
                         if (this.updateStatus) {
@@ -424,11 +452,13 @@
                 }).then(response => {
                     this.dialogFormVisible = true
                     this.create_form = response.data
-                    this.create_form.train_time = [this.create_form.start_date,this.create_form.end_date]
-                    this.create_form.register_time = [this.create_form.register_start_at,this.create_form.register_end_at]
+                    this.$set(this.create_form,'train_time',[this.create_form.start_date, this.create_form.end_date])
+                    this.$set(this.create_form,'register_time',[this.create_form.register_start_at, this.create_form.register_end_at])
+                    // this.create_form.train_time = [this.create_form.start_date, this.create_form.end_date]
+                    // this.create_form.register_time = [this.create_form.register_start_at, this.create_form.register_end_at]
                     this.imageUrl = this.create_form.picture
                     this.updateStatus = true
-                    console.log(this.create_form.examine)
+                    console.log(this.create_form)
                 }).catch(error => {
                     alert('错误')
                 });
@@ -439,7 +469,7 @@
                 this.create_form.picture = ''
                 this.create_form.start_date = ''
                 this.create_form.end_date = ''
-                this.create_form.train_time= ''
+                this.create_form.train_time = ''
                 this.create_form.contact = ''
                 this.create_form.wechat = ''
                 this.create_form.register_start_at = ''
@@ -473,14 +503,7 @@
                 this.$refs['myUpload'].clearFiles();
             },
             page(value) {
-                let url = 'school/schoolSemester-list?page=' + value
-                this.axios.get(url).then(response => {
-                    this.currentPage = response.data.current_page
-                    this.tableData = response.data.data;
-                    console.log(this.tableData);
-                }).catch(error => {
-                    alert('错误')
-                });
+                this.list(value, null, this.schoolValue);
             },
             indexMethod(index) {
                 //单前页码，具体看组件取值
@@ -493,7 +516,7 @@
                 this.list(this.currentPage, value, this.schoolValue);
             },
             Delete(row) {
-                let url = "head/headCourse-delete"
+                let url = "school/schoolSemester-delete"
                 this.axios.post(url, {
                     'id': row.id,
                 }).then(response => {
@@ -506,6 +529,7 @@
             },
             changeSchoolId(value) {
                 console.log(value);
+                this.currentPage = 1
                 this.list(this.currentPage, null, this.schoolValue);
             },
         },
@@ -518,10 +542,10 @@
 </script>
 
 <style scoped>
-    .container {
+    .semester-wrap {
+        flex: 1;
         display: flex;
-        /*height: 860px;*/
-        max-width: 2250px;
+        overflow: auto;
     }
 
     .form-search {
@@ -534,7 +558,6 @@
     }
 
     .el-form-item {
-        margin-bottom: 15px;
         margin-left: 20px;
     }
 

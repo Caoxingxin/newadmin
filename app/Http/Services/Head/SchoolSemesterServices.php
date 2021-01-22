@@ -5,6 +5,7 @@ namespace App\Http\Services\Head;
 
 
 use App\Http\Constans\School\SemesterStatus;
+use App\Http\Models\Head\Course;
 use App\Http\Models\School\Semester;
 use Illuminate\Support\Facades\DB;
 
@@ -22,8 +23,17 @@ class SchoolSemesterServices
         }
     }
 
-    public function update(){
+    public function update($data){
+        $semesterData = Semester::query()->where('id',$data['id'])->first();
+        try {
+            DB::beginTransaction();
+            $semesterData->update($data);
+            DB::commit();
+            return 'success';
 
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
     }
 
     public function detail($id){
@@ -31,8 +41,18 @@ class SchoolSemesterServices
         return $semesterData;
     }
 
-    public function delete(){
+    public function delete($id){
+        try {
+            DB::beginTransaction();
+            $query = Semester::query()->find($id);
+            $query->delete();
+            DB::commit();
 
+            return 'success';
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
     }
 
     public function status($status,$id){

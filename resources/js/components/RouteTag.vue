@@ -13,6 +13,7 @@
         <div class="tags-close-box">
             <el-dropdown @command="handleTags">
                 <el-button size="mini">
+                    关闭操作
                     <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu size="small" slot="dropdown">
@@ -117,22 +118,24 @@
 
 <style scoped>
     .tags {
-        position: relative;
-        height: 50px;
-        overflow: hidden;
+        position: sticky;
+        height: 40px;
         background: white;
-        padding-right: 120px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(0,0,0,.12);
     }
 
     .tags ul {
         box-sizing: border-box;
         width: 100%;
         height: 100%;
+        padding:5px 0;
     }
 
     .tags-li {
         float: left;
-        margin: 3px 5px 2px 3px;
+        margin-right:5px;
         border-radius: 3px;
         font-size: 15px;
         overflow: hidden;
@@ -147,6 +150,8 @@
         -webkit-transition: all .3s ease-in;
         -moz-transition: all .3s ease-in;
         transition: all .3s ease-in;
+        display: flex;
+        align-items: center;
     }
 
     .tags-li:not(.active):hover {
@@ -175,13 +180,8 @@
     }
 
     .tags-close-box {
-        position: fixed;
-        right: 0;
-        top: 50px;
-        box-sizing: border-box;
-        padding-top: 1px;
-        text-align: center;
-        z-index: 10;
+        display: flex;
+        align-items: center;
     }
 
 </style>

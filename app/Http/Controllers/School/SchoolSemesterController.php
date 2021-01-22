@@ -50,7 +50,8 @@ class SchoolSemesterController extends Controller
         return $services->detail($id);
     }
 
-    public function delete(){
-
+    public function delete(Request $request,SchoolSemesterServices $services){
+        $id = $request->input('id');
+        return $services->delete($id);
     }
 }

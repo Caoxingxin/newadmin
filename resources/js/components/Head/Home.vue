@@ -1,112 +1,62 @@
 <template>
-    <div>
-        <div class="title">
-            你好,<span v-if="postName">{{Name}}</span>欢迎使用Admin管理系统
-        </div>
-        <!-- Content Row -->
-        <div class="row">
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4 big">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings
-                                    (Monthly)
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="el-icon-date" style=" font-size: 50px;color: darkturquoise;"></i>
-                            </div>
-                        </div>
-                    </div>
+    <div class="home">
+        <div class="list-item">
+            <div class="item">
+                <span>
+                    <i class="el-icon-date" style="font-size: 50px;"></i>
+                </span>
+                <div class="content">
+                    <span class="title">New Visits</span>
+                    <span class="amount">102,400</span>
                 </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings
-                                    (Annual)
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="el-icon-paperclip" style=" font-size: 50px;color: darkturquoise;"></i>
-                            </div>
-                        </div>
-                    </div>
+            <div class="item">
+                <span>
+                    <i class="el-icon-paperclip" style="font-size: 50px;"></i>
+                </span>
+                <div class="content">
+                    <span class="title">New Visits</span>
+                    <span class="amount">102,400</span>
                 </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress progress-sm mr-2">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
-                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="el-icon-document" style=" font-size: 50px;color: darkturquoise;"></i>
-                            </div>
-                        </div>
-                    </div>
+            <div class="item">
+                <span>
+                    <i class="el-icon-document" style="font-size: 50px;"></i>
+                </span>
+                <div class="content">
+                    <span class="title">New Visits</span>
+                    <span class="amount">102,400</span>
                 </div>
             </div>
 
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #E6A23C">Pending
-                                    Requests
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="el-icon-chat-line-round" style=" font-size: 50px;color: darkturquoise;"></i>
-                            </div>
-                        </div>
-                    </div>
+            <div class="item">
+                <span>
+                    <i class="el-icon-chat-line-round" style="font-size: 50px;"></i>
+                </span>
+                <div class="content">
+                    <span class="title">New Visits</span>
+                    <span class="amount">102,400</span>
                 </div>
             </div>
         </div>
+
         <github-corner class="github-corner"></github-corner>
+
         <div class="line-chart">
-            <div id="main2" style="width: auto;height:400px;"></div>
+            <div id="main2"></div>
         </div>
-        <div style="display: flex;flex-wrap:nowrap ">
-            <div id="main1" style="width: 600px;height:400px;margin: 20px"></div>
-            <div id="main3" style="width: 600px;height:400px;margin: 20px"></div>
-            <div id="main4" style="width: 600px;height:400px;margin: 20px"></div>
+
+        <div class="chart-list">
+            <div id="main1"></div>
+            <div id="main3"></div>
+            <div id="main4"></div>
         </div>
-        <div style="display: flex;flex-wrap:nowrap;">
-            <div  style="width: 1000px;margin: 20px">
-                <financial></financial>
-            </div>
-            <div style="width: 400px;margin: 20px;">
-                <notice></notice>
-            </div>
-            <div style="width: 400px;height:400px;margin: 20px;background-color: cadetblue"></div>
+
+        <div class="table-list">
+            <financial></financial>
+            <notice></notice>
         </div>
     </div>
 </template>
@@ -115,12 +65,13 @@
     import GithubCorner from "../GithubCorner";
     import Financial from "./Home/Financial";
     import Notice from "./Home/Notice";
+    import westeros from "../../Theme/westeros"
 
     var servicedata_pie = [];
     var servucedata_line = [];
     export default {
         name: "Home",
-        components: {Notice, Financial, GithubCorner},
+        components: { Notice, Financial, GithubCorner },
         data() {
             return {
                 Name: '',
@@ -168,7 +119,7 @@
                         {
                             name: '访问来源',
                             type: 'pie',
-                            radius: ['50%', '70%'],
+                            radius: ['35%', '50%'],
                             avoidLabelOverlap: false,
                             label: {
                                 show: false,
@@ -207,7 +158,7 @@
                         axisPointer: {
                             label: {
                                 formatter: function (params) {
-                                    return '降水量  ' + params.value;
+                                    return params.value;
                                 }
                             }
                         },
@@ -239,9 +190,9 @@
                         },
                         markLine: {
                             //symbol: ['none', 'none'],
-                            label: {show: false},
+                            label: { show: false },
                         },
-                        areaStyle: {color: 'blue', opacity: 0.05},
+                        areaStyle: { color: 'blue', opacity: 0.05 },
                         itemStyle: {
                             color: "blue",
                         },
@@ -308,21 +259,21 @@
                     toolbox: {
                         show: true,
                         feature: {
-                            mark: {show: true},
-                            dataView: {show: true, readOnly: false},
+                            mark: { show: true },
+                            dataView: { show: true, readOnly: false },
                             magicType: {
                                 show: true,
                                 type: ['pie', 'funnel']
                             },
-                            restore: {show: true},
-                            saveAsImage: {show: true}
+                            restore: { show: true },
+                            saveAsImage: { show: true }
                         }
                     },
                     series: [
                         {
                             name: '面积模式',
                             type: 'pie',
-                            radius: [30, 110],
+                            radius: [40, 110],
                             center: ['50%', '50%'],
                             roseType: 'area',
                             data: servicedata_pie
@@ -339,31 +290,140 @@
         },
         mounted() {
             // 基于准备好的dom，初始化echarts实例
-            this.myChart_pie = this.$echarts.init(document.getElementById("main1"));
-            this.myChart_line = this.$echarts.init(document.getElementById("main2"));
-            this.myChart_bar = this.$echarts.init(document.getElementById("main3"));
-            this.myChart_coolpie = this.$echarts.init(document.getElementById("main4"));
+            this.myChart_pie = this.$echarts.init(document.getElementById("main1"),'westeros');
+            this.myChart_line = this.$echarts.init(document.getElementById("main2"),'westeros');
+            this.myChart_bar = this.$echarts.init(document.getElementById("main3"),'westeros');
+            this.myChart_coolpie = this.$echarts.init(document.getElementById("main4"),'westeros');
             this.list();
         }
     }
 </script>
 
 <style scoped>
-    .title {
+    .home {
+        flex: 1;
+        overflow: auto;
+    }
+    .list-item {
+        display: flex;
+        margin-bottom: 32px;
+    }
+
+    .item {
+        height: 108px;
+        width: 24%;
+        cursor: pointer;
+        font-size: 12px;
+        background: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        padding-right: 26px;
+        border-radius: 5px;
+        margin-right: 40px;
+    }
+
+    .el-icon-date {
+        color: darkturquoise;
+    }
+
+    .el-icon-paperclip {
+        color: #36a3f7;
+    }
+
+    .el-icon-document {
+        color: #f4516c;
+    }
+
+    .el-icon-chat-line-round {
+        color: #34bfa3;
+    }
+
+    .item > span {
+        margin: 14px 0 0 14px;
+        width: 80px;
+        height: 80px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .item:last-child {
+        margin-right: 0;
+    }
+
+    .item:nth-of-type(1):hover > span {
+        background: darkturquoise;
+    }
+
+    .item:nth-of-type(1):hover .el-icon-date,
+    .item:nth-of-type(2):hover .el-icon-paperclip,
+    .item:nth-of-type(3):hover .el-icon-document,
+    .item:nth-of-type(4):hover .el-icon-chat-line-round {
+        color: #ffffff;
+    }
+
+    .item:nth-of-type(2):hover > span {
+        background: #36a3f7;
+    }
+
+    .item:nth-of-type(3):hover > span {
+        background: #f4516c;
+    }
+
+    .item:nth-of-type(4):hover > span {
+        background: #34bfa3;
+    }
+
+    .item > .content {
+        font-weight: 700;
+        margin-top: 26px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item > .content > .title {
+        line-height: 18px;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .item > .content > .amount {
         font-size: 20px;
-        text-align: center;
-        margin-bottom: 20px;
-        align-content: center;
-        height: 50px;
-        width: 100%;
-        background-color: white;
     }
 
     .line-chart {
-        width: auto;
+        display: flex;
         height: 400px;
         background-color: white;
         margin-bottom: 30px;
+    }
+
+    .line-chart #main2 {
+        height: 400px;
+        display: flex;
+        flex: 1;
+    }
+
+
+    .chart-list {
+        display: flex;
+    }
+
+    .chart-list > #main1,
+    .chart-list > #main3,
+    .chart-list > #main4 {
+        display: flex;
+        flex: 1;
+        margin-right: 20px;
+        height: 500px;
+        background: #ffffff;
+        padding: 20px;
+    }
+
+    .chart-list > #main4 {
+        margin: 0;
     }
 
     .github-corner {
@@ -371,5 +431,11 @@
         top: 0;
         border: 0;
         right: 0;
+        z-index: 9999;
+    }
+
+    .table-list {
+        margin-top: 30px;
+        display: flex;
     }
 </style>

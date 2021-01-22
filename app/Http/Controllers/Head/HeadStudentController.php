@@ -17,12 +17,12 @@ class HeadStudentController extends Controller
         $page = $searchData['pageSize'] ?? 15;
         if (isset($searchData['searchStudentMobile']))
         {
-            $SchoolData = Student::query()->where('mobile','like',$searchData['searchStudentMobile'].'%')->paginate($page);
+            $StudentData = Student::query()->where('mobile','like',$searchData['searchStudentMobile'].'%')->paginate($page);
         }else
         {
-            $SchoolData = Student::query()->paginate($page);
+            $StudentData = Student::query()->paginate($page);
         }
-        return $SchoolData;
+        return $StudentData;
     }
 
     public function detail(Request $request,HeadStudentServices $services){

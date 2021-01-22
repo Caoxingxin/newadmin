@@ -76,4 +76,18 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
     Route::post('/schoolSemester-detail','SchoolSemesterController@detail')->name('detail');
     Route::post('/schoolSemester-update','SchoolSemesterController@update')->name('update');
     Route::post('/schoolSemester-delete','SchoolSemesterController@delete')->name('delete');
+
+    //学生
+    Route::get('/schoolStudent-list','SchoolStudentController@list')->name('list');
+    Route::post('/schoolStudent-detail','SchoolStudentController@detail')->name('detail');
+    Route::post('/schoolStudent-update','SchoolStudentController@update')->name('update');
+    Route::post('/schoolStudent-create','SchoolStudentController@create')->name('create');
+
+    //教室
+    Route::get('/schoolClassroom-list','SchoolClassroomController@list')->name('list');
+    Route::post('/schoolClassroom-status','SchoolClassroomController@status')->name('status');
+    Route::post('/schoolClassroom-create','SchoolClassroomController@create')->name('create');
+    Route::post('/schoolClassroom-detail','SchoolClassroomController@detail')->name('detail');
+    Route::post('/schoolClassroom-update','SchoolClassroomController@update')->name('update');
+    Route::post('/schoolClassroom-delete','SchoolClassroomController@delete')->name('delete');
 });

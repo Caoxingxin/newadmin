@@ -52,6 +52,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _GithubCorner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../GithubCorner */ "./resources/js/components/GithubCorner.vue");
 /* harmony import */ var _Home_Financial__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home/Financial */ "./resources/js/components/Head/Home/Financial.vue");
 /* harmony import */ var _Home_Notice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Home/Notice */ "./resources/js/components/Head/Home/Notice.vue");
+/* harmony import */ var _Theme_westeros__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Theme/westeros */ "./resources/js/Theme/westeros.js");
+/* harmony import */ var _Theme_westeros__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Theme_westeros__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -115,56 +117,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -231,7 +184,7 @@ var servucedata_line = [];
         series: [{
           name: '访问来源',
           type: 'pie',
-          radius: ['50%', '70%'],
+          radius: ['35%', '50%'],
           avoidLabelOverlap: false,
           label: {
             show: false,
@@ -269,7 +222,7 @@ var servucedata_line = [];
           axisPointer: {
             label: {
               formatter: function formatter(params) {
-                return '降水量  ' + params.value;
+                return params.value;
               }
             }
           }
@@ -393,7 +346,7 @@ var servucedata_line = [];
         series: [{
           name: '面积模式',
           type: 'pie',
-          radius: [30, 110],
+          radius: [40, 110],
           center: ['50%', '50%'],
           roseType: 'area',
           data: servicedata_pie
@@ -409,10 +362,10 @@ var servucedata_line = [];
   },
   mounted: function mounted() {
     // 基于准备好的dom，初始化echarts实例
-    this.myChart_pie = this.$echarts.init(document.getElementById("main1"));
-    this.myChart_line = this.$echarts.init(document.getElementById("main2"));
-    this.myChart_bar = this.$echarts.init(document.getElementById("main3"));
-    this.myChart_coolpie = this.$echarts.init(document.getElementById("main4"));
+    this.myChart_pie = this.$echarts.init(document.getElementById("main1"), 'westeros');
+    this.myChart_line = this.$echarts.init(document.getElementById("main2"), 'westeros');
+    this.myChart_bar = this.$echarts.init(document.getElementById("main3"), 'westeros');
+    this.myChart_coolpie = this.$echarts.init(document.getElementById("main4"), 'westeros');
     this.list();
   }
 });
@@ -428,9 +381,6 @@ var servucedata_line = [];
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -516,9 +466,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Notice"
 });
@@ -556,7 +503,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.title[data-v-12d3aaf3] {\n    font-size: 20px;\n    text-align: center;\n    margin-bottom: 20px;\n    align-content: center;\n    height: 50px;\n    width: 100%;\n    background-color: white;\n}\n.line-chart[data-v-12d3aaf3] {\n    width: auto;\n    height: 400px;\n    background-color: white;\n    margin-bottom: 30px;\n}\n.github-corner[data-v-12d3aaf3] {\n    position: absolute;\n    top: 0;\n    border: 0;\n    right: 0;\n}\n", ""]);
+exports.push([module.i, "\n.home[data-v-12d3aaf3] {\n    flex: 1;\n    overflow: auto;\n}\n.list-item[data-v-12d3aaf3] {\n    display: flex;\n    margin-bottom: 32px;\n}\n.item[data-v-12d3aaf3] {\n    height: 108px;\n    width: 24%;\n    cursor: pointer;\n    font-size: 12px;\n    background: #ffffff;\n    display: flex;\n    justify-content: space-between;\n    padding-right: 26px;\n    border-radius: 5px;\n    margin-right: 40px;\n}\n.el-icon-date[data-v-12d3aaf3] {\n    color: darkturquoise;\n}\n.el-icon-paperclip[data-v-12d3aaf3] {\n    color: #36a3f7;\n}\n.el-icon-document[data-v-12d3aaf3] {\n    color: #f4516c;\n}\n.el-icon-chat-line-round[data-v-12d3aaf3] {\n    color: #34bfa3;\n}\n.item > span[data-v-12d3aaf3] {\n    margin: 14px 0 0 14px;\n    width: 80px;\n    height: 80px;\n    border-radius: 6px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n.item[data-v-12d3aaf3]:last-child {\n    margin-right: 0;\n}\n.item:nth-of-type(1):hover > span[data-v-12d3aaf3] {\n    background: darkturquoise;\n}\n.item:nth-of-type(1):hover .el-icon-date[data-v-12d3aaf3],\n.item:nth-of-type(2):hover .el-icon-paperclip[data-v-12d3aaf3],\n.item:nth-of-type(3):hover .el-icon-document[data-v-12d3aaf3],\n.item:nth-of-type(4):hover .el-icon-chat-line-round[data-v-12d3aaf3] {\n    color: #ffffff;\n}\n.item:nth-of-type(2):hover > span[data-v-12d3aaf3] {\n    background: #36a3f7;\n}\n.item:nth-of-type(3):hover > span[data-v-12d3aaf3] {\n    background: #f4516c;\n}\n.item:nth-of-type(4):hover > span[data-v-12d3aaf3] {\n    background: #34bfa3;\n}\n.item > .content[data-v-12d3aaf3] {\n    font-weight: 700;\n    margin-top: 26px;\n    display: flex;\n    flex-direction: column;\n}\n.item > .content > .title[data-v-12d3aaf3] {\n    line-height: 18px;\n    color: rgba(0, 0, 0, 0.45);\n    font-size: 16px;\n    margin-bottom: 12px;\n}\n.item > .content > .amount[data-v-12d3aaf3] {\n    font-size: 20px;\n}\n.line-chart[data-v-12d3aaf3] {\n    display: flex;\n    height: 400px;\n    background-color: white;\n    margin-bottom: 30px;\n}\n.line-chart #main2[data-v-12d3aaf3] {\n    height: 400px;\n    display: flex;\n    flex: 1;\n}\n.chart-list[data-v-12d3aaf3] {\n    display: flex;\n}\n.chart-list > #main1[data-v-12d3aaf3],\n.chart-list > #main3[data-v-12d3aaf3],\n.chart-list > #main4[data-v-12d3aaf3] {\n    display: flex;\n    flex: 1;\n    margin-right: 20px;\n    height: 500px;\n    background: #ffffff;\n    padding: 20px;\n}\n.chart-list > #main4[data-v-12d3aaf3] {\n    margin: 0;\n}\n.github-corner[data-v-12d3aaf3] {\n    position: absolute;\n    top: 0;\n    border: 0;\n    right: 0;\n    z-index: 9999;\n}\n.table-list[data-v-12d3aaf3] {\n    margin-top: 30px;\n    display: flex;\n}\n", ""]);
 
 // exports
 
@@ -575,7 +522,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.text[data-v-19a64d66] {\n    font-size: 14px;\n}\n.item[data-v-19a64d66] {\n    margin-top: 0;\n}\n.clearfix[data-v-19a64d66]:before,\n.clearfix[data-v-19a64d66]:after {\n    display: table;\n    content: \"\";\n}\n.clearfix[data-v-19a64d66]:after {\n    clear: both\n}\n\n", ""]);
+exports.push([module.i, "\n.box-card[data-v-19a64d66] {\r\n    flex: 1;\r\n    margin-right: 20px;\r\n    background: #ffffff;\r\n    border-radius: 5px;\r\n    padding: 20px;\n}\n.text[data-v-19a64d66] {\r\n    font-size: 14px;\n}\n.item[data-v-19a64d66] {\r\n    margin-top: 0;\n}\n.clearfix[data-v-19a64d66]:before,\r\n.clearfix[data-v-19a64d66]:after {\r\n    display: table;\r\n    content: \"\";\n}\n.clearfix[data-v-19a64d66]:after {\r\n    clear: both;\n}\r\n", ""]);
 
 // exports
 
@@ -594,7 +541,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.text[data-v-335cc644] {\n    font-size: 14px;\n}\n.item[data-v-335cc644] {\n    margin-bottom: 18px;\n}\n.clearfix[data-v-335cc644]:before,\n.clearfix[data-v-335cc644]:after {\n    display: table;\n    content: \"\";\n}\n.clearfix[data-v-335cc644]:after {\n    clear: both\n}\n\n", ""]);
+exports.push([module.i, "\n.box-card[data-v-335cc644] {\r\n    background: #ffffff;\r\n    flex: 1;\r\n    border-radius: 5px;\r\n    padding: 20px;\n}\n.text[data-v-335cc644] {\r\n    font-size: 14px;\n}\n.item[data-v-335cc644] {\r\n    margin-bottom: 18px;\n}\n.clearfix[data-v-335cc644]:before,\r\n.clearfix[data-v-335cc644]:after {\r\n    display: table;\r\n    content: \"\";\n}\n.clearfix[data-v-335cc644]:after {\r\n    clear: both;\n}\r\n", ""]);
 
 // exports
 
@@ -810,13 +757,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "home" },
     [
-      _c("div", { staticClass: "title" }, [
-        _vm._v("\n        你好,"),
-        _vm.postName ? _c("span", [_vm._v(_vm._s(_vm.Name))]) : _vm._e(),
-        _vm._v("欢迎使用Admin管理系统\n    ")
-      ]),
-      _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
       _c("github-corner", { staticClass: "github-corner" }),
@@ -825,30 +767,12 @@ var render = function() {
       _vm._v(" "),
       _vm._m(2),
       _vm._v(" "),
-      _c("div", { staticStyle: { display: "flex", "flex-wrap": "nowrap" } }, [
-        _c(
-          "div",
-          { staticStyle: { width: "1000px", margin: "20px" } },
-          [_c("financial")],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticStyle: { width: "400px", margin: "20px" } },
-          [_c("notice")],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", {
-          staticStyle: {
-            width: "400px",
-            height: "400px",
-            margin: "20px",
-            "background-color": "cadetblue"
-          }
-        })
-      ])
+      _c(
+        "div",
+        { staticClass: "table-list" },
+        [_c("financial"), _vm._v(" "), _c("notice")],
+        1
+      )
     ],
     1
   )
@@ -858,184 +782,65 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4 big" }, [
-        _c(
-          "div",
-          { staticClass: "card border-left-primary shadow h-100 py-2" },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row no-gutters align-items-center" }, [
-                _c("div", { staticClass: "col mr-2" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "text-xs font-weight-bold text-primary text-uppercase mb-1"
-                    },
-                    [
-                      _vm._v(
-                        "Earnings\n                                (Monthly)\n                            "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                    [_vm._v("$40,000")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-auto" }, [
-                  _c("i", {
-                    staticClass: "el-icon-date",
-                    staticStyle: { "font-size": "50px", color: "darkturquoise" }
-                  })
-                ])
-              ])
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
-        _c(
-          "div",
-          { staticClass: "card border-left-success shadow h-100 py-2" },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row no-gutters align-items-center" }, [
-                _c("div", { staticClass: "col mr-2" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "text-xs font-weight-bold text-success text-uppercase mb-1"
-                    },
-                    [
-                      _vm._v(
-                        "Earnings\n                                (Annual)\n                            "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                    [_vm._v("$215,000")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-auto" }, [
-                  _c("i", {
-                    staticClass: "el-icon-paperclip",
-                    staticStyle: { "font-size": "50px", color: "darkturquoise" }
-                  })
-                ])
-              ])
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
-        _c("div", { staticClass: "card border-left-info shadow h-100 py-2" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row no-gutters align-items-center" }, [
-              _c("div", { staticClass: "col mr-2" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "text-xs font-weight-bold text-info text-uppercase mb-1"
-                  },
-                  [_vm._v("Tasks")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "row no-gutters align-items-center" },
-                  [
-                    _c("div", { staticClass: "col-auto" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "h5 mb-0 mr-3 font-weight-bold text-gray-800"
-                        },
-                        [_vm._v("50%")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col" }, [
-                      _c("div", { staticClass: "progress progress-sm mr-2" }, [
-                        _c("div", {
-                          staticClass: "progress-bar bg-info",
-                          staticStyle: { width: "50%" },
-                          attrs: {
-                            role: "progressbar",
-                            "aria-valuenow": "50",
-                            "aria-valuemin": "0",
-                            "aria-valuemax": "100"
-                          }
-                        })
-                      ])
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-auto" }, [
-                _c("i", {
-                  staticClass: "el-icon-document",
-                  staticStyle: { "font-size": "50px", color: "darkturquoise" }
-                })
-              ])
-            ])
-          ])
+    return _c("div", { staticClass: "list-item" }, [
+      _c("div", { staticClass: "item" }, [
+        _c("span", [
+          _c("i", {
+            staticClass: "el-icon-date",
+            staticStyle: { "font-size": "50px" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "content" }, [
+          _c("span", { staticClass: "title" }, [_vm._v("New Visits")]),
+          _vm._v(" "),
+          _c("span", { staticClass: "amount" }, [_vm._v("102,400")])
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
-        _c(
-          "div",
-          { staticClass: "card border-left-warning shadow h-100 py-2" },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row no-gutters align-items-center" }, [
-                _c("div", { staticClass: "col mr-2" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "text-xs font-weight-bold text-uppercase mb-1",
-                      staticStyle: { color: "#E6A23C" }
-                    },
-                    [
-                      _vm._v(
-                        "Pending\n                                Requests\n                            "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                    [_vm._v("18")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-auto" }, [
-                  _c("i", {
-                    staticClass: "el-icon-chat-line-round",
-                    staticStyle: { "font-size": "50px", color: "darkturquoise" }
-                  })
-                ])
-              ])
-            ])
-          ]
-        )
+      _c("div", { staticClass: "item" }, [
+        _c("span", [
+          _c("i", {
+            staticClass: "el-icon-paperclip",
+            staticStyle: { "font-size": "50px" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "content" }, [
+          _c("span", { staticClass: "title" }, [_vm._v("New Visits")]),
+          _vm._v(" "),
+          _c("span", { staticClass: "amount" }, [_vm._v("102,400")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "item" }, [
+        _c("span", [
+          _c("i", {
+            staticClass: "el-icon-document",
+            staticStyle: { "font-size": "50px" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "content" }, [
+          _c("span", { staticClass: "title" }, [_vm._v("New Visits")]),
+          _vm._v(" "),
+          _c("span", { staticClass: "amount" }, [_vm._v("102,400")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "item" }, [
+        _c("span", [
+          _c("i", {
+            staticClass: "el-icon-chat-line-round",
+            staticStyle: { "font-size": "50px" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "content" }, [
+          _c("span", { staticClass: "title" }, [_vm._v("New Visits")]),
+          _vm._v(" "),
+          _c("span", { staticClass: "amount" }, [_vm._v("102,400")])
+        ])
       ])
     ])
   },
@@ -1044,36 +849,20 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "line-chart" }, [
-      _c("div", {
-        staticStyle: { width: "auto", height: "400px" },
-        attrs: { id: "main2" }
-      })
+      _c("div", { attrs: { id: "main2" } })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticStyle: { display: "flex", "flex-wrap": "nowrap" } },
-      [
-        _c("div", {
-          staticStyle: { width: "600px", height: "400px", margin: "20px" },
-          attrs: { id: "main1" }
-        }),
-        _vm._v(" "),
-        _c("div", {
-          staticStyle: { width: "600px", height: "400px", margin: "20px" },
-          attrs: { id: "main3" }
-        }),
-        _vm._v(" "),
-        _c("div", {
-          staticStyle: { width: "600px", height: "400px", margin: "20px" },
-          attrs: { id: "main4" }
-        })
-      ]
-    )
+    return _c("div", { staticClass: "chart-list" }, [
+      _c("div", { attrs: { id: "main1" } }),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "main3" } }),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "main4" } })
+    ])
   }
 ]
 render._withStripped = true
@@ -1098,15 +887,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-card",
+    "div",
     { staticClass: "box-card" },
     [
-      _c(
-        "div",
-        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("近7日收入订单")])]
-      ),
-      _vm._v(" "),
       _c(
         "el-table",
         {
@@ -1205,28 +988,435 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-card",
+    "div",
     { staticClass: "box-card" },
-    [
-      _c(
-        "div",
-        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("卡片名称")])]
-      ),
-      _vm._v(" "),
-      _vm._l(4, function(o) {
-        return _c("div", { key: o, staticClass: "text item" }, [
-          _vm._v("\n        " + _vm._s("列表内容 " + o) + "\n    ")
-        ])
-      })
-    ],
-    2
+    _vm._l(4, function(o) {
+      return _c("div", { key: o, staticClass: "text item" }, [
+        _vm._v("\n        " + _vm._s("列表内容 " + o) + "\n    ")
+      ])
+    }),
+    0
   )
 }
 var staticRenderFns = []
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "./resources/js/Theme/westeros.js":
+/*!****************************************!*\
+  !*** ./resources/js/Theme/westeros.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+(function (root, factory) {
+  if (true) {
+    // AMD. Register as an anonymous module.
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! echarts */ "./node_modules/echarts/index.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+})(this, function (exports, echarts) {
+  var log = function log(msg) {
+    if (typeof console !== 'undefined') {
+      console && console.error && console.error(msg);
+    }
+  };
+
+  if (!echarts) {
+    log('ECharts is not Loaded');
+    return;
+  }
+
+  echarts.registerTheme('westeros', {
+    "color": ["#516b91", "#59c4e6", "#edafda", "#93b7e3", "#a5e7f0", "#cbb0e3"],
+    "backgroundColor": "rgba(0,0,0,0)",
+    "textStyle": {},
+    "title": {
+      "textStyle": {
+        "color": "#516b91"
+      },
+      "subtextStyle": {
+        "color": "#93b7e3"
+      }
+    },
+    "line": {
+      "itemStyle": {
+        "borderWidth": "2"
+      },
+      "lineStyle": {
+        "width": "2"
+      },
+      "symbolSize": "6",
+      "symbol": "emptyCircle",
+      "smooth": true
+    },
+    "radar": {
+      "itemStyle": {
+        "borderWidth": "2"
+      },
+      "lineStyle": {
+        "width": "2"
+      },
+      "symbolSize": "6",
+      "symbol": "emptyCircle",
+      "smooth": true
+    },
+    "bar": {
+      "itemStyle": {
+        "barBorderWidth": 0,
+        "barBorderColor": "#ccc"
+      }
+    },
+    "pie": {
+      "itemStyle": {
+        "borderWidth": 0,
+        "borderColor": "#ccc"
+      }
+    },
+    "scatter": {
+      "itemStyle": {
+        "borderWidth": 0,
+        "borderColor": "#ccc"
+      }
+    },
+    "boxplot": {
+      "itemStyle": {
+        "borderWidth": 0,
+        "borderColor": "#ccc"
+      }
+    },
+    "parallel": {
+      "itemStyle": {
+        "borderWidth": 0,
+        "borderColor": "#ccc"
+      }
+    },
+    "sankey": {
+      "itemStyle": {
+        "borderWidth": 0,
+        "borderColor": "#ccc"
+      }
+    },
+    "funnel": {
+      "itemStyle": {
+        "borderWidth": 0,
+        "borderColor": "#ccc"
+      }
+    },
+    "gauge": {
+      "itemStyle": {
+        "borderWidth": 0,
+        "borderColor": "#ccc"
+      }
+    },
+    "candlestick": {
+      "itemStyle": {
+        "color": "#edafda",
+        "color0": "transparent",
+        "borderColor": "#d680bc",
+        "borderColor0": "#8fd3e8",
+        "borderWidth": "2"
+      }
+    },
+    "graph": {
+      "itemStyle": {
+        "borderWidth": 0,
+        "borderColor": "#ccc"
+      },
+      "lineStyle": {
+        "width": 1,
+        "color": "#aaaaaa"
+      },
+      "symbolSize": "6",
+      "symbol": "emptyCircle",
+      "smooth": true,
+      "color": ["#516b91", "#59c4e6", "#edafda", "#93b7e3", "#a5e7f0", "#cbb0e3"],
+      "label": {
+        "color": "#eeeeee"
+      }
+    },
+    "map": {
+      "itemStyle": {
+        "normal": {
+          "areaColor": "#f3f3f3",
+          "borderColor": "#516b91",
+          "borderWidth": 0.5
+        },
+        "emphasis": {
+          "areaColor": "#a5e7f0",
+          "borderColor": "#516b91",
+          "borderWidth": 1
+        }
+      },
+      "label": {
+        "normal": {
+          "textStyle": {
+            "color": "#000"
+          }
+        },
+        "emphasis": {
+          "textStyle": {
+            "color": "#516b91"
+          }
+        }
+      }
+    },
+    "geo": {
+      "itemStyle": {
+        "normal": {
+          "areaColor": "#f3f3f3",
+          "borderColor": "#516b91",
+          "borderWidth": 0.5
+        },
+        "emphasis": {
+          "areaColor": "#a5e7f0",
+          "borderColor": "#516b91",
+          "borderWidth": 1
+        }
+      },
+      "label": {
+        "normal": {
+          "textStyle": {
+            "color": "#000"
+          }
+        },
+        "emphasis": {
+          "textStyle": {
+            "color": "#516b91"
+          }
+        }
+      }
+    },
+    "categoryAxis": {
+      "axisLine": {
+        "show": true,
+        "lineStyle": {
+          "color": "#cccccc"
+        }
+      },
+      "axisTick": {
+        "show": false,
+        "lineStyle": {
+          "color": "#333"
+        }
+      },
+      "axisLabel": {
+        "show": true,
+        "textStyle": {
+          "color": "#999999"
+        }
+      },
+      "splitLine": {
+        "show": true,
+        "lineStyle": {
+          "color": ["#eeeeee"]
+        }
+      },
+      "splitArea": {
+        "show": false,
+        "areaStyle": {
+          "color": ["rgba(250,250,250,0.05)", "rgba(200,200,200,0.02)"]
+        }
+      }
+    },
+    "valueAxis": {
+      "axisLine": {
+        "show": true,
+        "lineStyle": {
+          "color": "#cccccc"
+        }
+      },
+      "axisTick": {
+        "show": false,
+        "lineStyle": {
+          "color": "#333"
+        }
+      },
+      "axisLabel": {
+        "show": true,
+        "textStyle": {
+          "color": "#999999"
+        }
+      },
+      "splitLine": {
+        "show": true,
+        "lineStyle": {
+          "color": ["#eeeeee"]
+        }
+      },
+      "splitArea": {
+        "show": false,
+        "areaStyle": {
+          "color": ["rgba(250,250,250,0.05)", "rgba(200,200,200,0.02)"]
+        }
+      }
+    },
+    "logAxis": {
+      "axisLine": {
+        "show": true,
+        "lineStyle": {
+          "color": "#cccccc"
+        }
+      },
+      "axisTick": {
+        "show": false,
+        "lineStyle": {
+          "color": "#333"
+        }
+      },
+      "axisLabel": {
+        "show": true,
+        "textStyle": {
+          "color": "#999999"
+        }
+      },
+      "splitLine": {
+        "show": true,
+        "lineStyle": {
+          "color": ["#eeeeee"]
+        }
+      },
+      "splitArea": {
+        "show": false,
+        "areaStyle": {
+          "color": ["rgba(250,250,250,0.05)", "rgba(200,200,200,0.02)"]
+        }
+      }
+    },
+    "timeAxis": {
+      "axisLine": {
+        "show": true,
+        "lineStyle": {
+          "color": "#cccccc"
+        }
+      },
+      "axisTick": {
+        "show": false,
+        "lineStyle": {
+          "color": "#333"
+        }
+      },
+      "axisLabel": {
+        "show": true,
+        "textStyle": {
+          "color": "#999999"
+        }
+      },
+      "splitLine": {
+        "show": true,
+        "lineStyle": {
+          "color": ["#eeeeee"]
+        }
+      },
+      "splitArea": {
+        "show": false,
+        "areaStyle": {
+          "color": ["rgba(250,250,250,0.05)", "rgba(200,200,200,0.02)"]
+        }
+      }
+    },
+    "toolbox": {
+      "iconStyle": {
+        "normal": {
+          "borderColor": "#999999"
+        },
+        "emphasis": {
+          "borderColor": "#666666"
+        }
+      }
+    },
+    "legend": {
+      "textStyle": {
+        "color": "#999999"
+      }
+    },
+    "tooltip": {
+      "axisPointer": {
+        "lineStyle": {
+          "color": "#cccccc",
+          "width": 1
+        },
+        "crossStyle": {
+          "color": "#cccccc",
+          "width": 1
+        }
+      }
+    },
+    "timeline": {
+      "lineStyle": {
+        "color": "#8fd3e8",
+        "width": 1
+      },
+      "itemStyle": {
+        "normal": {
+          "color": "#8fd3e8",
+          "borderWidth": 1
+        },
+        "emphasis": {
+          "color": "#8fd3e8"
+        }
+      },
+      "controlStyle": {
+        "normal": {
+          "color": "#8fd3e8",
+          "borderColor": "#8fd3e8",
+          "borderWidth": 0.5
+        },
+        "emphasis": {
+          "color": "#8fd3e8",
+          "borderColor": "#8fd3e8",
+          "borderWidth": 0.5
+        }
+      },
+      "checkpointStyle": {
+        "color": "#8fd3e8",
+        "borderColor": "rgba(138,124,168,0.37)"
+      },
+      "label": {
+        "normal": {
+          "textStyle": {
+            "color": "#8fd3e8"
+          }
+        },
+        "emphasis": {
+          "textStyle": {
+            "color": "#8fd3e8"
+          }
+        }
+      }
+    },
+    "visualMap": {
+      "color": ["#516b91", "#59c4e6", "#a5e7f0"]
+    },
+    "dataZoom": {
+      "backgroundColor": "rgba(0,0,0,0)",
+      "dataBackgroundColor": "rgba(255,255,255,0.3)",
+      "fillerColor": "rgba(167,183,204,0.4)",
+      "handleColor": "#a7b7cc",
+      "handleSize": "100%",
+      "textStyle": {
+        "color": "#333333"
+      }
+    },
+    "markPoint": {
+      "label": {
+        "color": "#eeeeee"
+      },
+      "emphasis": {
+        "label": {
+          "color": "#eeeeee"
+        }
+      }
+    }
+  });
+});
 
 /***/ }),
 

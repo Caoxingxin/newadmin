@@ -1,24 +1,24 @@
 <template>
-    <el-container>
-        <el-header>
-            <AdminHeader></AdminHeader>
-        </el-header>
-        <el-container>
-            <el-aside width="200px">
-                <Aside></Aside>
-            </el-aside>
-            <el-container>
-                <el-header>
+    <div id="app">
+        <el-container class="app-container">
+            <el-header>
+                <AdminHeader></AdminHeader>
+            </el-header>
+            <el-container style="height: 80%">
+                <el-aside width="200px">
+                    <Aside></Aside>
+                </el-aside>
+                <el-main>
                     <RouteTag></RouteTag>
-                </el-header>
-                <el-main class="animate_fix">        <!--添加动画效果-->
-                    <transition name="fade">
+                    <!--添加动画效果-->
+                    <div class="container-box">
                         <router-view/>
-                    </transition>
+                    </div>
                 </el-main>
             </el-container>
         </el-container>
-    </el-container>
+    </div>
+
 </template>
 
 <script>
@@ -53,34 +53,93 @@
     .el-menu {
         border: none;
     }
-    /*主体内容部分*/
-    .el-main {
-        background-color: rgb(240,242,246);
-        color: #333;
-        padding: 0;
+
+    .app-container {
+        height: 100%;
+    }
+
+    .container-box {
+        padding: 16px;
+        position: relative;
+        display: flex;
+        flex: 1;
+        overflow: auto;
     }
 
     /*全局样式表*/
-    html, body, #app {
+    html,
+    body,
+    #app {
         height: 100%;
         margin: 0;
         padding: 0;
-        min-width: 1366px;
     }
 
-    h1, h2, h3, h4, h5, h6, ul, li {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    li {
         margin: 0;
         padding: 0;
     }
 
-    body > .el-container {
-        height: 100%;
+    a {
+        cursor: pointer;
+        text-decoration: none;
     }
 
-    .el-container {
-        height: 100%;
-        background-color: rgb(240,242,246);
+    button {
+        outline: none;
     }
+
+    .search-main {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .elRow {
+        margin-bottom: 20px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-search {
+        display: flex;
+    }
+
+    .search {
+        width: 300px;
+        margin-right: 10px;
+    }
+
+    .table-main {
+        display: flex;
+        overflow: auto;
+    }
+
+    /*滚动条整体样式*/
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background: 0 0;
+    }
+
+    /*滚动条滑块*/
+    ::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background-color: #ccc;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.35);
+    }
+
+    /*重置element UI 样式*/
 
     .el-aside {
         height: 100%;
@@ -97,23 +156,6 @@
 
     .el-aside::-webkit-scrollbar {
         display: none;
-    }
-
-    .has-gutter th div.cell {
-        /*text-align: center;*/
-    }
-
-    .animate_fix {
-        position: relative;
-        /*width: 100%;*/
-    }
-
-    .animate_fix > div {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 20px;
     }
 
     .el-card__body {
@@ -139,30 +181,62 @@
         text-align: center;
     }
 
-    /*滚动条滑块*/
-    ::-webkit-scrollbar-thumb {
-        border-radius: 6px;
-        background-color: #ccc;
+    .el-main {
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(240, 242, 246);
+        color: #333;
+        padding: 0;
     }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 0, 0, 0.35);
-    }
-
 
     .el-card {
         flex: 1;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    .el-card__body {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        overflow: auto;
+        overflow-x: hidden;
     }
 
     .el-table {
-        margin-top: 15px;
         font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        overflow-x: hidden;
     }
 
-    .el-pagination {
-        margin-top: 15px;
-        float: right;
+    .el-table__body-wrapper {
+        overflow: auto;
     }
 
+    .el-table__footer-wrapper,
+    .el-table__header-wrapper {
+        overflow: initial;
+    }
+
+    .el-dropdown-menu {
+        z-index: 9999999 !important;
+    }
+
+    .el-table__row > td,
+    .has-gutter > tr > th {
+        padding: 8px 0;
+    }
+    .el-form-item__error{
+        color: #F56C6C;
+        font-size: 12px;
+        line-height: 1;
+        position: relative;
+        top: 80%;
+        left: 0;
+    }
 </style>
