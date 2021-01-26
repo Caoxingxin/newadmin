@@ -90,4 +90,14 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
     Route::post('/schoolClassroom-detail','SchoolClassroomController@detail')->name('detail');
     Route::post('/schoolClassroom-update','SchoolClassroomController@update')->name('update');
     Route::post('/schoolClassroom-delete','SchoolClassroomController@delete')->name('delete');
+
+    //班级
+    Route::get('/schoolClass-list','SchoolClassController@list')->name('list');
+    Route::post('/schoolClass-status','SchoolClassController@status')->name('status');
+    Route::post('/schoolClass-create','SchoolClassController@create')->name('create');
+    Route::post('/schoolClass-detail','SchoolClassController@detail')->name('detail');
+    Route::post('/schoolClass-update','SchoolClassController@update')->name('update');
+    Route::post('/schoolClass-delete','SchoolClassController@delete')->name('delete');
+
+    Route::post('/get-semester-list','SchoolSemesterController@getList')->name('get-list');
 });

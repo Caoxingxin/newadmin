@@ -82,75 +82,17 @@
             </div>
         </el-card>
 
-        <el-dialog title="添加学期" :visible.sync="dialogFormVisible" width="800px" top="20px" :close-on-click-modal="false"
+        <el-dialog title="添加教室" :visible.sync="dialogFormVisible" width="800px" top="20px" :close-on-click-modal="false"
                    :before-close="handleClose">
             <el-form ref="form" :rules="rules" :model="create_form" :label-position="labelPosition" label-width="100px">
-                <el-form-item label="学期名称:" prop="name">
+                <el-form-item label="教室名称:" prop="name">
                     <el-input v-model="create_form.name" autocomplete="off"
-                              style="width: 200px !important;" placeholder="请输入学期名称" size="small">
+                              style="width: 200px !important;" placeholder="请输入教室名称" size="small">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="图片:" prop="picture">
-                    <el-upload
-                        class="avatar-uploader"
-                        action="http://localhost:3600/admin/upload"
-                        :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload"
-                        ref="myUpload"
-                    >
-                        <img v-if="imageUrl" :src="this.imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                </el-form-item>
-                <el-form-item label="联系电话:" prop="contact">
-                    <el-input v-model="create_form.contact" autocomplete="off"
-                              style="width: 200px !important;" placeholder="请输入电话" size="small">
-                    </el-input>
-                </el-form-item>
-                <el-form-item label="微信号:" prop="wechat">
-                    <el-input v-model="create_form.wechat" autocomplete="off"
-                              style="width: 200px !important;" placeholder="请输入微信" size="small">
-                    </el-input>
-                </el-form-item>
-                <el-form-item label="培训时间:" prop="train_time">
-                    <el-date-picker
-                        v-model="create_form.train_time"
-                        type="daterange"
-                        range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        value-format="yyyy-MM-dd"
-                        :picker-options="pickerOptionsTime"
-
-                    >
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="报名时间:" prop="register_time">
-                    <el-date-picker
-                        v-model="create_form.register_time"
-                        type="daterange"
-                        range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        value-format="yyyy-MM-dd"
-                        :picker-options="pickerOptionsTime"
-                    >
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="报名名额:" prop="number">
-                    <el-input v-model="create_form.number" autocomplete="off"
+                <el-form-item label="容纳人数:" prop="number">
+                    <el-input v-model="create_form.max_number" autocomplete="off"
                               style="width: 200px !important;" placeholder="请输入报名名额" size="small">
-                    </el-input>
-                </el-form-item>
-                <el-form-item label="学费:" prop="tuition">
-                    <el-input v-model="create_form.tuition" autocomplete="off"
-                              style="width: 200px !important;" placeholder="请输入学费" size="small">
-                    </el-input>
-                </el-form-item>
-                <el-form-item label="学期介绍:" prop="introduction">
-                    <el-input type="textarea" v-model="create_form.introduction" autocomplete="off"
-                              :autosize="{ minRows: 4, maxRows: 6}" placeholder="请输入学期介绍" size="small">
                     </el-input>
                 </el-form-item>
             </el-form>
@@ -176,7 +118,6 @@
                 currentPage: 1,
                 //总条数
                 total: 0,
-                imageUrl: '',
                 updateStatus: false,
                 labelPosition: 'right',
                 loading: false,
@@ -187,19 +128,7 @@
                     id: '',
                     school_id: '',
                     name: '',
-                    picture: '',
-                    start_date: '',
-                    end_date: '',
-                    train_time: '',
-                    contact: '',
-                    wechat: '',
-                    register_start_at: '',
-                    register_end_at: '',
-                    register_time: '',
-                    number: '',
-                    registered_number: '',
-                    tuition: '',
-                    introduction: '',
+                    max_number:'',
                     status: '',
                 },
                 rules: {
@@ -207,36 +136,10 @@
                         {required: true, message: '请输入名称', trigger: 'blur'},
                         {min: 2, max: 200, message: '长度在 3 到 5 个字符', trigger: 'blur'}
                     ],
-                    contact: [
-                        {
-                            required: true,
-                            pattern: /^1[34578]\d{9}$/,//可以写正则表达式呦呦呦
-                            message: '目前只支持中国大陆的手机号码',
-                            trigger: 'blur'
-                        }
-                    ],
-                    train_time:[
-                        { required: true, message: '请填写培训时间' },
-                    ],
-                    register_time:[
-                        { required: true, message: '请填写报名时间' },
-                    ],
-                    number:[
-                        { required: true, message: '请填写报名名额' },
-                    ],
-                    tuition:[
-                        { required: true, message: '请填写学费金额' },
-                    ],
-                },
-                pickerOptionsTime:{
-                    disabledDate(time) {
-                        return time.getTime() < Date.now() - 8.64e7;
-                    }
                 },
             };
         },
         methods: {
-
             listSchoolData() {
                 let url = "head/headSchool-list?status=1";
                 this.axios.get(url).then(response => {
@@ -251,7 +154,6 @@
             //添加按钮
             add() {
                 this.updateStatus = false;
-                this.imageUrl = '';
                 this.dialogFormVisible = true;
             },
             //设置改变状态按钮值
@@ -264,7 +166,7 @@
             },
             //请求改变状态接口
             changeStatus(row) {
-                let url = "school/schoolSemester-status"
+                let url = "school/schoolClassroom-status"
                 this.axios.post(url, {
                     'status': row.status,
                     'id': row.id,
@@ -326,26 +228,13 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.create_form.start_date = this.create_form.train_time[0];
-                        this.create_form.end_date = this.create_form.train_time[1];
-                        this.create_form.register_start_at = this.create_form.register_time[0];
-                        this.create_form.register_end_at = this.create_form.register_time[1];
                         if (this.updateStatus) {
-                            let url = 'school/schoolSemester-update'
+                            let url = 'school/schoolClassroom-update'
                             this.axios.post(url, {
                                 id: this.create_form.id,
                                 school_id: this.schoolValue,
                                 name: this.create_form.name,
-                                picture: this.create_form.picture,
-                                start_date: this.create_form.start_date,
-                                end_date: this.create_form.end_date,
-                                contact: this.create_form.contact,
-                                wechat: this.create_form.wechat,
-                                register_start_at: this.create_form.register_start_at,
-                                register_end_at: this.create_form.register_end_at,
-                                number: this.create_form.number,
-                                tuition: this.create_form.tuition,
-                                introduction: this.create_form.introduction,
+                                max_number : this.create_form.max_number,
                             }).then(response => {
                                 this.$refs[formName].resetFields();
                                 this.dialogFormVisible = false
@@ -377,20 +266,11 @@
                             console.log('----------------')
                             console.log(this.updateStatus)
                         } else {
-                            let url = 'school/schoolSemester-create'
+                            let url = 'school/schoolClassroom-create'
                             this.axios.post(url, {
                                 school_id: this.schoolValue,
                                 name: this.create_form.name,
-                                picture: this.create_form.picture,
-                                start_date: this.create_form.start_date,
-                                end_date: this.create_form.end_date,
-                                contact: this.create_form.contact,
-                                wechat: this.create_form.wechat,
-                                register_start_at: this.create_form.register_start_at,
-                                register_end_at: this.create_form.register_end_at,
-                                number: this.create_form.number,
-                                tuition: this.create_form.tuition,
-                                introduction: this.create_form.introduction,
+                                max_number : this.create_form.max_number,
                             }).then(response => {
                                 this.$refs[formName].resetFields();
                                 this.dialogFormVisible = false
@@ -440,17 +320,12 @@
             },
             //课程信息详情
             Deatil(id) {
-                let url = 'school/schoolSemester-detail'
+                let url = 'school/schoolClassroom-detail'
                 this.axios.post(url, {
                     id: id,
                 }).then(response => {
                     this.dialogFormVisible = true
                     this.create_form = response.data
-                    this.$set(this.create_form,'train_time',[this.create_form.start_date, this.create_form.end_date])
-                    this.$set(this.create_form,'register_time',[this.create_form.register_start_at, this.create_form.register_end_at])
-                    // this.create_form.train_time = [this.create_form.start_date, this.create_form.end_date]
-                    // this.create_form.register_time = [this.create_form.register_start_at, this.create_form.register_end_at]
-                    this.imageUrl = this.create_form.picture
                     this.updateStatus = true
                     console.log(this.create_form)
                 }).catch(error => {
@@ -460,38 +335,8 @@
             //清空表单值
             cleanCreateFormData() {
                 this.create_form.name = ''
-                this.create_form.picture = ''
-                this.create_form.start_date = ''
-                this.create_form.end_date = ''
-                this.create_form.train_time = ''
-                this.create_form.contact = ''
-                this.create_form.wechat = ''
-                this.create_form.register_start_at = ''
-                this.create_form.register_end_at = ''
-                this.create_form.register_time = ''
-                this.create_form.number = ''
-                this.create_form.registered_number = ''
-                this.create_form.tuition = ''
-                this.create_form.introduction = ''
+                this.create_form.max_number = ''
                 this.create_form.status = ''
-            },
-            //上传图片
-            handleAvatarSuccess(response) {
-                this.imageUrl = '/storage/image/' + response.filepath;
-                this.create_form.picture = this.imageUrl
-                console.log(this.imageUrl)
-            },
-            beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
-                const isLt2M = file.size / 1024 / 1024 < 2;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
             },
             clearFiles() {
                 this.$refs['myUpload'].clearFiles();
@@ -510,7 +355,7 @@
                 this.list(this.currentPage, value, this.schoolValue);
             },
             Delete(row) {
-                let url = "school/schoolSemester-delete"
+                let url = "school/schoolClassroom-delete"
                 this.axios.post(url, {
                     'id': row.id,
                 }).then(response => {

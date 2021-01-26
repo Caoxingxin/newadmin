@@ -7,6 +7,9 @@ namespace App\Http\Controllers\School;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Head\School;
 use App\Http\Models\School\Classroom;
+use App\Http\Requests\School\SchoolClassroomRequest;
+use App\Http\Services\Head\SchoolClassroomServices;
+use Illuminate\Http\Request;
 
 class SchoolClassroomController extends Controller
 {
@@ -33,24 +36,30 @@ class SchoolClassroomController extends Controller
         return $ClassroomData;
     }
 
-    public function create(){
-
+    public function create(SchoolClassroomRequest $request,SchoolClassroomServices $services){
+        $data = $request->all();
+        return $services->create($data);
     }
 
-    public function update(){
-
+    public function update(SchoolClassroomRequest $request,SchoolClassroomServices $services){
+        $data = $request->all();
+        return $services->update($data);
     }
 
-    public function detail(){
-
+    public function detail(Request $request,SchoolClassroomServices $services){
+        $id = $request->input('id');
+        return $services->detail($id);
     }
 
-    public function status(){
-
+    public function status(Request $request,SchoolClassroomServices $services){
+        $status = $request->input('status');
+        $id = $request->input('id');
+        return $services->status($status,$id);
     }
 
-    public function delete(){
-
+    public function delete(Request $request,SchoolClassroomServices $services){
+        $id = $request->input('id');
+        return $services->delete($id);
     }
 
 }

@@ -20,6 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
         window.postName= "{{ $name  }}"
+        window.postId = "{{ $id }}"
     </script>
 </head>
 <body>

@@ -15,6 +15,10 @@
                         <i class="el-icon-user"></i>
                         <span v-if="postName">{{Name}}</span>
                     </el-dropdown-item>
+                    <el-dropdown-item>
+                        <i class="el-icon-user"></i>
+                        <span v-if="postId">{{Id}}</span>
+                    </el-dropdown-item>
                     <el-dropdown-item @click.native="onQuit">
                         <i class="el-icon-switch-button"></i>
                         退出登录
@@ -32,7 +36,8 @@
         components: { RouteTag },
         data() {
             return {
-                Name: 123
+                Name: '',
+                Id : ''
             };
         },
         methods: {
@@ -64,6 +69,10 @@
             postName() {
                 this.Name = window.postName;
                 return window.postName
+            },
+            postId(){
+                this.Id = window.postId;
+                return window.postId
             }
         }
 

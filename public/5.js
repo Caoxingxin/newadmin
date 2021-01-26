@@ -117,64 +117,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Classroom",
@@ -188,7 +130,6 @@ __webpack_require__.r(__webpack_exports__);
       currentPage: 1,
       //总条数
       total: 0,
-      imageUrl: '',
       updateStatus: false,
       labelPosition: 'right',
       loading: false,
@@ -199,19 +140,7 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         school_id: '',
         name: '',
-        picture: '',
-        start_date: '',
-        end_date: '',
-        train_time: '',
-        contact: '',
-        wechat: '',
-        register_start_at: '',
-        register_end_at: '',
-        register_time: '',
-        number: '',
-        registered_number: '',
-        tuition: '',
-        introduction: '',
+        max_number: '',
         status: ''
       },
       rules: {
@@ -224,35 +153,7 @@ __webpack_require__.r(__webpack_exports__);
           max: 200,
           message: '长度在 3 到 5 个字符',
           trigger: 'blur'
-        }],
-        contact: [{
-          required: true,
-          pattern: /^1[34578]\d{9}$/,
-          //可以写正则表达式呦呦呦
-          message: '目前只支持中国大陆的手机号码',
-          trigger: 'blur'
-        }],
-        train_time: [{
-          required: true,
-          message: '请填写培训时间'
-        }],
-        register_time: [{
-          required: true,
-          message: '请填写报名时间'
-        }],
-        number: [{
-          required: true,
-          message: '请填写报名名额'
-        }],
-        tuition: [{
-          required: true,
-          message: '请填写学费金额'
         }]
-      },
-      pickerOptionsTime: {
-        disabledDate: function disabledDate(time) {
-          return time.getTime() < Date.now() - 8.64e7;
-        }
       }
     };
   },
@@ -273,7 +174,6 @@ __webpack_require__.r(__webpack_exports__);
     //添加按钮
     add: function add() {
       this.updateStatus = false;
-      this.imageUrl = '';
       this.dialogFormVisible = true;
     },
     //设置改变状态按钮值
@@ -288,7 +188,7 @@ __webpack_require__.r(__webpack_exports__);
     changeStatus: function changeStatus(row) {
       var _this2 = this;
 
-      var url = "school/schoolSemester-status";
+      var url = "school/schoolClassroom-status";
       this.axios.post(url, {
         'status': row.status,
         'id': row.id
@@ -366,28 +266,14 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$refs[formName].validate(function (valid) {
         if (valid) {
-          _this5.create_form.start_date = _this5.create_form.train_time[0];
-          _this5.create_form.end_date = _this5.create_form.train_time[1];
-          _this5.create_form.register_start_at = _this5.create_form.register_time[0];
-          _this5.create_form.register_end_at = _this5.create_form.register_time[1];
-
           if (_this5.updateStatus) {
-            var url = 'school/schoolSemester-update';
+            var url = 'school/schoolClassroom-update';
 
             _this5.axios.post(url, {
               id: _this5.create_form.id,
               school_id: _this5.schoolValue,
               name: _this5.create_form.name,
-              picture: _this5.create_form.picture,
-              start_date: _this5.create_form.start_date,
-              end_date: _this5.create_form.end_date,
-              contact: _this5.create_form.contact,
-              wechat: _this5.create_form.wechat,
-              register_start_at: _this5.create_form.register_start_at,
-              register_end_at: _this5.create_form.register_end_at,
-              number: _this5.create_form.number,
-              tuition: _this5.create_form.tuition,
-              introduction: _this5.create_form.introduction
+              max_number: _this5.create_form.max_number
             }).then(function (response) {
               _this5.$refs[formName].resetFields();
 
@@ -424,21 +310,12 @@ __webpack_require__.r(__webpack_exports__);
             console.log('----------------');
             console.log(_this5.updateStatus);
           } else {
-            var _url = 'school/schoolSemester-create';
+            var _url = 'school/schoolClassroom-create';
 
             _this5.axios.post(_url, {
               school_id: _this5.schoolValue,
               name: _this5.create_form.name,
-              picture: _this5.create_form.picture,
-              start_date: _this5.create_form.start_date,
-              end_date: _this5.create_form.end_date,
-              contact: _this5.create_form.contact,
-              wechat: _this5.create_form.wechat,
-              register_start_at: _this5.create_form.register_start_at,
-              register_end_at: _this5.create_form.register_end_at,
-              number: _this5.create_form.number,
-              tuition: _this5.create_form.tuition,
-              introduction: _this5.create_form.introduction
+              max_number: _this5.create_form.max_number
             }).then(function (response) {
               _this5.$refs[formName].resetFields();
 
@@ -494,20 +371,12 @@ __webpack_require__.r(__webpack_exports__);
     Deatil: function Deatil(id) {
       var _this6 = this;
 
-      var url = 'school/schoolSemester-detail';
+      var url = 'school/schoolClassroom-detail';
       this.axios.post(url, {
         id: id
       }).then(function (response) {
         _this6.dialogFormVisible = true;
         _this6.create_form = response.data;
-
-        _this6.$set(_this6.create_form, 'train_time', [_this6.create_form.start_date, _this6.create_form.end_date]);
-
-        _this6.$set(_this6.create_form, 'register_time', [_this6.create_form.register_start_at, _this6.create_form.register_end_at]); // this.create_form.train_time = [this.create_form.start_date, this.create_form.end_date]
-        // this.create_form.register_time = [this.create_form.register_start_at, this.create_form.register_end_at]
-
-
-        _this6.imageUrl = _this6.create_form.picture;
         _this6.updateStatus = true;
         console.log(_this6.create_form);
       })["catch"](function (error) {
@@ -517,40 +386,8 @@ __webpack_require__.r(__webpack_exports__);
     //清空表单值
     cleanCreateFormData: function cleanCreateFormData() {
       this.create_form.name = '';
-      this.create_form.picture = '';
-      this.create_form.start_date = '';
-      this.create_form.end_date = '';
-      this.create_form.train_time = '';
-      this.create_form.contact = '';
-      this.create_form.wechat = '';
-      this.create_form.register_start_at = '';
-      this.create_form.register_end_at = '';
-      this.create_form.register_time = '';
-      this.create_form.number = '';
-      this.create_form.registered_number = '';
-      this.create_form.tuition = '';
-      this.create_form.introduction = '';
+      this.create_form.max_number = '';
       this.create_form.status = '';
-    },
-    //上传图片
-    handleAvatarSuccess: function handleAvatarSuccess(response) {
-      this.imageUrl = '/storage/image/' + response.filepath;
-      this.create_form.picture = this.imageUrl;
-      console.log(this.imageUrl);
-    },
-    beforeAvatarUpload: function beforeAvatarUpload(file) {
-      var isJPG = file.type === 'image/jpeg';
-      var isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像只能是 JPG 格式!');
-      }
-
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-
-      return isJPG && isLt2M;
     },
     clearFiles: function clearFiles() {
       this.$refs['myUpload'].clearFiles();
@@ -571,7 +408,7 @@ __webpack_require__.r(__webpack_exports__);
     Delete: function Delete(row) {
       var _this7 = this;
 
-      var url = "school/schoolSemester-delete";
+      var url = "school/schoolClassroom-delete";
       this.axios.post(url, {
         'id': row.id
       }).then(function (response) {
@@ -973,7 +810,7 @@ var render = function() {
             "el-dialog",
             {
               attrs: {
-                title: "添加学期",
+                title: "添加教室",
                 visible: _vm.dialogFormVisible,
                 width: "800px",
                 top: "20px",
@@ -1001,13 +838,13 @@ var render = function() {
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "学期名称:", prop: "name" } },
+                    { attrs: { label: "教室名称:", prop: "name" } },
                     [
                       _c("el-input", {
                         staticStyle: { width: "200px !important" },
                         attrs: {
                           autocomplete: "off",
-                          placeholder: "请输入学期名称",
+                          placeholder: "请输入教室名称",
                           size: "small"
                         },
                         model: {
@@ -1024,134 +861,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-form-item",
-                    { attrs: { label: "图片:", prop: "picture" } },
-                    [
-                      _c(
-                        "el-upload",
-                        {
-                          ref: "myUpload",
-                          staticClass: "avatar-uploader",
-                          attrs: {
-                            action: "http://localhost:3600/admin/upload",
-                            "show-file-list": false,
-                            "on-success": _vm.handleAvatarSuccess,
-                            "before-upload": _vm.beforeAvatarUpload
-                          }
-                        },
-                        [
-                          _vm.imageUrl
-                            ? _c("img", {
-                                staticClass: "avatar",
-                                attrs: { src: this.imageUrl }
-                              })
-                            : _c("i", {
-                                staticClass: "el-icon-plus avatar-uploader-icon"
-                              })
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "联系电话:", prop: "contact" } },
-                    [
-                      _c("el-input", {
-                        staticStyle: { width: "200px !important" },
-                        attrs: {
-                          autocomplete: "off",
-                          placeholder: "请输入电话",
-                          size: "small"
-                        },
-                        model: {
-                          value: _vm.create_form.contact,
-                          callback: function($$v) {
-                            _vm.$set(_vm.create_form, "contact", $$v)
-                          },
-                          expression: "create_form.contact"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "微信号:", prop: "wechat" } },
-                    [
-                      _c("el-input", {
-                        staticStyle: { width: "200px !important" },
-                        attrs: {
-                          autocomplete: "off",
-                          placeholder: "请输入微信",
-                          size: "small"
-                        },
-                        model: {
-                          value: _vm.create_form.wechat,
-                          callback: function($$v) {
-                            _vm.$set(_vm.create_form, "wechat", $$v)
-                          },
-                          expression: "create_form.wechat"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "培训时间:", prop: "train_time" } },
-                    [
-                      _c("el-date-picker", {
-                        attrs: {
-                          type: "daterange",
-                          "range-separator": "至",
-                          "start-placeholder": "开始日期",
-                          "end-placeholder": "结束日期",
-                          "value-format": "yyyy-MM-dd",
-                          "picker-options": _vm.pickerOptionsTime
-                        },
-                        model: {
-                          value: _vm.create_form.train_time,
-                          callback: function($$v) {
-                            _vm.$set(_vm.create_form, "train_time", $$v)
-                          },
-                          expression: "create_form.train_time"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "报名时间:", prop: "register_time" } },
-                    [
-                      _c("el-date-picker", {
-                        attrs: {
-                          type: "daterange",
-                          "range-separator": "至",
-                          "start-placeholder": "开始日期",
-                          "end-placeholder": "结束日期",
-                          "value-format": "yyyy-MM-dd",
-                          "picker-options": _vm.pickerOptionsTime
-                        },
-                        model: {
-                          value: _vm.create_form.register_time,
-                          callback: function($$v) {
-                            _vm.$set(_vm.create_form, "register_time", $$v)
-                          },
-                          expression: "create_form.register_time"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "报名名额:", prop: "number" } },
+                    { attrs: { label: "容纳人数:", prop: "number" } },
                     [
                       _c("el-input", {
                         staticStyle: { width: "200px !important" },
@@ -1161,58 +871,11 @@ var render = function() {
                           size: "small"
                         },
                         model: {
-                          value: _vm.create_form.number,
+                          value: _vm.create_form.max_number,
                           callback: function($$v) {
-                            _vm.$set(_vm.create_form, "number", $$v)
+                            _vm.$set(_vm.create_form, "max_number", $$v)
                           },
-                          expression: "create_form.number"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "学费:", prop: "tuition" } },
-                    [
-                      _c("el-input", {
-                        staticStyle: { width: "200px !important" },
-                        attrs: {
-                          autocomplete: "off",
-                          placeholder: "请输入学费",
-                          size: "small"
-                        },
-                        model: {
-                          value: _vm.create_form.tuition,
-                          callback: function($$v) {
-                            _vm.$set(_vm.create_form, "tuition", $$v)
-                          },
-                          expression: "create_form.tuition"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: "学期介绍:", prop: "introduction" } },
-                    [
-                      _c("el-input", {
-                        attrs: {
-                          type: "textarea",
-                          autocomplete: "off",
-                          autosize: { minRows: 4, maxRows: 6 },
-                          placeholder: "请输入学期介绍",
-                          size: "small"
-                        },
-                        model: {
-                          value: _vm.create_form.introduction,
-                          callback: function($$v) {
-                            _vm.$set(_vm.create_form, "introduction", $$v)
-                          },
-                          expression: "create_form.introduction"
+                          expression: "create_form.max_number"
                         }
                       })
                     ],
