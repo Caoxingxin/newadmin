@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\School;
 
 
+use App\Http\Constans\School\SemesterStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Models\School\Semester;
 use App\Http\Requests\School\SchoolSemesterRequest;
@@ -57,6 +58,6 @@ class SchoolSemesterController extends Controller
 
     public function getList(Request $request){
         $school_id = $request->input('school_id');
-        return Semester::query()->where('school_id',$school_id)->get();
+        return Semester::query()->where('school_id',$school_id)->where('status',SemesterStatus::ONLINE)->get();
     }
 }

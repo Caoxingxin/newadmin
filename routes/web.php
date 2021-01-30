@@ -100,4 +100,10 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
     Route::post('/schoolClass-delete','SchoolClassController@delete')->name('delete');
 
     Route::post('/get-semester-list','SchoolSemesterController@getList')->name('get-list');
+
+    //班级分班
+    Route::get('/schoolClassAllot-list','StudentDistributeController@list')->name('list');
+    Route::post('/schoolClassAllot-distribute','StudentDistributeController@status')->name('distribute');
+    Route::post('/schoolClassAllot-remove','StudentDistributeController@create')->name('remove');
+    Route::post('/schoolClassAllot-showList','StudentDistributeController@showList')->name('showList');
 });

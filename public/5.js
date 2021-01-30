@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[5],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Classroom.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/School/Classroom.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Allot.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/School/Allot.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -117,16 +117,74 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Classroom",
+  name: "Allot",
   data: function data() {
     return {
-      radio: '1',
+      allotWindow: false,
+      color: ['rgb(212,164,235)', 'rgb(247,244,148)', 'rgb(114,204,225)', 'rgb(210,245,166)', 'rgb(252,151,175)'],
+      semesterDisable: false,
+      semesterData: '',
+      semesterValue: '',
+      semesterName: '',
+      className: '',
+      classValue: '',
+      operate_id: window.postId,
       schoolData: '',
       schoolValue: '',
       index: 1,
-      searchClassroomName: '',
+      searchClassName: '',
+      searchStudentMobile: '',
       currentPage: 1,
       //总条数
       total: 0,
@@ -135,12 +193,14 @@ __webpack_require__.r(__webpack_exports__);
       loading: false,
       dialogFormVisible: false,
       formLabelWidth: '120px',
-      tableData: [{}],
+      tableData: [],
+      allotStudentData: [],
       create_form: {
         id: '',
         school_id: '',
+        semester_id: '',
+        semester_name: '',
         name: '',
-        max_number: '',
         status: ''
       },
       rules: {
@@ -158,6 +218,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    allot: function allot(semeseterName, className, classId) {
+      this.allotWindow = true;
+      this.semesterName = semeseterName;
+      this.className = className;
+      this.classValue = classId;
+      this.listAllot(this.currentPage, null, this.classValue);
+    },
     listSchoolData: function listSchoolData() {
       var _this = this;
 
@@ -173,22 +240,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     //添加按钮
     add: function add() {
+      this.listSemesterData();
       this.updateStatus = false;
       this.dialogFormVisible = true;
+      this.create_form.semester_id = '';
     },
     //设置改变状态按钮值
     options: function options(row) {
       if (row.status == 1) {
-        return "下线";
+        return "禁用";
       } else {
-        return "上线";
+        return "启用";
       }
     },
     //请求改变状态接口
     changeStatus: function changeStatus(row) {
       var _this2 = this;
 
-      var url = "school/schoolClassroom-status";
+      var url = "school/schoolClass-status";
       this.axios.post(url, {
         'status': row.status,
         'id': row.id
@@ -209,35 +278,65 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       setTimeout(function () {
         _this3.loading = false;
-      }, 500); //加这个句话是为了避免$refs没有被渲染的情况
-
-      if (this.$refs['form'] !== undefined) {
-        this.clearFiles();
-      }
-
+      }, 500);
       this.list(this.currentPage, null, this.schoolValue);
+    },
+    //设置刷新按钮
+    refreshAllot: function refreshAllot() {
+      var _this4 = this;
+
+      this.loading = true;
+      setTimeout(function () {
+        _this4.loading = false;
+      }, 500);
+      this.listAllot(this.currentPage, null, this.classValue);
     },
     //请求list接口
     list: function list(currentPage) {
-      var _this4 = this;
+      var _this5 = this;
 
       var pageSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var schoolId = arguments.length > 2 ? arguments[2] : undefined;
 
       if (pageSize) {
-        var url = "school/schoolClassroom-list?page=" + currentPage + "&searchClassroomName=" + this.searchClassroomName + "&pageSize=" + pageSize + "&school_id=" + schoolId;
+        var url = "school/schoolClass-list?page=" + currentPage + "&searchClassName=" + this.searchClassName + "&pageSize=" + pageSize + "&school_id=" + schoolId;
       } else {
-        var url = "school/schoolClassroom-list?page=" + currentPage + "&searchClassroomName=" + this.searchClassroomName + "&school_id=" + schoolId;
+        var url = "school/schoolClass-list?page=" + currentPage + "&searchClassName=" + this.searchClassName + "&school_id=" + schoolId;
       }
 
       this.axios.get(url).then(function (response) {
-        _this4.currentPage = response.data.current_page;
-        _this4.tableData = response.data.data;
-        _this4.total = response.data.total;
+        _this5.currentPage = response.data.current_page;
+        _this5.tableData = response.data.data;
+        _this5.total = response.data.total;
 
-        _this4.cleanCreateFormData();
+        _this5.cleanCreateFormData();
 
-        console.log(_this4.tableData);
+        console.log(_this5.tableData);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    //该班级已有学员
+    listAllot: function listAllot(currentPage) {
+      var _this6 = this;
+
+      var pageSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var classId = arguments.length > 2 ? arguments[2] : undefined;
+
+      if (pageSize) {
+        var url1 = "school/schoolClassAllot-list?page=" + currentPage + "&searchStudentMobile=" + this.searchStudentMobile + "&pageSize=" + pageSize + "&class_id=" + classId;
+      } else {
+        var url1 = "school/schoolClassAllot-list?page=" + currentPage + "&searchStudentMobile=" + this.searchStudentMobile + "&class_id=" + classId;
+      }
+
+      this.axios.get(url1).then(function (response) {
+        _this6.currentPage = response.data.current_page;
+        _this6.allotStudentData = response.data.data;
+        _this6.total = response.data.total;
+
+        _this6.cleanCreateFormData();
+
+        console.log(_this6.tableData);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -251,9 +350,9 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       if (status == 1) {
-        this.$set(data, 'message', h('p', '下线成功'));
+        this.$set(data, 'message', h('p', '禁用成功'));
       } else if (status == -1) {
-        this.$set(data, 'message', h('p', '上线成功'));
+        this.$set(data, 'message', h('p', '启用成功'));
       } else {
         this.$set(data, 'message', h('p', '删除成功'));
       }
@@ -262,24 +361,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     //请求课程创建接口
     submitForm: function submitForm(formName) {
-      var _this5 = this;
+      var _this7 = this;
 
       this.$refs[formName].validate(function (valid) {
         if (valid) {
-          if (_this5.updateStatus) {
-            var url = 'school/schoolClassroom-update';
+          if (_this7.updateStatus) {
+            var url = 'school/schoolClass-update';
 
-            _this5.axios.post(url, {
-              id: _this5.create_form.id,
-              school_id: _this5.schoolValue,
-              name: _this5.create_form.name,
-              max_number: _this5.create_form.max_number
+            _this7.axios.post(url, {
+              id: _this7.create_form.id,
+              school_id: _this7.schoolValue,
+              name: _this7.create_form.name,
+              operate_id: _this7.operate_id
             }).then(function (response) {
-              _this5.$refs[formName].resetFields();
+              _this7.$refs[formName].resetFields();
 
-              _this5.dialogFormVisible = false;
+              _this7.dialogFormVisible = false;
 
-              _this5.list(_this5.currentPage, null, _this5.schoolValue);
+              _this7.list(_this7.currentPage, null, _this7.schoolValue);
 
               Object(element_ui__WEBPACK_IMPORTED_MODULE_0__["Notification"])({
                 title: '信息提示',
@@ -293,7 +392,7 @@ __webpack_require__.r(__webpack_exports__);
               if (mes['name']) {
                 Object(element_ui__WEBPACK_IMPORTED_MODULE_0__["Notification"])({
                   title: '验证错误',
-                  message: '课程名不能重复',
+                  message: '班级名不能重复',
                   type: "error",
                   duration: 2000
                 });
@@ -308,20 +407,21 @@ __webpack_require__.r(__webpack_exports__);
             });
 
             console.log('----------------');
-            console.log(_this5.updateStatus);
+            console.log(_this7.updateStatus);
           } else {
-            var _url = 'school/schoolClassroom-create';
+            var _url = 'school/schoolClass-create';
 
-            _this5.axios.post(_url, {
-              school_id: _this5.schoolValue,
-              name: _this5.create_form.name,
-              max_number: _this5.create_form.max_number
+            _this7.axios.post(_url, {
+              school_id: _this7.schoolValue,
+              name: _this7.create_form.name,
+              semester_id: _this7.create_form.semester_id,
+              operate_id: _this7.operate_id
             }).then(function (response) {
-              _this5.$refs[formName].resetFields();
+              _this7.$refs[formName].resetFields();
 
-              _this5.dialogFormVisible = false;
+              _this7.dialogFormVisible = false;
 
-              _this5.list(_this5.currentPage, null, _this5.schoolValue);
+              _this7.list(_this7.currentPage, null, _this7.schoolValue);
 
               Object(element_ui__WEBPACK_IMPORTED_MODULE_0__["Notification"])({
                 title: '信息提示',
@@ -335,7 +435,7 @@ __webpack_require__.r(__webpack_exports__);
               if (mes['name']) {
                 Object(element_ui__WEBPACK_IMPORTED_MODULE_0__["Notification"])({
                   title: '验证错误',
-                  message: '课程名不能重复',
+                  message: '班级名不能重复',
                   type: "error",
                   duration: 2000
                 });
@@ -369,28 +469,29 @@ __webpack_require__.r(__webpack_exports__);
     },
     //课程信息详情
     Deatil: function Deatil(id) {
-      var _this6 = this;
+      var _this8 = this;
 
-      var url = 'school/schoolClassroom-detail';
+      var url = 'school/schoolClass-detail';
       this.axios.post(url, {
         id: id
       }).then(function (response) {
-        _this6.dialogFormVisible = true;
-        _this6.create_form = response.data;
-        _this6.updateStatus = true;
-        console.log(_this6.create_form);
+        _this8.dialogFormVisible = true;
+        _this8.create_form = response.data;
+        _this8.updateStatus = true;
+        console.log(_this8.create_form);
       })["catch"](function (error) {
-        alert('错误');
-      });
+        alert('错误1');
+      }); //请求对应学习下的所以学期
+
+      this.listSemesterData();
+      this.semesterDisable = true;
     },
     //清空表单值
     cleanCreateFormData: function cleanCreateFormData() {
       this.create_form.name = '';
-      this.create_form.max_number = '';
+      this.create_form.semester_name = '';
       this.create_form.status = '';
-    },
-    clearFiles: function clearFiles() {
-      this.$refs['myUpload'].clearFiles();
+      this.semesterDisable = false;
     },
     page: function page(value) {
       this.list(value, null, this.schoolValue);
@@ -406,15 +507,15 @@ __webpack_require__.r(__webpack_exports__);
       this.list(this.currentPage, value, this.schoolValue);
     },
     Delete: function Delete(row) {
-      var _this7 = this;
+      var _this9 = this;
 
-      var url = "school/schoolClassroom-delete";
+      var url = "school/schoolClass-delete";
       this.axios.post(url, {
         'id': row.id
       }).then(function (response) {
-        _this7.open1(0);
+        _this9.open1(0);
 
-        _this7.list(_this7.currentPage, null, _this7.schoolValue);
+        _this9.list(_this9.currentPage, null, _this9.schoolValue);
 
         console.log(response);
       })["catch"](function (error) {
@@ -425,19 +526,43 @@ __webpack_require__.r(__webpack_exports__);
       console.log(value);
       this.currentPage = 1;
       this.list(this.currentPage, null, this.schoolValue);
+    },
+    changeSemesterId: function changeSemesterId(value) {
+      this.semesterValue = value;
+    },
+    listSemesterData: function listSemesterData() {
+      var _this10 = this;
+
+      var url_semester = 'school/get-semester-list';
+      this.axios.post(url_semester, {
+        school_id: this.schoolValue
+      }).then(function (response) {
+        _this10.semesterData = response.data;
+        _this10.semesterValue = _this10.schoolData[0]['id'];
+        console.log(_this10.semesterData);
+      })["catch"](function (error) {
+        alert('错误2');
+      });
     }
   },
   created: function created() {
     this.listSchoolData();
+  },
+  filters: {
+    nameFileter: function nameFileter(value) {
+      if (value) {
+        return value.substr(0, 1);
+      }
+    }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -446,22 +571,22 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.semester-wrap[data-v-3e6a53c3] {\n    flex: 1;\n    display: flex;\n    overflow: auto;\n}\n.form-search[data-v-3e6a53c3] {\n    display: flex;\n}\n.search[data-v-3e6a53c3] {\n    width: 300px;\n    margin-right: 10px;\n}\n.el-form-item[data-v-3e6a53c3] {\n    margin-left: 20px;\n}\na[data-v-3e6a53c3] {\n    color: #3490dc !important;\n}\n.avatar-uploader .el-upload[data-v-3e6a53c3] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-3e6a53c3]:hover {\n    border-color: #409EFF;\n}\n.avatar-uploader-icon[data-v-3e6a53c3] {\n    background-color: rgb(250, 250, 250);\n    font-size: 28px;\n    color: #8c939d;\n    width: 128px;\n    height: 128px;\n    line-height: 128px;\n    text-align: center;\n    border: 1px dashed #d9d9d9;\n}\n.avatar[data-v-3e6a53c3] {\n    background-color: rgb(250, 250, 250);\n    border: 1px dashed #d9d9d9;\n    padding: 10px;\n    width: 128px;\n    height: 128px;\n    display: block;\n}\n", ""]);
+exports.push([module.i, "\n.semester-wrap[data-v-39888336] {\n    flex: 1;\n    display: flex;\n    overflow: auto;\n}\n.form-search[data-v-39888336] {\n    display: flex;\n}\n.search[data-v-39888336] {\n    width: 300px;\n    margin-right: 10px;\n}\n.el-form-item[data-v-39888336] {\n    margin-left: 20px;\n}\na[data-v-39888336] {\n    color: #3490dc !important;\n}\n.avatar-uploader .el-upload[data-v-39888336] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-39888336]:hover {\n    border-color: #409EFF;\n}\n.avatar-uploader-icon[data-v-39888336] {\n    background-color: rgb(250, 250, 250);\n    font-size: 28px;\n    color: #8c939d;\n    width: 128px;\n    height: 128px;\n    line-height: 128px;\n    text-align: center;\n    border: 1px dashed #d9d9d9;\n}\n.avatar[data-v-39888336] {\n    background-color: rgb(250, 250, 250);\n    border: 1px dashed #d9d9d9;\n    padding: 10px;\n    width: 128px;\n    height: 128px;\n    display: block;\n}\n.table-item[data-v-39888336] {\n    background-color: rgb(247, 249, 250);\n    width: 350px;\n    height: 200px;\n    margin: 10px;\n    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)\n}\n.item-avatar[data-v-39888336] {\n    position: relative;\n    border-radius: 100%;\n    top: 8%;\n    left: 10%;\n    width: 80px;\n    height: 80px;\n    background-color: rgb(212, 164, 235);\n    font-size: 30px;\n    text-align: center;\n    display: inline-block;\n    line-height: 75px;\n    color: white;\n    font-weight: bold;\n}\n.item-class_name[data-v-39888336] {\n    position: relative;\n    top: -20%;\n    font-size: 20px;\n    left: 50%;\n}\n.item-semester_name[data-v-39888336] {\n    position: relative;\n    left: 50%;\n    top: -10%;\n    font-size: 15px;\n}\n.item-count[data-v-39888336] {\n    position: relative;\n    top: 10%;\n    left: 10%;\n    letter-spacing: 1px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css&");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -483,10 +608,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Classroom.vue?vue&type=template&id=3e6a53c3&scoped=true&":
-/*!*******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/School/Classroom.vue?vue&type=template&id=3e6a53c3&scoped=true& ***!
-  \*******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Allot.vue?vue&type=template&id=39888336&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/School/Allot.vue?vue&type=template&id=39888336&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -561,11 +686,11 @@ var render = function() {
                                 }
                               },
                               model: {
-                                value: _vm.searchClassroomName,
+                                value: _vm.searchClassName,
                                 callback: function($$v) {
-                                  _vm.searchClassroomName = $$v
+                                  _vm.searchClassName = $$v
                                 },
-                                expression: "searchClassroomName"
+                                expression: "searchClassName"
                               }
                             },
                             [
@@ -583,29 +708,6 @@ var render = function() {
                               })
                             ],
                             1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-col",
-                        {
-                          staticStyle: { "margin-top": "10px" },
-                          attrs: { span: 2 }
-                        },
-                        [
-                          _c(
-                            "el-button",
-                            {
-                              attrs: {
-                                type: "primary",
-                                size: "small",
-                                icon: "el-icon-plus"
-                              },
-                              on: { click: _vm.add }
-                            },
-                            [_vm._v("添加\n                    ")]
                           )
                         ],
                         1
@@ -654,153 +756,303 @@ var render = function() {
                 "div",
                 { staticClass: "table-main" },
                 [
-                  _c(
-                    "el-table",
-                    {
-                      directives: [
-                        {
-                          name: "loading",
-                          rawName: "v-loading",
-                          value: _vm.loading,
-                          expression: "loading"
+                  _vm._l(_vm.tableData, function(item) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass: "table-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.allot(
+                              item.semester_name,
+                              item.name,
+                              item.id
+                            )
+                          }
                         }
-                      ],
-                      staticStyle: { width: "100%" },
-                      attrs: { data: _vm.tableData, border: "", stripe: "" }
+                      },
+                      [
+                        _c("div", { staticClass: "item-avatar" }, [
+                          _c("span", [
+                            _vm._v(_vm._s(_vm._f("nameFileter")(item.name)))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "item-class_name" }, [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(item.name) +
+                              "\n                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "item-semester_name" }, [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(item.semester_name) +
+                              "\n                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "item-count" }, [
+                          _c("span", [_vm._v("学员" + _vm._s(item.id) + "人")])
+                        ])
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "el-drawer",
+                    {
+                      attrs: {
+                        title: "分班管理",
+                        visible: _vm.allotWindow,
+                        direction: "rtl",
+                        size: "70%",
+                        "with-header": false
+                      },
+                      on: {
+                        "update:visible": function($event) {
+                          _vm.allotWindow = $event
+                        }
+                      }
                     },
                     [
-                      _c("el-table-column", {
-                        attrs: {
-                          type: "index",
-                          index: _vm.indexMethod,
-                          width: "50"
-                        }
-                      }),
+                      _c(
+                        "div",
+                        {
+                          staticStyle: { "font-size": "25px", margin: "20px" }
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.semesterName) +
+                              "-" +
+                              _vm._s(_vm.className)
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { prop: "name", label: "名称" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(scope) {
-                                return [
+                      _c(
+                        "div",
+                        { staticClass: "search-main" },
+                        [
+                          _c(
+                            "el-row",
+                            { staticClass: "elRow" },
+                            [
+                              _c(
+                                "el-col",
+                                {
+                                  staticStyle: { margin: "10px 10px 0 10px" },
+                                  attrs: { span: 7 }
+                                },
+                                [
                                   _c(
-                                    "a",
+                                    "el-input",
                                     {
+                                      attrs: {
+                                        placeholder: "请输入内容",
+                                        size: "small",
+                                        clearable: ""
+                                      },
                                       on: {
-                                        click: function($event) {
-                                          return _vm.Deatil(scope.row.id)
+                                        clear: function($event) {
+                                          return _vm.listAllot(
+                                            1,
+                                            null,
+                                            _vm.schoolValue
+                                          )
                                         }
+                                      },
+                                      model: {
+                                        value: _vm.searchStudentMobile,
+                                        callback: function($$v) {
+                                          _vm.searchStudentMobile = $$v
+                                        },
+                                        expression: "searchStudentMobile"
                                       }
                                     },
                                     [
-                                      _vm._v(
-                                        _vm._s(scope.row.name) +
-                                          "\n                        "
-                                      )
-                                    ]
+                                      _c("el-button", {
+                                        attrs: {
+                                          slot: "append",
+                                          icon: "el-icon-search"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.listAllot(
+                                              1,
+                                              null,
+                                              _vm.schoolValue
+                                            )
+                                          }
+                                        },
+                                        slot: "append"
+                                      })
+                                    ],
+                                    1
                                   )
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          3339927052
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { prop: "school_name", label: "学校" }
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { prop: "max_number", label: "容纳人数" }
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { prop: "status", label: "状态" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(scope) {
-                                return [
-                                  scope.row.status === 1
-                                    ? _c("span", [_vm._v("启用")])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  scope.row.status === -1
-                                    ? _c(
-                                        "span",
-                                        { staticStyle: { color: "red" } },
-                                        [_vm._v("禁用")]
-                                      )
-                                    : _vm._e()
-                                ]
-                              }
-                            }
-                          ],
-                          null,
-                          false,
-                          3926852030
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("el-table-column", {
-                        attrs: { label: "操作" },
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "default",
-                              fn: function(scope) {
-                                return [
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-col",
+                                {
+                                  staticStyle: { "margin-top": "10px" },
+                                  attrs: { span: 2 }
+                                },
+                                [
                                   _c(
                                     "el-button",
                                     {
-                                      attrs: { type: "success", size: "mini" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.changeStatus(scope.row)
-                                        }
-                                      }
+                                      attrs: {
+                                        type: "primary",
+                                        size: "small",
+                                        icon: "el-icon-plus"
+                                      },
+                                      on: { click: _vm.add }
                                     },
                                     [
                                       _vm._v(
-                                        "\n                            " +
-                                          _vm._s(_vm.options(scope.row)) +
-                                          "\n                        "
+                                        "添加\n                                "
                                       )
                                     ]
-                                  ),
-                                  _vm._v(" "),
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "el-col",
+                                {
+                                  staticStyle: { "margin-top": "10px" },
+                                  attrs: { span: 1 }
+                                },
+                                [
                                   _c(
                                     "el-button",
                                     {
-                                      attrs: { type: "danger", size: "mini" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.Delete(scope.row)
-                                        }
-                                      }
+                                      attrs: { type: "primary", size: "small" },
+                                      on: { click: _vm.refreshAllot }
                                     },
-                                    [_vm._v("删除\n                        ")]
+                                    [
+                                      _c("i", {
+                                        staticClass: "el-icon-refresh"
+                                      })
+                                    ]
                                   )
-                                ]
-                              }
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("el-pagination", {
+                            staticStyle: { "margin-right": "10px" },
+                            attrs: {
+                              "page-sizes": [15, 30, 40, 50],
+                              layout: "total, sizes, prev, pager, next, jumper",
+                              total: this.total,
+                              "current-page": _vm.currentPage
+                            },
+                            on: {
+                              "current-change": _vm.page,
+                              "size-change": _vm.changePageSize
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-table",
+                        {
+                          directives: [
+                            {
+                              name: "loading",
+                              rawName: "v-loading",
+                              value: _vm.loading,
+                              expression: "loading"
                             }
                           ],
-                          null,
-                          false,
-                          1078284807
-                        )
-                      })
+                          staticStyle: { width: "100%", margin: "10px" },
+                          attrs: {
+                            data: _vm.allotStudentData,
+                            border: "",
+                            stripe: ""
+                          }
+                        },
+                        [
+                          _c("el-table-column", {
+                            attrs: {
+                              type: "index",
+                              index: _vm.indexMethod,
+                              width: "50"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: { prop: "student_name", label: "姓名" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: { prop: "student_mobile", label: "手机" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: { prop: "operator_id", label: "操作人" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: { prop: "updated_at", label: "修改时间" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-table-column", {
+                            attrs: { label: "操作" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "default",
+                                  fn: function(scope) {
+                                    return [
+                                      _c(
+                                        "el-button",
+                                        {
+                                          attrs: {
+                                            type: "danger",
+                                            size: "mini"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.Delete(scope.row)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "删除\n                                "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              false,
+                              1833410184
+                            )
+                          })
+                        ],
+                        1
+                      )
                     ],
                     1
                   )
                 ],
-                1
+                2
               )
             ],
             1
@@ -810,7 +1062,7 @@ var render = function() {
             "el-dialog",
             {
               attrs: {
-                title: "添加教室",
+                title: "添加班级",
                 visible: _vm.dialogFormVisible,
                 width: "800px",
                 top: "20px",
@@ -838,7 +1090,7 @@ var render = function() {
                 [
                   _c(
                     "el-form-item",
-                    { attrs: { label: "教室名称:", prop: "name" } },
+                    { attrs: { label: "班级名称:", prop: "name" } },
                     [
                       _c("el-input", {
                         staticStyle: { width: "200px !important" },
@@ -861,23 +1113,33 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-form-item",
-                    { attrs: { label: "容纳人数:", prop: "number" } },
+                    { attrs: { label: "学期:", prop: "semester_id" } },
                     [
-                      _c("el-input", {
-                        staticStyle: { width: "200px !important" },
-                        attrs: {
-                          autocomplete: "off",
-                          placeholder: "请输入报名名额",
-                          size: "small"
-                        },
-                        model: {
-                          value: _vm.create_form.max_number,
-                          callback: function($$v) {
-                            _vm.$set(_vm.create_form, "max_number", $$v)
+                      _c(
+                        "el-select",
+                        {
+                          attrs: { disabled: _vm.semesterDisable },
+                          on: {
+                            change: function($event) {
+                              return _vm.changeSemesterId(_vm.semesterValue)
+                            }
                           },
-                          expression: "create_form.max_number"
-                        }
-                      })
+                          model: {
+                            value: _vm.create_form.semester_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.create_form, "semester_id", $$v)
+                            },
+                            expression: "create_form.semester_id"
+                          }
+                        },
+                        _vm._l(_vm.semesterData, function(item) {
+                          return _c("el-option", {
+                            key: item.id,
+                            attrs: { label: item.name, value: item.id }
+                          })
+                        }),
+                        1
+                      )
                     ],
                     1
                   )
@@ -935,18 +1197,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/School/Classroom.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/School/Classroom.vue ***!
-  \******************************************************/
+/***/ "./resources/js/components/School/Allot.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/School/Allot.vue ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Classroom_vue_vue_type_template_id_3e6a53c3_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Classroom.vue?vue&type=template&id=3e6a53c3&scoped=true& */ "./resources/js/components/School/Classroom.vue?vue&type=template&id=3e6a53c3&scoped=true&");
-/* harmony import */ var _Classroom_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Classroom.vue?vue&type=script&lang=js& */ "./resources/js/components/School/Classroom.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Classroom_vue_vue_type_style_index_0_id_3e6a53c3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css& */ "./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css&");
+/* harmony import */ var _Allot_vue_vue_type_template_id_39888336_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Allot.vue?vue&type=template&id=39888336&scoped=true& */ "./resources/js/components/School/Allot.vue?vue&type=template&id=39888336&scoped=true&");
+/* harmony import */ var _Allot_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Allot.vue?vue&type=script&lang=js& */ "./resources/js/components/School/Allot.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Allot_vue_vue_type_style_index_0_id_39888336_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css& */ "./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -957,66 +1219,66 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _Classroom_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Classroom_vue_vue_type_template_id_3e6a53c3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Classroom_vue_vue_type_template_id_3e6a53c3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Allot_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Allot_vue_vue_type_template_id_39888336_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Allot_vue_vue_type_template_id_39888336_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "3e6a53c3",
+  "39888336",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/School/Classroom.vue"
+component.options.__file = "resources/js/components/School/Allot.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/School/Classroom.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/School/Classroom.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/components/School/Allot.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/School/Allot.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Classroom.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Classroom.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Allot.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Allot.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css&":
-/*!***************************************************************************************************************!*\
-  !*** ./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css& ***!
-  \***************************************************************************************************************/
+/***/ "./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css& ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_style_index_0_id_3e6a53c3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Classroom.vue?vue&type=style&index=0&id=3e6a53c3&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_style_index_0_id_3e6a53c3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_style_index_0_id_3e6a53c3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_style_index_0_id_3e6a53c3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_style_index_0_id_3e6a53c3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_style_index_0_id_39888336_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Allot.vue?vue&type=style&index=0&id=39888336&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_style_index_0_id_39888336_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_style_index_0_id_39888336_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_style_index_0_id_39888336_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_style_index_0_id_39888336_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ "./resources/js/components/School/Classroom.vue?vue&type=template&id=3e6a53c3&scoped=true&":
-/*!*************************************************************************************************!*\
-  !*** ./resources/js/components/School/Classroom.vue?vue&type=template&id=3e6a53c3&scoped=true& ***!
-  \*************************************************************************************************/
+/***/ "./resources/js/components/School/Allot.vue?vue&type=template&id=39888336&scoped=true&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/School/Allot.vue?vue&type=template&id=39888336&scoped=true& ***!
+  \*********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_template_id_3e6a53c3_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Classroom.vue?vue&type=template&id=3e6a53c3&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Classroom.vue?vue&type=template&id=3e6a53c3&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_template_id_3e6a53c3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_template_id_39888336_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Allot.vue?vue&type=template&id=39888336&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/School/Allot.vue?vue&type=template&id=39888336&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_template_id_39888336_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Classroom_vue_vue_type_template_id_3e6a53c3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Allot_vue_vue_type_template_id_39888336_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

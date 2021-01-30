@@ -95,8 +95,8 @@
                               style="width: 200px !important;" placeholder="请输入教室名称" size="small">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="容纳人数:" prop="semester_id">
-                    <el-select v-model="create_form.semester_id" @change="changeSemesterId(semesterValue)">
+                <el-form-item label="学期:" prop="semester_id">
+                    <el-select v-model="create_form.semester_id" :disabled="semesterDisable" @change="changeSemesterId(semesterValue)">
                         <el-option
                             v-for="item in semesterData"
                             :key="item.id"
@@ -121,6 +121,7 @@
         name: "Class",
         data() {
             return {
+                semesterDisable: false,
                 semesterData: '',
                 semesterValue: '',
                 operate_id: window.postId,
@@ -168,8 +169,10 @@
             },
             //添加按钮
             add() {
+                this.listSemesterData();
                 this.updateStatus = false;
                 this.dialogFormVisible = true;
+                this.create_form.semester_id = ''
             },
             //设置改变状态按钮值
             options(row) {
@@ -199,10 +202,6 @@
                 setTimeout(() => {
                     this.loading = false
                 }, 500);
-                //加这个句话是为了避免$refs没有被渲染的情况
-                if (this.$refs['form'] !== undefined) {
-                    this.clearFiles()
-                }
                 this.list(this.currentPage, null, this.schoolValue)
             },
             //请求list接口
@@ -230,9 +229,9 @@
                     type: 'success',
                 }
                 if (status == 1) {
-                    this.$set(data, 'message', h('p', '下线成功'))
+                    this.$set(data, 'message', h('p', '禁用成功'))
                 } else if (status == -1) {
-                    this.$set(data, 'message', h('p', '上线成功'))
+                    this.$set(data, 'message', h('p', '启用成功'))
                 } else {
                     this.$set(data, 'message', h('p', '删除成功'))
                 }
@@ -244,12 +243,12 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         if (this.updateStatus) {
-                            let url = 'school/schoolClassroom-update'
+                            let url = 'school/schoolClass-update'
                             this.axios.post(url, {
                                 id: this.create_form.id,
                                 school_id: this.schoolValue,
                                 name: this.create_form.name,
-                                max_number: this.create_form.max_number,
+                                operate_id:this.operate_id,
                             }).then(response => {
                                 this.$refs[formName].resetFields();
                                 this.dialogFormVisible = false
@@ -265,7 +264,7 @@
                                 if (mes['name']) {
                                     Notification({
                                         title: '验证错误',
-                                        message: '课程名不能重复',
+                                        message: '班级名不能重复',
                                         type: "error",
                                         duration: 2000
                                     });
@@ -281,11 +280,12 @@
                             console.log('----------------')
                             console.log(this.updateStatus)
                         } else {
-                            let url = 'school/schoolClassroom-create'
+                            let url = 'school/schoolClass-create'
                             this.axios.post(url, {
                                 school_id: this.schoolValue,
                                 name: this.create_form.name,
-                                max_number: this.create_form.max_number,
+                                semester_id: this.create_form.semester_id,
+                                operate_id:this.operate_id,
                             }).then(response => {
                                 this.$refs[formName].resetFields();
                                 this.dialogFormVisible = false
@@ -301,7 +301,7 @@
                                 if (mes['name']) {
                                     Notification({
                                         title: '验证错误',
-                                        message: '课程名不能重复',
+                                        message: '班级名不能重复',
                                         type: "error",
                                         duration: 2000
                                     });
@@ -347,26 +347,15 @@
                     alert('错误1')
                 });
                 //请求对应学习下的所以学期
-                let url_semester = 'school/get-semester-list'
-                this.axios.post(url_semester, {
-                    school_id: this.schoolValue,
-                }).then(response => {
-                    this.semesterData = response.data
-                    this.semesterValue = this.schoolData[0]['id'];
-                    console.log(this.semesterData)
-                }).catch(error => {
-                    alert('错误2')
-                });
-
+                this.listSemesterData();
+                this.semesterDisable = true;
             },
             //清空表单值
             cleanCreateFormData() {
                 this.create_form.name = ''
                 this.create_form.semester_name = ''
                 this.create_form.status = ''
-            },
-            clearFiles() {
-                this.$refs['myUpload'].clearFiles();
+                this.semesterDisable = false
             },
             page(value) {
                 this.list(value, null, this.schoolValue);
@@ -382,7 +371,7 @@
                 this.list(this.currentPage, value, this.schoolValue);
             },
             Delete(row) {
-                let url = "school/schoolClassroom-delete"
+                let url = "school/schoolClass-delete"
                 this.axios.post(url, {
                     'id': row.id,
                 }).then(response => {
@@ -400,6 +389,18 @@
             },
             changeSemesterId(value){
                 this.semesterValue = value
+            },
+            listSemesterData(){
+                let url_semester = 'school/get-semester-list'
+                this.axios.post(url_semester, {
+                    school_id: this.schoolValue,
+                }).then(response => {
+                    this.semesterData = response.data
+                    this.semesterValue = this.schoolData[0]['id'];
+                    console.log(this.semesterData)
+                }).catch(error => {
+                    alert('错误2')
+                });
             }
         },
         created() {

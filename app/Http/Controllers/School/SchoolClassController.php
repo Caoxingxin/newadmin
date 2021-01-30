@@ -6,8 +6,10 @@ namespace App\Http\Controllers\School;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\School\Classes;
+use App\Http\Requests\School\SchoolClassRequest;
 use App\Http\Services\Head\SchoolClassServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SchoolClassController extends Controller
 {
@@ -36,12 +38,14 @@ class SchoolClassController extends Controller
         return $ClessData;
     }
 
-    public function create(){
-
+    public function create(SchoolClassRequest $request,SchoolClassServices $services){
+        $data = $request->all();
+        return $services->create($data);
     }
 
-    public function update(){
-
+    public function update(SchoolClassRequest $request,SchoolClassServices $services){
+        $data = $request->all();
+        return $services->update($data);
     }
 
     public function detail(Request $request,SchoolClassServices $services){
@@ -49,12 +53,17 @@ class SchoolClassController extends Controller
         return $services->detail($id);
     }
 
-    public function delete(){
-
+    public function delete(Request $request,SchoolClassServices $services){
+        $id = $request->input('id');
+        return DB::transaction(function () use($id,$services){
+            $services->delete($id);
+        });
     }
 
-    public function status(){
-
+    public function status(Request $request,SchoolClassServices $services){
+        $status = $request->input('status');
+        $id = $request->input('id');
+        return $services->status($status,$id);
     }
 
 }
