@@ -6,6 +6,7 @@ namespace App\Http\Controllers\School;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\School\Classes;
+use App\Http\Models\School\StudentDistribute;
 use App\Http\Requests\School\SchoolClassRequest;
 use App\Http\Services\Head\SchoolClassServices;
 use Illuminate\Http\Request;
@@ -34,7 +35,10 @@ class SchoolClassController extends Controller
                 ->select('class.*','school.name as school_name','semester.name as semester_name')
                 ->paginate($page);
         }
-
+        foreach ($ClessData as $item){
+            $count = StudentDistribute::query()->where('class_id',$item['id'])->count('student_id');
+            $item['count'] = $count;
+        }
         return $ClessData;
     }
 

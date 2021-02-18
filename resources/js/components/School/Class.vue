@@ -63,11 +63,7 @@
                     </el-table-column>
                     <el-table-column prop="school_name" label="学校"></el-table-column>
                     <el-table-column prop="semester_name" label="学期"></el-table-column>
-                    <el-table-column prop="count" label="当前人数">
-                        <template slot-scope="scope">
-                            <span>0</span>
-                        </template>
-                    </el-table-column>
+                    <el-table-column prop="count" label="当前人数"></el-table-column>
                     <el-table-column prop="status" label="状态">
                         <template slot-scope="scope">
                             <span v-if="scope.row.status === 1">启用</span>

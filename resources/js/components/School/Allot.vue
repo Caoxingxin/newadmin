@@ -44,8 +44,7 @@
             </div>
 
             <div class="table-main">
-<!--                <div v-for="item in tableData" class="table-item" @click="Deatil(item.id)">-->
-                <div v-for="item in tableData" class="table-item" @click="allot(item.semester_name,item.name,item.id)">
+                <div v-for="item in tableData" class="table-item" @click="allot(item.semester_name,item.name,item.id,item.semester_id)">
                     <div class="item-avatar">
                         <span>{{ item.name | nameFileter }}</span>
                     </div>
@@ -56,9 +55,10 @@
                         {{ item.semester_name }}
                     </div>
                     <div class="item-count">
-                        <span>学员{{ item.id }}人</span>
+                        <span>学员{{ item.count }}人</span>
                     </div>
                 </div>
+                <!--      这个班级有哪些学生的弹窗          -->
                 <el-drawer
                     title="分班管理"
                     :visible.sync="allotWindow"
@@ -72,9 +72,9 @@
                             <!--搜索框-->
                             <el-col :span="7" style="margin: 10px 10px 0 10px">
                                 <el-input placeholder="请输入内容" size="small" v-model="searchStudentMobile" clearable
-                                          @clear="listAllot(1,null,schoolValue)">
+                                          @clear="listAllot(1,null,classValue)">
                                     <el-button slot="append" icon="el-icon-search"
-                                               @click="listAllot(1,null,schoolValue)"></el-button>
+                                               @click="listAllot(1,null,classValue)"></el-button>
                                 </el-input>
                             </el-col>
                             <!--添加-->
@@ -112,11 +112,11 @@
                         </el-table-column>
                         <el-table-column prop="student_name" label="姓名"></el-table-column>
                         <el-table-column prop="student_mobile" label="手机"></el-table-column>
-                        <el-table-column prop="operator_id" label="操作人"></el-table-column>
+                        <el-table-column prop="admin_name" label="操作人"></el-table-column>
                         <el-table-column prop="updated_at" label="修改时间"></el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <el-button type="danger" size="mini" @click="Delete(scope.row)">删除
+                                <el-button type="danger" size="mini" @click="Remove(scope.row)">移除
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -125,30 +125,65 @@
             </div>
         </el-card>
 
-        <el-dialog title="添加班级" :visible.sync="dialogFormVisible" width="800px" top="20px" :close-on-click-modal="false"
+<!--   学员分班时的弹窗     -->
+        <el-dialog title="添加学员" :visible.sync="dialogFormVisible" width="80%" top="20px" :close-on-click-modal="false"
                    :before-close="handleClose">
-            <el-form ref="form" :rules="rules" :model="create_form" :label-position="labelPosition" label-width="100px">
-                <el-form-item label="班级名称:" prop="name">
-                    <el-input v-model="create_form.name" autocomplete="off"
-                              style="width: 200px !important;" placeholder="请输入教室名称" size="small">
-                    </el-input>
-                </el-form-item>
-                <el-form-item label="学期:" prop="semester_id">
-                    <el-select v-model="create_form.semester_id" :disabled="semesterDisable"
-                               @change="changeSemesterId(semesterValue)">
-                        <el-option
-                            v-for="item in semesterData"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="resetForm('form')">取 消</el-button>
-                <el-button type="primary" @click="submitForm('form')">保 存</el-button>
+            <div class="search-main">
+                <el-row class="elRow">
+                    <!--搜索框-->
+                    <el-col :span="7" style="margin: 10px 10px 0 10px">
+                        <el-input placeholder="请输入内容" size="small" v-model="searchStudentMobile" clearable
+                                  @clear="listNotAllot(1,null,schoolValue,semesterValue)">
+                            <el-button slot="append" icon="el-icon-search"
+                                       @click="listNotAllot(1,null,schoolValue,semesterValue)"></el-button>
+                        </el-input>
+                    </el-col>
+                    <!--添加-->
+                    <el-col :span="2" style="margin-top: 10px">
+                        <el-button type="primary" size="small" @click="distribute" icon="el-icon-plus">批量添加
+                        </el-button>
+                    </el-col>
+                    <el-col :span="1" style="margin-top: 10px;margin-left:20px">
+                        <el-button
+                            type="primary"
+                            size="small"
+                            @click="refreshNotAllot">
+                            <i class="el-icon-refresh"></i>
+                        </el-button>
+                    </el-col>
+                    <!--分页-->
+
+                </el-row>
+                <el-pagination
+                    :page-sizes="[15, 30, 40, 50]"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="this.total"
+                    style="margin-right: 10px"
+                    @current-change="page"
+                    @size-change="changePageSize"
+                    :current-page="currentPage"
+                >
+                </el-pagination>
             </div>
+            <el-table
+                :data="notAllotStudentData"
+                style="width: 100%;margin: 10px" border stripe v-loading="loading"
+                @selection-change="selectStudent"
+            >
+                <el-table-column
+                    type="selection"
+                    width="50">
+                </el-table-column>
+                <el-table-column prop="name" label="姓名"></el-table-column>
+                <el-table-column prop="mobile" label="手机"></el-table-column>
+                <el-table-column prop="status" label="报道状态">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.status === 10" style="color:red">未报到</span>
+                        <span v-if="scope.row.status === 20" style="color:green">已报到</span>
+                        <span v-if="scope.row.status === 30" style="color:yellow" >延期</span>
+                    </template>
+                </el-table-column>
+            </el-table>
         </el-dialog>
     </div>
 </template>
@@ -171,6 +206,7 @@ export default {
             operate_id: window.postId,
             schoolData: '',
             schoolValue: '',
+            studentIds: [],
             index: 1,
             searchClassName: '',
             searchStudentMobile: '',
@@ -184,30 +220,45 @@ export default {
             formLabelWidth: '120px',
             tableData: [],
             allotStudentData:[],
-            create_form: {
-                id: '',
-                school_id: '',
-                semester_id: '',
-                semester_name: '',
-                name: '',
-                status: '',
-            },
-            rules: {
-                name: [
-                    {required: true, message: '请输入名称', trigger: 'blur'},
-                    {min: 2, max: 200, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-                ],
-            },
+            notAllotStudentData:[],
         };
     },
     methods: {
-        allot(semeseterName,className,classId){
+        selectStudent(val){
+            console.log(val)
+            for (var i=0;i<val.length;i++)
+                 this.studentIds[i] = val[i]['student_id']
+        },
+        //添加学员到班级
+        distribute(){
+            console.log( this.studentIds)
+            if (this.studentIds.length == 0){
+                this.open1(-1);
+                return
+            }
+            let url = "school/schoolClassAllot-distribute";
+            this.axios.post(url,{
+                'class_id' : this.classValue,
+                'semester_id' : this.semesterValue,
+                'student_id' : this.studentIds,
+                'admin_id' : window.postId
+            }).then(response =>{
+                this.open1(1);
+                this.listNotAllot(this.currentPage, null,this.schoolValue,this.semesterValue);
+            }).catch(function (error){
+
+            })
+        },
+        //对应班级详情入口
+        allot(semeseterName,className,classId,semesterId){
             this.allotWindow = true
             this.semesterName = semeseterName
+            this.semesterValue = semesterId
             this.className = className
             this.classValue = classId
             this.listAllot(this.currentPage, null, this.classValue)
         },
+        //下拉学校选择
         listSchoolData() {
             let url = "head/headSchool-list?status=1";
             this.axios.get(url).then(response => {
@@ -221,32 +272,10 @@ export default {
         },
         //添加按钮
         add() {
-            this.listSemesterData();
+            // this.listSemesterData();
+            this.listNotAllot(this.currentPage, null,this.schoolValue,this.semesterValue);
             this.updateStatus = false;
             this.dialogFormVisible = true;
-            this.create_form.semester_id = ''
-        },
-        //设置改变状态按钮值
-        options(row) {
-            if (row.status == 1) {
-                return "禁用";
-            } else {
-                return "启用"
-            }
-        },
-        //请求改变状态接口
-        changeStatus(row) {
-            let url = "school/schoolClass-status"
-            this.axios.post(url, {
-                'status': row.status,
-                'id': row.id,
-            }).then(response => {
-                this.open1(row.status);
-                this.list(this.currentPage, null, this.schoolValue);
-                console.log(response);
-            }).catch(function (error) {
-                console.log(error);
-            });
         },
         //设置刷新按钮
         refresh() {
@@ -256,7 +285,7 @@ export default {
             }, 500);
             this.list(this.currentPage, null, this.schoolValue)
         },
-        //设置刷新按钮
+        //设置该班级学员刷新按钮
         refreshAllot() {
             this.loading = true
             setTimeout(() => {
@@ -264,7 +293,15 @@ export default {
             }, 500);
             this.listAllot(this.currentPage, null, this.classValue)
         },
-        //请求list接口
+        //设置未分班学员接口刷新
+        refreshNotAllot(){
+            this.loading = true
+            setTimeout(() => {
+                this.loading = false
+            }, 500);
+            this.listNotAllot(this.currentPage, null, this.schoolValue,this.semesterValue)
+        },
+        //请求班级list接口
         list(currentPage, pageSize = null, schoolId) {
             if (pageSize) {
                 var url = "school/schoolClass-list?page=" + currentPage + "&searchClassName=" + this.searchClassName + "&pageSize=" + pageSize + "&school_id=" + schoolId;
@@ -273,16 +310,19 @@ export default {
             }
             this.axios.get(url).then(response => {
                 this.currentPage = response.data.current_page
-                this.tableData = response.data.data;
+                for (var i=0;i<response.data.data.length;i++)
+                {
+                    if (response.data.data[i]['status'] == -1)
+                        continue
+                    this.tableData[i] = response.data.data[i];
+                }
                 this.total = response.data.total;
-                this.cleanCreateFormData()
-                console.log(this.tableData);
             }).catch(function (error) {
                 console.log(error);
             });
         },
         //该班级已有学员
-        listAllot(currentPage, pageSize = null, classId){
+        listAllot(currentPage, pageSize = null,classId){
             if (pageSize) {
                 var url1 = "school/schoolClassAllot-list?page=" + currentPage + "&searchStudentMobile=" + this.searchStudentMobile + "&pageSize=" + pageSize + "&class_id=" + classId;
             } else {
@@ -292,8 +332,21 @@ export default {
                 this.currentPage = response.data.current_page
                 this.allotStudentData = response.data.data;
                 this.total = response.data.total;
-                this.cleanCreateFormData()
-                console.log(this.tableData);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        //请求未分配班级学员
+        listNotAllot(currentPage, pageSize = null,schoolId,semesterId){
+            if (pageSize) {
+                var url2 = "school/schoolClassAllot-showList?page=" + currentPage + "&searchStudentMobile=" + this.searchStudentMobile + "&pageSize=" + pageSize + "&school_id=" + schoolId + "&semester_id=" + semesterId;
+            } else {
+                var url2 = "school/schoolClassAllot-showList?page=" + currentPage + "&searchStudentMobile=" + this.searchStudentMobile + "&school_id=" + schoolId + "&semester_id=" + semesterId;
+            }
+            this.axios.get(url2).then(response => {
+                this.currentPage = response.data.current_page
+                this.notAllotStudentData = response.data.data;
+                this.total = response.data.total;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -306,133 +359,20 @@ export default {
                 type: 'success',
             }
             if (status == 1) {
-                this.$set(data, 'message', h('p', '禁用成功'))
+                this.$set(data, 'message', h('p', '添加成功'))
             } else if (status == -1) {
-                this.$set(data, 'message', h('p', '启用成功'))
+                this.$set(data, 'message', h('p', '请选择学生'))
             } else {
                 this.$set(data, 'message', h('p', '删除成功'))
             }
 
             this.$notify(data);
         },
-        //请求课程创建接口
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    if (this.updateStatus) {
-                        let url = 'school/schoolClass-update'
-                        this.axios.post(url, {
-                            id: this.create_form.id,
-                            school_id: this.schoolValue,
-                            name: this.create_form.name,
-                            operate_id: this.operate_id,
-                        }).then(response => {
-                            this.$refs[formName].resetFields();
-                            this.dialogFormVisible = false
-                            this.list(this.currentPage, null, this.schoolValue)
-                            Notification({
-                                title: '信息提示',
-                                message: '修改成功',
-                                type: "success",
-                                duration: 1000
-                            });
-                        }).catch(error => {
-                            let mes = error.response.data['data'];
-                            if (mes['name']) {
-                                Notification({
-                                    title: '验证错误',
-                                    message: '班级名不能重复',
-                                    type: "error",
-                                    duration: 2000
-                                });
-                            } else {
-                                Notification({
-                                    title: '验证错误',
-                                    message: mes,
-                                    type: "error",
-                                    duration: 2000
-                                });
-                            }
-                        });
-                        console.log('----------------')
-                        console.log(this.updateStatus)
-                    } else {
-                        let url = 'school/schoolClass-create'
-                        this.axios.post(url, {
-                            school_id: this.schoolValue,
-                            name: this.create_form.name,
-                            semester_id: this.create_form.semester_id,
-                            operate_id: this.operate_id,
-                        }).then(response => {
-                            this.$refs[formName].resetFields();
-                            this.dialogFormVisible = false
-                            this.list(this.currentPage, null, this.schoolValue)
-                            Notification({
-                                title: '信息提示',
-                                message: '添加成功',
-                                type: "success",
-                                duration: 1000
-                            });
-                        }).catch(error => {
-                            let mes = error.response.data['data'];
-                            if (mes['name']) {
-                                Notification({
-                                    title: '验证错误',
-                                    message: '班级名不能重复',
-                                    type: "error",
-                                    duration: 2000
-                                });
-                            } else {
-                                Notification({
-                                    title: '验证错误',
-                                    message: mes,
-                                    type: "error",
-                                    duration: 2000
-                                });
-                            }
-                        });
-                    }
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
-        },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
-            this.cleanCreateFormData()
-            this.dialogFormVisible = false
-            this.refresh()
-        },
         handleClose(done) {
             done();
-            this.$refs['form'].resetFields();
-            this.cleanCreateFormData()
             this.refresh()
-        },
-        //课程信息详情
-        Deatil(id) {
-            let url = 'school/schoolClass-detail'
-            this.axios.post(url, {
-                id: id,
-            }).then(response => {
-                this.dialogFormVisible = true
-                this.create_form = response.data
-                this.updateStatus = true
-                console.log(this.create_form)
-            }).catch(error => {
-                alert('错误1')
-            });
-            //请求对应学习下的所以学期
-            this.listSemesterData();
-            this.semesterDisable = true;
-        },
-        //清空表单值
-        cleanCreateFormData() {
-            this.create_form.name = ''
-            this.create_form.semester_name = ''
-            this.create_form.status = ''
-            this.semesterDisable = false
+            this.refreshAllot()
+            this.refreshNotAllot()
         },
         page(value) {
             this.list(value, null, this.schoolValue);
@@ -447,38 +387,26 @@ export default {
         changePageSize(value) {
             this.list(this.currentPage, value, this.schoolValue);
         },
-        Delete(row) {
-            let url = "school/schoolClass-delete"
+        //移除该班级学生
+        Remove(row) {
+            let url = "school/schoolClassAllot-remove"
             this.axios.post(url, {
-                'id': row.id,
+                'class_id': this.classValue,
+                'student_id' : row.student_id,
+                'semester_id' : this.semesterValue
             }).then(response => {
                 this.open1(0);
-                this.list(this.currentPage, null, this.schoolValue);
-                console.log(response);
+                this.listAllot(this.currentPage, null, this.classValue);
             }).catch(function (error) {
                 console.log(error);
             });
         },
+        //切换学校
         changeSchoolId(value) {
             console.log(value);
             this.currentPage = 1
             this.list(this.currentPage, null, this.schoolValue);
         },
-        changeSemesterId(value) {
-            this.semesterValue = value
-        },
-        listSemesterData() {
-            let url_semester = 'school/get-semester-list'
-            this.axios.post(url_semester, {
-                school_id: this.schoolValue,
-            }).then(response => {
-                this.semesterData = response.data
-                this.semesterValue = this.schoolData[0]['id'];
-                console.log(this.semesterData)
-            }).catch(error => {
-                alert('错误2')
-            });
-        }
     },
     created() {
         this.listSchoolData();
@@ -489,7 +417,6 @@ export default {
                 return value.substr(0, 1)
             }
         },
-
     }
 
 }

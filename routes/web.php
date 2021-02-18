@@ -103,7 +103,7 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
 
     //班级分班
     Route::get('/schoolClassAllot-list','StudentDistributeController@list')->name('list');
-    Route::post('/schoolClassAllot-distribute','StudentDistributeController@status')->name('distribute');
-    Route::post('/schoolClassAllot-remove','StudentDistributeController@create')->name('remove');
-    Route::post('/schoolClassAllot-showList','StudentDistributeController@showList')->name('showList');
+    Route::post('/schoolClassAllot-distribute','StudentDistributeController@distribute')->name('distribute');
+    Route::post('/schoolClassAllot-remove','StudentDistributeController@remove')->name('remove');
+    Route::get('/schoolClassAllot-showList','StudentDistributeController@showList')->name('showList');
 });
