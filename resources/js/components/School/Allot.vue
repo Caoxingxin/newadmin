@@ -310,12 +310,17 @@ export default {
             }
             this.axios.get(url).then(response => {
                 this.currentPage = response.data.current_page
-                for (var i=0;i<response.data.data.length;i++)
+                for (var i=0,j=0;i<response.data.data.length;i++)
                 {
-                    if (response.data.data[i]['status'] == -1)
-                        continue
-                    this.tableData[i] = response.data.data[i];
+                    if (response.data.data[i]['status'] == -1){
+                        continue;
+                    }
+                    else {
+                        this.tableData[j++] = response.data.data[i];
+                    }
+
                 }
+                console.log(this.tableData)
                 this.total = response.data.total;
             }).catch(function (error) {
                 console.log(error);
