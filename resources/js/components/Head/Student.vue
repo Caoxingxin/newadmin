@@ -1,15 +1,6 @@
 <template>
     <div class="student-wrap">
         <el-card>
-            <el-select v-model="schoolValue" @change="changeSchoolId(schoolValue)">
-                <el-option
-                    v-for="item in schoolData"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                >
-                </el-option>
-            </el-select>
             <div class="search-main">
                 <el-row class="elRow">
                     <!--搜索框-->

@@ -303,6 +303,7 @@ export default {
         },
         //请求班级list接口
         list(currentPage, pageSize = null, schoolId) {
+            this.tableData = [];
             if (pageSize) {
                 var url = "school/schoolClass-list?page=" + currentPage + "&searchClassName=" + this.searchClassName + "&pageSize=" + pageSize + "&school_id=" + schoolId;
             } else {

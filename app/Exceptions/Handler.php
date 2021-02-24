@@ -46,6 +46,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        //如果 Content-Type 不是 application/json，呈现框架的错误页面
+        if ($request->getContentType() && $request->getContentType() != 'json') {
+            return parent::render($request, $exception);
+        }
+            $e = $this->prepareException($exception);
+
+        if ($e instanceof CommonException) {  //业务错误
+            return $e->getResponse();
+        }
+
+
     }
 }

@@ -55,4 +55,16 @@ class SchoolStudentController extends Controller
         $id = $request->input('id');
         return $services->detail($id);
     }
+
+    public function getList(Request $request){
+        $mobile = $request->input('mobile');
+        $data = Student::query()->where('mobile',$mobile)->first();
+        if ($data)
+        {
+            return $data;
+        }
+        else{
+            return null;
+        }
+    }
 }

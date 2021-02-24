@@ -34,6 +34,8 @@ Route::group(['namespace' => 'Admin' , 'prefix' => 'admin' ,],function (){
         Route::get('/','HomeController@index');
     });
 
+    Route::get('/get-admin-list','HomeController@getList')->name('get-list');
+
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -83,6 +85,8 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
     Route::post('/schoolStudent-update','SchoolStudentController@update')->name('update');
     Route::post('/schoolStudent-create','SchoolStudentController@create')->name('create');
 
+    Route::post('/get-student-list','SchoolStudentController@getList')->name('get-list');
+
     //教室
     Route::get('/schoolClassroom-list','SchoolClassroomController@list')->name('list');
     Route::post('/schoolClassroom-status','SchoolClassroomController@status')->name('status');
@@ -106,4 +110,21 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
     Route::post('/schoolClassAllot-distribute','StudentDistributeController@distribute')->name('distribute');
     Route::post('/schoolClassAllot-remove','StudentDistributeController@remove')->name('remove');
     Route::get('/schoolClassAllot-showList','StudentDistributeController@showList')->name('showList');
+
+    //学员报名
+    Route::get('/schoolStudentRegister-list','StudentRegisterController@list')->name('list');
+    Route::post('/schoolStudentRegister-create','StudentRegisterController@create')->name('create');
+    Route::post('/schoolStudentRegister-detail','StudentRegisterController@detail')->name('detail');
+    Route::post('/schoolStudentRegister-report','StudentRegisterController@report')->name('report');
+    Route::post('/schoolStudentRegister-postpone','StudentRegisterController@postpone')->name('postpone');
+    Route::post('/schoolStudentRegister-cancelRegister','StudentRegisterController@cancelRegister')->name('cancelRegister');
+
+    //订单管理
+    Route::get('/schoolOrder-list','OrderController@list')->name('list');
+    Route::post('/schoolOrder-create','OrderController@create')->name('create');
+    Route::post('/schoolOrder-detail','OrderController@detail')->name('detail');
+
+    //付款记录
+    Route::get('/schoolPaymentOrder-list','PaymentOrderController@list')->name('list');
+
 });

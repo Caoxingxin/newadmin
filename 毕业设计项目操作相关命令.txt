@@ -1,0 +1,14 @@
+https://github.com/YuchenJx/fucking-algorithm 学习网站
+http://www.ruanyifeng.com/blog/   扩展网站
+
+php -S 0.0.0.0:3600 -t public   启动php服务
+然后 npm run watch 启动vue
+
+创建软连接，上传图片并且前端能访问
+php artisan storage:link 
+
+创建自定义异常类
+php artisan make:exception CommonException
+
+运用echarts.js 图表
+1.npm install echarts --save 或者 npm install echarts@4.9.0（推荐）

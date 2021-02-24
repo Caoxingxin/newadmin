@@ -5,7 +5,7 @@
                 <el-row class="elRow">
                     <!--搜索框-->
                     <el-col :span="7">
-                        <el-input placeholder="请输入内容" size="small" v-model="searchCourseName" clearable @clear="list(1)">
+                        <el-input placeholder="请输入内容" size="small" v-model="searchTeacherMobile" clearable @clear="list(1)">
                             <el-button slot="append" icon="el-icon-search" @click="list(1)"></el-button>
                         </el-input>
                     </el-col>
@@ -158,7 +158,7 @@ export default {
             loading: false,
             dialogFormVisible: false,
             formLabelWidth: '120px',
-            tableData: '',
+            tableData: [],
             create_form: {
                 id: '',
                 name: '',
