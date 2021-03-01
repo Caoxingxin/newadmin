@@ -885,9 +885,9 @@ export default {
                 this.dialogOrderFormVisible =false
                 this.Deatil(this.studentRegisterValue);
                 Notification({
-                    title: '错误提示',
+                    title: '提示',
                     message: '付款成功',
-                    type: "error",
+                    type: "success",
                     duration: 2000
                 });
             }).catch(error => {

@@ -57,4 +57,9 @@ class HeadTeacherController extends Controller
         //dd($status,$id,$full_time);
         return $services->status($status,$id,$full_time);
     }
+
+    public function getList(){
+        return Teacher::query()->get();
+    }
+
 }

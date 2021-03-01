@@ -37,7 +37,8 @@ class SchoolStudentRegisterServices
                 'gender' => $data['gender'],
                 'status' => StudentStauts::ORDINARY
             ];
-            if ($studentData){
+            if ($studentData ){
+                $school_student = Student_School::query()->where('student_id',$studentData['id'])->where('school_id',$data['school_id'])->first();
                 $data['student_id'] = $studentData['id'];
                 $studentRegisterData = StudentRegister::query()
                     ->where('student_id',$studentData['id'])
@@ -48,6 +49,9 @@ class SchoolStudentRegisterServices
                     throw new CommonException('Has enrolled for the semester');
                 }
                 $studentData->update($memberData);
+                if (!$school_student){
+                    Student_School::query()->create(['school_id' => $data['school_id'],'student_id'=>$studentData['id']]);
+                }
             }
             else{
                 $newStudentData = Student::query()->create($memberData);

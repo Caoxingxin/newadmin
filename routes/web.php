@@ -56,6 +56,8 @@ Route::group(['namespace' => 'Head' , 'prefix' => 'head' ,],function (){
     Route::post('/headCourse-status','HeadCourseController@status')->name('status');
     Route::post('headCourse-delete','HeadCourseController@delete')->name('delete');
 
+    Route::get('/get-course-list','HeadCourseController@getList')->name('get-list');
+
     //学生
     Route::get('/headStudent-list','HeadStudentController@list')->name('list');
     Route::post('/headStudent-detail','HeadStudentController@detail')->name('detail');
@@ -68,6 +70,8 @@ Route::group(['namespace' => 'Head' , 'prefix' => 'head' ,],function (){
     Route::post('/headTeacher-create','HeadTeacherController@create')->name('create');
     Route::post('/headTeacher-delete','HeadTeacherController@delete')->name('delete');
     Route::post('/headTeacher-status','HeadTeacherController@status')->name('status');
+
+    Route::get('/get-teacher-list','HeadTeacherController@getList')->name('get-list');
 });
 
 Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
@@ -95,6 +99,8 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
     Route::post('/schoolClassroom-update','SchoolClassroomController@update')->name('update');
     Route::post('/schoolClassroom-delete','SchoolClassroomController@delete')->name('delete');
 
+    Route::post('/get-classroom-list','SchoolClassroomController@getList')->name('get-list');
+
     //班级
     Route::get('/schoolClass-list','SchoolClassController@list')->name('list');
     Route::post('/schoolClass-status','SchoolClassController@status')->name('status');
@@ -103,6 +109,7 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
     Route::post('/schoolClass-update','SchoolClassController@update')->name('update');
     Route::post('/schoolClass-delete','SchoolClassController@delete')->name('delete');
 
+    Route::get('/get-classes-list','SchoolClassController@getList')->name('classes-get-list');
     Route::post('/get-semester-list','SchoolSemesterController@getList')->name('get-list');
 
     //班级分班
@@ -126,5 +133,21 @@ Route::group(['namespace' => 'School' , 'prefix' => 'school' ,],function (){
 
     //付款记录
     Route::get('/schoolPaymentOrder-list','PaymentOrderController@list')->name('list');
+
+});
+
+Route::group(['namespace' => 'classes' , 'prefix' => 'classes' ,],function (){
+
+    //学生
+    Route::get('/classeStudent-list','ClassesStudentController@list')->name('list');
+    Route::post('/classeStudent-detail','ClassesStudentController@detail')->name('detail');
+
+    //课表
+    Route::post('/classesCoursePlan-list','ClassesCoursePlanController@list')->name('list');
+    Route::post('/classesCoursePlan-create','ClassesCoursePlanController@create')->name('create');
+    Route::post('/classesCoursePlan-detail','ClassesCoursePlanController@detail')->name('detail');
+    Route::post('/classesCoursePlan-update','ClassesCoursePlanController@update')->name('update');
+    Route::post('/classesCoursePlan-check','ClassesCoursePlanController@check')->name('check');
+    Route::post('/classesCoursePlan-cancel','ClassesCoursePlanController@cancel')->name('cancel');
 
 });

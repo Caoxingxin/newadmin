@@ -70,4 +70,9 @@ class SchoolClassController extends Controller
         return $services->status($status,$id);
     }
 
+    public function getList(Request $request){
+        $school_id = $request->input('school_id');
+
+        return Classes::query()->where('school_id',$school_id)->get();
+    }
 }

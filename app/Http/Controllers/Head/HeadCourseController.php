@@ -49,4 +49,8 @@ class HeadCourseController extends Controller
         $id = $request->input('id');
         return $services->delete($id);
     }
+
+    public function getList(){
+        return Course::query()->get();
+    }
 }

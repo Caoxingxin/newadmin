@@ -62,4 +62,8 @@ class SchoolClassroomController extends Controller
         return $services->delete($id);
     }
 
+    public function getList(Request $request){
+        $school_id = $request->input('school_id');
+        return Classroom::query()->where('school_id',$school_id)->get();
+    }
 }
