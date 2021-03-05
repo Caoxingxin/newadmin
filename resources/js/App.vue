@@ -39,6 +39,22 @@
 </script>
 
 <style>
+button:focus {
+    outline: none;
+}
+
+.el-calendar-table thead th{
+    background-color:rgb(245,245,245);
+    text-align: center;
+    font-size: 20px;
+}
+.el-calendar-table .el-calendar-day{
+    box-sizing:border-box;
+    padding:8px;
+    height:100%;
+    text-align:center;
+    background-color:rgb(255,252,245);
+}
     .el-header {
         text-align: center;
         line-height: 60px;

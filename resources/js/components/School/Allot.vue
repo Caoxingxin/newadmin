@@ -43,19 +43,23 @@
                 </el-pagination>
             </div>
 
-            <div class="table-main">
-                <div v-for="item in tableData" class="table-item" @click="allot(item.semester_name,item.name,item.id,item.semester_id)">
-                    <div class="item-avatar">
-                        <span>{{ item.name | nameFileter }}</span>
-                    </div>
-                    <div class="item-class_name">
-                        {{ item.name }}
-                    </div>
-                    <div class="item-semester_name">
-                        {{ item.semester_name }}
-                    </div>
-                    <div class="item-count">
-                        <span>学员{{ item.count }}人</span>
+            <div >
+                <div v-for="(item,index) in tableData"
+                     @click="allot(item.semester_name,item.name,item.id,item.semester_id)"
+                >
+                    <div class="table-item"  style="width: 350px;float: left">
+                        <div class="item-avatar">
+                            <span>{{ item.name | nameFileter }}</span>
+                        </div>
+                        <div class="item-class_name">
+                            {{ item.name }}
+                        </div>
+                        <div class="item-semester_name">
+                            {{ item.semester_name }}
+                        </div>
+                        <div class="item-count">
+                            <span>学员{{ item.count }}人</span>
+                        </div>
                     </div>
                 </div>
                 <!--      这个班级有哪些学生的弹窗          -->
@@ -104,7 +108,8 @@
                         >
                         </el-pagination>
                     </div>
-                    <el-table :data="allotStudentData" style="width: 100%;margin: 10px" border stripe v-loading="loading">
+                    <el-table :data="allotStudentData" style="width: 100%;margin: 10px" border stripe
+                              v-loading="loading">
                         <el-table-column
                             type="index"
                             :index="indexMethod"
@@ -125,7 +130,7 @@
             </div>
         </el-card>
 
-<!--   学员分班时的弹窗     -->
+        <!--   学员分班时的弹窗     -->
         <el-dialog title="添加学员" :visible.sync="dialogFormVisible" width="80%" top="20px" :close-on-click-modal="false"
                    :before-close="handleClose">
             <div class="search-main">
@@ -180,7 +185,7 @@
                     <template slot-scope="scope">
                         <span v-if="scope.row.status === 10" style="color:red">未报到</span>
                         <span v-if="scope.row.status === 20" style="color:green">已报到</span>
-                        <span v-if="scope.row.status === 30" style="color:yellow" >延期</span>
+                        <span v-if="scope.row.status === 30" style="color:yellow">延期</span>
                     </template>
                 </el-table-column>
             </el-table>
@@ -195,13 +200,13 @@ export default {
     name: "Allot",
     data() {
         return {
-            allotWindow:false,
+            allotWindow: false,
             color: ['rgb(212,164,235)', 'rgb(247,244,148)', 'rgb(114,204,225)', 'rgb(210,245,166)', 'rgb(252,151,175)'],
             semesterDisable: false,
             semesterData: '',
             semesterValue: '',
             semesterName: '',
-            className:'',
+            className: '',
             classValue: '',
             operate_id: window.postId,
             schoolData: '',
@@ -219,38 +224,38 @@ export default {
             dialogFormVisible: false,
             formLabelWidth: '120px',
             tableData: [],
-            allotStudentData:[],
-            notAllotStudentData:[],
+            allotStudentData: [],
+            notAllotStudentData: [],
         };
     },
     methods: {
-        selectStudent(val){
+        selectStudent(val) {
             console.log(val)
-            for (var i=0;i<val.length;i++)
-                 this.studentIds[i] = val[i]['student_id']
+            for (var i = 0; i < val.length; i++)
+                this.studentIds[i] = val[i]['student_id']
         },
         //添加学员到班级
-        distribute(){
-            console.log( this.studentIds)
-            if (this.studentIds.length == 0){
+        distribute() {
+            console.log(this.studentIds)
+            if (this.studentIds.length == 0) {
                 this.open1(-1);
                 return
             }
             let url = "school/schoolClassAllot-distribute";
-            this.axios.post(url,{
-                'class_id' : this.classValue,
-                'semester_id' : this.semesterValue,
-                'student_id' : this.studentIds,
-                'admin_id' : window.postId
-            }).then(response =>{
+            this.axios.post(url, {
+                'class_id': this.classValue,
+                'semester_id': this.semesterValue,
+                'student_id': this.studentIds,
+                'admin_id': window.postId
+            }).then(response => {
                 this.open1(1);
-                this.listNotAllot(this.currentPage, null,this.schoolValue,this.semesterValue);
-            }).catch(function (error){
+                this.listNotAllot(this.currentPage, null, this.schoolValue, this.semesterValue);
+            }).catch(function (error) {
 
             })
         },
         //对应班级详情入口
-        allot(semeseterName,className,classId,semesterId){
+        allot(semeseterName, className, classId, semesterId) {
             this.allotWindow = true
             this.semesterName = semeseterName
             this.semesterValue = semesterId
@@ -273,7 +278,7 @@ export default {
         //添加按钮
         add() {
             // this.listSemesterData();
-            this.listNotAllot(this.currentPage, null,this.schoolValue,this.semesterValue);
+            this.listNotAllot(this.currentPage, null, this.schoolValue, this.semesterValue);
             this.updateStatus = false;
             this.dialogFormVisible = true;
         },
@@ -294,12 +299,12 @@ export default {
             this.listAllot(this.currentPage, null, this.classValue)
         },
         //设置未分班学员接口刷新
-        refreshNotAllot(){
+        refreshNotAllot() {
             this.loading = true
             setTimeout(() => {
                 this.loading = false
             }, 500);
-            this.listNotAllot(this.currentPage, null, this.schoolValue,this.semesterValue)
+            this.listNotAllot(this.currentPage, null, this.schoolValue, this.semesterValue)
         },
         //请求班级list接口
         list(currentPage, pageSize = null, schoolId) {
@@ -311,12 +316,10 @@ export default {
             }
             this.axios.get(url).then(response => {
                 this.currentPage = response.data.current_page
-                for (var i=0,j=0;i<response.data.data.length;i++)
-                {
-                    if (response.data.data[i]['status'] == -1){
+                for (var i = 0, j = 0; i < response.data.data.length; i++) {
+                    if (response.data.data[i]['status'] == -1) {
                         continue;
-                    }
-                    else {
+                    } else {
                         this.tableData[j++] = response.data.data[i];
                     }
 
@@ -328,7 +331,7 @@ export default {
             });
         },
         //该班级已有学员
-        listAllot(currentPage, pageSize = null,classId){
+        listAllot(currentPage, pageSize = null, classId) {
             if (pageSize) {
                 var url1 = "school/schoolClassAllot-list?page=" + currentPage + "&searchStudentMobile=" + this.searchStudentMobile + "&pageSize=" + pageSize + "&class_id=" + classId;
             } else {
@@ -343,7 +346,7 @@ export default {
             });
         },
         //请求未分配班级学员
-        listNotAllot(currentPage, pageSize = null,schoolId,semesterId){
+        listNotAllot(currentPage, pageSize = null, schoolId, semesterId) {
             if (pageSize) {
                 var url2 = "school/schoolClassAllot-showList?page=" + currentPage + "&searchStudentMobile=" + this.searchStudentMobile + "&pageSize=" + pageSize + "&school_id=" + schoolId + "&semester_id=" + semesterId;
             } else {
@@ -398,8 +401,8 @@ export default {
             let url = "school/schoolClassAllot-remove"
             this.axios.post(url, {
                 'class_id': this.classValue,
-                'student_id' : row.student_id,
-                'semester_id' : this.semesterValue
+                'student_id': row.student_id,
+                'semester_id': this.semesterValue
             }).then(response => {
                 this.open1(0);
                 this.listAllot(this.currentPage, null, this.classValue);
@@ -488,7 +491,7 @@ a {
     background-color: rgb(247, 249, 250);
     width: 350px;
     height: 200px;
-    margin: 10px;
+    margin: 20px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 }
 

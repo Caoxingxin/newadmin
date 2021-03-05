@@ -58,6 +58,8 @@ class SchoolSemesterController extends Controller
 
     public function getList(Request $request){
         $school_id = $request->input('school_id');
-        return Semester::query()->where('school_id',$school_id)->where('status',SemesterStatus::ONLINE)->get();
+        return Semester::query()->where('school_id',$school_id)
+            ->where('end_date','>=',date('Y-m-d'))
+            ->where('status',SemesterStatus::ONLINE)->get();
     }
 }
