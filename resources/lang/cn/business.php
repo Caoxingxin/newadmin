@@ -26,4 +26,6 @@ return [
     'Arranging the conflict' => '排课冲突',
     'The period is not within a period of time' => '周期不在时间段内',
     'course-plan dose not exists' => '课程安排不存在',
+    'The score is between 100 and 0' => '分数在100到0之间',
+    'The score of the subject is not completed' => '科目分数没有录入完成'
 ];

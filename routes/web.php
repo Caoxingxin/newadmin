@@ -150,4 +150,10 @@ Route::group(['namespace' => 'classes' , 'prefix' => 'classes' ,],function (){
     Route::post('/classesCoursePlan-check','ClassesCoursePlanController@check')->name('check');
     Route::post('/classesCoursePlan-cancel','ClassesCoursePlanController@cancel')->name('cancel');
 
+    //成绩单
+    Route::get('/classesStudentGrade-list','ClassesStudentGradeController@list')->name('list');
+    Route::post('/classesStudentGrade-input','ClassesStudentGradeController@input')->name('input');
+    Route::post('/classesStudentGrade-detail','ClassesStudentGradeController@detail')->name('detail');
+    Route::post('/classesStudentGrade-audit','ClassesStudentGradeController@audit')->name('audit');
+
 });
