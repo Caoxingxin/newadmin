@@ -8,8 +8,17 @@
     <title>Laravel</title>
 
     <!-- Scripts -->
-    <script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
-    <script src="{{asset('js/welcome2.js')}}"></script>
+    <script src="//cdn.bootcdn.net/ajax/libs/vue/2.4.2/vue.min.js"></script>
+
+    <script src="//cdn.bootcdn.net/ajax/libs/vue-router/3.0.1/vue-router.min.js"></script>
+
+    <script src="//cdn.bootcdn.net/ajax/libs/element-ui/2.14.1/index.min.js"></script>
+
+    <script src="//cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+    <script src="//cdn.bootcdn.net/ajax/libs/echarts/5.0.1/echarts.min.js"></script>
+
+    <script src="//cdn.bootcdn.net/ajax/libs/less.js/3.13.0/less.min.js"></script>
 
 
     <!-- Fonts -->

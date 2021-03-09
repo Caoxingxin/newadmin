@@ -7,8 +7,6 @@
     <title>Laravel</title>
 
     <!-- Scripts -->
-    <script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
-    <script src="{{asset('js/welcome2.js')}}"></script>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">

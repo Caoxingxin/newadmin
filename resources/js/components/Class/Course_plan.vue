@@ -61,7 +61,7 @@
                         </el-button>
                     </el-col>
                     <el-col :span="1" style="margin-top: 10px">
-                        <el-button type="primary" size="small" @click="" icon="el-icon-plus">批量审核
+                        <el-button type="primary" size="small" @click="check" icon="el-icon-plus">批量审核
                         </el-button>
                     </el-col>
                 </el-row>
@@ -79,8 +79,11 @@
             </div>
 
             <div class="table-main">
-                <el-table :data="tableData" style="width: 100%" border stripe v-loading="loading" v-if="changeModel">
-                    <el-table-column type="index" :index="indexMethod" width="50">
+                <el-table :data="tableData" style="width: 100%" border stripe v-loading="loading"
+                          v-if="changeModel" @selection-change="selectCoursePlan">
+                    <el-table-column
+                        type="selection"
+                        width="50">
                     </el-table-column>
                     <el-table-column label="班级">
                         <template slot-scope="scope">
@@ -104,12 +107,10 @@
                     </el-table-column>
                     <el-table-column label="操作" width="280px">
                         <template slot-scope="scope">
-                            <a @click=""
+                            <a @click="cancel(scope.row.id)"
                                v-if="scope.row.status === 20">
-                                审核
+                                取消
                             </a>
-                            <el-divider direction="vertical"></el-divider>
-                            <a @click="">取消</a>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -252,6 +253,7 @@ export default {
     name: "Course_plan",
     data() {
         return {
+            ids: [],
             detailStatus: false,
             dayButtion: true,          //切换单日周期
             classroomData: '',        //教室所有值
@@ -303,6 +305,10 @@ export default {
         }
     },
     methods: {
+        selectCoursePlan(val){
+            for (var i = 0; i < val.length; i++)
+                this.ids[i] = val[i]['id']
+        },
         //切换模式
         Change(value) {
             this.changeModel = !value;
@@ -539,13 +545,6 @@ export default {
         page(value) {
             this.list(value, null, this.schoolValue);
         },
-        indexMethod(index) {
-            //单前页码，具体看组件取值
-            let curpage = this.currentPage
-            //每页条数，具体是组件取值
-            let limitpage = 13
-            return (index + 1) + (curpage - 1) * limitpage
-        },
         changePageSize(value) {
             this.list(this.currentPage, value, this.schoolValue);
         },
@@ -613,6 +612,43 @@ export default {
                 if (this.classroomData.length !== 0) {
                     this.classroomValue = this.classroomData[0]['id'];
                 }
+            }).catch(error => {
+                alert('错误4')
+            });
+        },
+        //审核
+        check(){
+            if (this.ids.length == 0) {
+                return
+            }
+            let url = 'classes/classesCoursePlan-check'
+            this.axios.post(url, {
+                ids: this.ids,
+            }).then(response => {
+                Notification({
+                    title: '信息提示',
+                    message: '取消成功',
+                    type: "success",
+                    duration: 1000
+                });
+                this.list(this.currentPage, null, this.classValue)
+            }).catch(error => {
+                alert('错误4')
+            });
+        },
+        //取消课程
+        cancel(id){
+            let url = 'classes/classesCoursePlan-cancel'
+            this.axios.post(url, {
+                id: id,
+            }).then(response => {
+                Notification({
+                    title: '信息提示',
+                    message: '取消成功',
+                    type: "success",
+                    duration: 1000
+                });
+                this.list(this.currentPage, null, this.classValue)
             }).catch(error => {
                 alert('错误4')
             });

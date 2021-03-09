@@ -79,13 +79,17 @@ class ClassesCoursePlanController extends Controller
         return $services->update($data);
     }
 
-    public function check()
+    public function check(Request $request,SchoolCoursePlanServices $services)
     {
 
+        $ids = $request->all();
+        return $services->check($ids);
     }
 
-    public function cancel()
+    public function cancel(Request $request,SchoolCoursePlanServices $services)
     {
 
+        $id = $request->all();
+        return $services->cancel($id);
     }
 }

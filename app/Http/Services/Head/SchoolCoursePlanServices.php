@@ -219,6 +219,32 @@ class SchoolCoursePlanServices
         return $courseplan;
     }
 
+    public function check($ids){
+        foreach ($ids as $id){
+            $query = CoursePlan::query()->where('status',CoursePlanStatus::NOReviewed)->where('id',$id)->first();
+            if(!$query)
+            {
+                continue;
+            }
+
+            $query->update(['status' => CoursePlanStatus::Reviewed]);
+        }
+        return 'success';
+    }
+
+    public function cancel($id){
+
+        $record = CoursePlan::query()->where('id',$id)->first();
+        try {
+            DB::beginTransaction();
+            $record->update(['status' => CoursePlanStatus::Cancelled]);
+            DB::commit();
+            return 'success';
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+    }
 
 
     //判断教室人数是否能容纳班级人数
