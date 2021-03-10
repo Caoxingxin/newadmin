@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>轻音教育后台管理</title>
 
     <!-- Scripts -->
 
@@ -60,7 +60,7 @@
 <div class="flex-center position-ref full-height">
     <div class="content">
         <div class="pen-title">
-            <h1>Laravel-admin后台管理系统</h1>
+            <h1>轻音教育后台管理系统</h1>
         </div>
         <div class="container">
 
@@ -72,7 +72,7 @@
                         <div class="col-lg-7">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">创建一个账户!</h1>
                                 </div>
                                 <form class="user" method="POST" action="{{ route('admin.register') }}">
                                     @csrf
@@ -80,7 +80,7 @@
                                         <input id="exampleFirstName" type="text"
                                                class="form-control form-control-user @error('name') is-invalid @enderror"
                                                name="name"
-                                               value="{{ old('name') }}" placeholder="First Name" required
+                                               value="{{ old('name') }}" placeholder="账户名称" required
                                                autocomplete="name" autofocus>
                                         @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -92,7 +92,7 @@
                                         <input id="exampleInputEmail" type="email"
                                                class="form-control form-control-user @error('email') is-invalid @enderror"
                                                name="email"
-                                               value="{{ old('email') }}" placeholder="Email Address" required
+                                               value="{{ old('email') }}" placeholder="账户邮箱地址" required
                                                autocomplete="email">
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -118,12 +118,12 @@
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        {{ __('Register') }}
+                                        {{ __('注册') }}
                                     </button>
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="{{ url('admin/login') }}">{{ __('Already have an account? Login!') }}</a>
+                                    <a class="small" href="{{ url('admin/login') }}">{{ __('已经有一个账户了？立即登录！') }}</a>
                                 </div>
                             </div>
                         </div>

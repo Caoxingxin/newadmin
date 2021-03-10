@@ -14,12 +14,12 @@ mix.webpackConfig({
     plugins: [
     ],
     externals: {//配置不打包的选项
+        'vue': 'Vue',
         'element-ui': 'Element',
         'axios': 'axios',
-        'vue': 'Vue',
-        'vuex': 'Vuex',
         'vue-router': 'VueRouter',
-        'less': 'less'
+        "echarts": 'echarts',
+        'less': 'less',
     }
 });
 mix.js('resources/js/app.js', 'public/js')

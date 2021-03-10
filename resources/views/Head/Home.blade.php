@@ -10,21 +10,29 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="//cdn.staticfile.org/vue/2.5.22/vue.min.js"></script>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <script src="//cdn.staticfile.org/element-ui/2.14.1/index.min.js"></script>
+
+    <script src="//cdn.bootcdn.net/ajax/libs/vue-router/3.0.1/vue-router.min.js"></script>
+
+    <script src="//cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
+
+    <script src="//cdn.bootcdn.net/ajax/libs/less.js/3.13.0/less.min.js"></script>
+
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script>
-        window.postName= "{{ $name  }}"
-        window.postId = "{{ $id }}"
-    </script>
+    <link rel="stylesheet" href="//cdn.staticfile.org/element-ui/2.14.1/theme-chalk/index.min.css">
+        <script>
+            window.postName= "{{ $name  }}"
+            window.postId = "{{ $id }}"
+        </script>
 </head>
 <body>
-<div id="app">
-</div>
+<div id="app"></div>
 </body>
 </html>

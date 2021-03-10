@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{{ csrf_token() }}"/>
 
-    <title>Laravel</title>
+    <title>轻音教育后台管理</title>
 
     <!-- Scripts -->
     <script src="//cdn.bootcdn.net/ajax/libs/vue/2.4.2/vue.min.js"></script>
@@ -86,7 +86,7 @@
     {{--    @endif--}}
     <div class="content">
         <div class="pen-title">
-            <h1>Laravel-admin后台管理系统</h1>
+            <h1>轻音教育后台管理系统</h1>
         </div>
         <div class="container">
             <div class="row justify-content-center">
@@ -99,7 +99,7 @@
                                 <div class="col-lg-6">
                                     <div class="p-5">
                                         <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">Welcome Login!</h1>
+                                            <h1 class="h4 text-gray-900 mb-4">登录</h1>
                                         </div>
                                         <form class="user" method="POST" action="{{ route('admin.login') }}">
                                             @csrf
@@ -107,7 +107,7 @@
                                                 <input id="exampleInputEmail" type="email"
                                                        class="form-control form-control-user @error('email') is-invalid @enderror"
                                                        aria-describedby="emailHelp"
-                                                       placeholder="Enter Email Address..."
+                                                       placeholder="账户邮箱"
                                                        name="email" value="{{ old('email') }}" required
                                                        autocomplete="email" autofocus>
                                                 @error('email')
@@ -119,7 +119,7 @@
                                             <div class="form-group">
                                                 <input id="exampleInputPassword" type="password"
                                                        class="form-control form-control-user @error('password') is-invalid @enderror"
-                                                       placeholder="Password" name="password" required autocomplete="current-password">
+                                                       placeholder="密码" name="password" required autocomplete="current-password">
                                                 @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -136,12 +136,12 @@
 
                                             </div>
                                             <button type="submit" class="btn btn-primary btn-user btn-block">
-                                                {{ __('Login') }}
+                                                {{ __('登录') }}
                                             </button>
                                         </form>
                                         <hr>
                                         <div class="text-center">
-                                            <a class="small" href="{{ url('admin/register') }}">{{ __('Register') }}</a>
+                                            <a class="small" href="{{ url('admin/register') }}">{{ __('注册') }}</a>
                                         </div>
                                     </div>
                                 </div>

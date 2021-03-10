@@ -41,7 +41,7 @@ class LoginController extends Controller
     }
     public function showLoginForm()
     {
-        return view('Login.login');
+        return view('Login.Login');
     }
     protected function guard()
     {

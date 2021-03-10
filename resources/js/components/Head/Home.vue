@@ -290,10 +290,10 @@
         },
         mounted() {
             // 基于准备好的dom，初始化echarts实例
-            this.myChart_pie = this.$echarts.init(document.getElementById("main1"),'westeros');
-            this.myChart_line = this.$echarts.init(document.getElementById("main2"),'westeros');
-            this.myChart_bar = this.$echarts.init(document.getElementById("main3"),'westeros');
-            this.myChart_coolpie = this.$echarts.init(document.getElementById("main4"),'westeros');
+            this.myChart_pie = echarts.init(document.getElementById("main1"),'westeros');
+            this.myChart_line = echarts.init(document.getElementById("main2"),'westeros');
+            this.myChart_bar = echarts.init(document.getElementById("main3"),'westeros');
+            this.myChart_coolpie = echarts.init(document.getElementById("main4"),'westeros');
             this.list();
         }
     }
