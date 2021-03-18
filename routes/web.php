@@ -38,7 +38,14 @@ Route::group(['namespace' => 'Admin' , 'prefix' => 'admin' ,],function (){
 
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['namespace' => 'Index', 'prefix' => 'index'],function(){
+   Route::get('/get-school-list','GetListDataController@getSchoolList')->name('get-school-list');
+   Route::get('/get-student-list','GetListDataController@getStudentList')->name('get-student-list');
+   Route::get('/get-order-list','GetListDataController@getOrderList')->name('get-Order-list');
+   Route::get('/get-teacher-list','GetListDataController@getTeacherList')->name('get-teacher-list');
+});
 
 Route::group(['namespace' => 'Head' , 'prefix' => 'head' ,],function (){
     //学校操作

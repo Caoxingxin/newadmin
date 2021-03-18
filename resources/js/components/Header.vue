@@ -2,7 +2,7 @@
     <div class="nav">
         <div class="title" @click="skipHome">
             <i class="el-icon-data-analysis"></i>
-            Laravel-admin后台管理系统
+            轻音教育后台管理系统
         </div>
 
         <div class="userInfo">

@@ -3,11 +3,11 @@
         <div class="list-item">
             <div class="item">
                 <span>
-                    <i class="el-icon-date" style="font-size: 50px;"></i>
+                    <i class="el-icon-school" style="font-size: 50px;"></i>
                 </span>
                 <div class="content">
-                    <span class="title">New Visits</span>
-                    <span class="amount">102,400</span>
+                    <span class="title">学校总数</span>
+                    <span class="amount">{{SchoolData.length}}</span>
                 </div>
             </div>
 
@@ -16,28 +16,28 @@
                     <i class="el-icon-paperclip" style="font-size: 50px;"></i>
                 </span>
                 <div class="content">
-                    <span class="title">New Visits</span>
-                    <span class="amount">102,400</span>
+                    <span class="title">今日订单金额</span>
+                    <span class="amount">${{OrderIsDaySum}}</span>
                 </div>
             </div>
 
             <div class="item">
                 <span>
-                    <i class="el-icon-document" style="font-size: 50px;"></i>
+                    <i class="el-icon-edit-outline" style="font-size: 50px;"></i>
                 </span>
                 <div class="content">
-                    <span class="title">New Visits</span>
-                    <span class="amount">102,400</span>
+                    <span class="title">总收入</span>
+                    <span class="amount">${{OrderAllSum}}</span>
                 </div>
             </div>
 
             <div class="item">
                 <span>
-                    <i class="el-icon-chat-line-round" style="font-size: 50px;"></i>
+                    <i class="el-icon-s-custom" style="font-size: 50px;"></i>
                 </span>
                 <div class="content">
-                    <span class="title">New Visits</span>
-                    <span class="amount">102,400</span>
+                    <span class="title">在校人数</span>
+                    <span class="amount">{{StudentData.length}}</span>
                 </div>
             </div>
         </div>
@@ -74,6 +74,10 @@
         components: { Notice, Financial, GithubCorner },
         data() {
             return {
+                OrderIsDaySum:0,
+                OrderAllSum: 0,
+                StudentData: '',
+                SchoolData: '',
                 Name: '',
                 myChart_pie: '',
                 myChart_line: '',
@@ -84,9 +88,10 @@
         methods: {
             //请求list接口
             list() {
-                let url = "head/headSchool-list";
+                let url = "index/get-school-list";
                 this.axios.get(url).then(response => {
-                    var Data = response.data.data;
+                    var Data = response.data;
+                    this.SchoolData = Data;
                     console.log(Data);
                     for (var i = 0; i < Data.length; i++) {
                         var obj = new Object();
@@ -100,6 +105,39 @@
                     this.linePhoto();
                     this.barPhoto();
                     this.coolpiePhoto();
+                    this.student_list();
+                    this.order_list();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            student_list(){
+                var url = "index/get-student-list"
+                this.axios.get(url).then(response => {
+                    this.StudentData = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            order_list(){
+                var url = "index/get-order-list"
+                this.axios.get(url).then(response => {
+                    var Data = response.data;
+                    var date = new Date();
+                    var year = date.getFullYear();
+                    var month = date.getMonth() + 1;
+                    month = month<10 ? '0'+month: month;
+                    var strDate = date.getDate();
+                    var currentDate = year + '-' + month + '-' +strDate
+                    for (var i=0;i<Data.length;i++){
+                        var date1 = new Date(currentDate);
+                        var date2 = new Date((Data[i].created_at).substr(0,10));
+                        if (date1.getTime() == date2.getTime())
+                        {
+                            this.OrderIsDaySum += Number.parseInt(Data[i].actual_total)
+                        }
+                        this.OrderAllSum += Number.parseInt(Data[i].actual_total)
+                    }
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -141,14 +179,18 @@
                 });
             },
             linePhoto() {
-                console.log(servicedata_pie)
                 this.myChart_line.setOption({
                     tooltip: {
                         trigger: 'axis'
                     },
+                    title: {
+                        left: 'center',
+                        text: '未来一周气温变化',
+                    },
                     xAxis: {
                         type: 'category',
-                        data: servucedata_line,
+                        // data: servucedata_line,
+                        data: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
                         boundaryGap: false,
                         axisLine: {
                             lineStyle: {
@@ -322,7 +364,7 @@
         margin-right: 40px;
     }
 
-    .el-icon-date {
+    .el-icon-school {
         color: darkturquoise;
     }
 
@@ -330,11 +372,11 @@
         color: #36a3f7;
     }
 
-    .el-icon-document {
+    .el-icon-edit-outline {
         color: #f4516c;
     }
 
-    .el-icon-chat-line-round {
+    .el-icon-s-custom {
         color: #34bfa3;
     }
 
@@ -356,10 +398,10 @@
         background: darkturquoise;
     }
 
-    .item:nth-of-type(1):hover .el-icon-date,
+    .item:nth-of-type(1):hover .el-icon-school,
     .item:nth-of-type(2):hover .el-icon-paperclip,
-    .item:nth-of-type(3):hover .el-icon-document,
-    .item:nth-of-type(4):hover .el-icon-chat-line-round {
+    .item:nth-of-type(3):hover .el-icon-edit-outline,
+    .item:nth-of-type(4):hover .el-icon-s-custom {
         color: #ffffff;
     }
 

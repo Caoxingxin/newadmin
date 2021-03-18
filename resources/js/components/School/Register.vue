@@ -867,6 +867,7 @@ export default {
         order_submitForm(formName,orderType){
             let url = 'school/schoolOrder-create'
             this.axios.post(url,{
+                'remark': this.order_form.order_remark ? this.order_form.order_remark : '' ,
                 'tuition_wait':this.detail_form.tuition_wait,
                 'tuition_paid':this.detail_form.tuition_paid,
                 'operate_id':this.operate_id,
@@ -874,7 +875,6 @@ export default {
                 'semester_id': this.detail_form.semester_id,
                 'actual_total':this.ordetTuition,
                 'platform': this.channelValue,
-                'remark': this.order_form.order_remark,
                 'type': this.orderType,
                 'payment_order':{
                     'amount': this.ordetTuition,

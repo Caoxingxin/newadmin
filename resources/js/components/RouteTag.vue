@@ -49,7 +49,7 @@
         created() {
             // 第一次进入页面时，修改tag的值
             this.tagsList.push({
-                title: 'home',
+                title: '首页',
                 path: '/',
             })
         },
