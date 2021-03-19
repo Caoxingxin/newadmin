@@ -385,7 +385,7 @@ export default {
             //单前页码，具体看组件取值
             let curpage = this.currentPage
             //每页条数，具体是组件取值
-            let limitpage = 13
+            let limitpage = 15
             return (index + 1) + (curpage - 1) * limitpage
         },
         changePageSize(value) {
