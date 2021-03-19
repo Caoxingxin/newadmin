@@ -69,11 +69,14 @@
 
     var servicedata_pie = [];
     var servucedata_line = [];
+    var order_data = [];
+    var order_year_data = [0,0,0,0,0,0,0,0,0,0,0,0];
     export default {
         name: "Home",
         components: { Notice, Financial, GithubCorner },
         data() {
             return {
+                OrderData:0,
                 OrderIsDaySum:0,
                 OrderAllSum: 0,
                 StudentData: '',
@@ -100,13 +103,11 @@
                         servicedata_pie[i] = obj;
                         servucedata_line[i] = obj.name;
                     }
-                    console.log(servicedata_pie)
-                    this.piePhoto();
-                    this.linePhoto();
-                    this.barPhoto();
-                    this.coolpiePhoto();
                     this.student_list();
                     this.order_list();
+                    this.piePhoto();
+                    this.barPhoto();
+                    this.coolpiePhoto();
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -136,8 +137,15 @@
                         {
                             this.OrderIsDaySum += Number.parseInt(Data[i].actual_total)
                         }
+                        if(year == date2.getFullYear()){
+                            order_year_data[date2.getMonth()] += Number.parseInt(Data[i].actual_total);
+                        }
                         this.OrderAllSum += Number.parseInt(Data[i].actual_total)
                     }
+                    for (var j=0;j<12;j++){
+                        order_data[j] = order_year_data[j];
+                    }
+                    this.linePhoto();
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -185,7 +193,7 @@
                     },
                     title: {
                         left: 'center',
-                        text: '未来一周气温变化',
+                        text: '今年收益变化趋势',
                     },
                     xAxis: {
                         type: 'category',
@@ -238,7 +246,8 @@
                         itemStyle: {
                             color: "blue",
                         },
-                        data: servicedata_pie,
+                        data: order_data,
+                        // data: [0,6700],
                         type: 'line'
                     }]
                 });
