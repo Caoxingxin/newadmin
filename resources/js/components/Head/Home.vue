@@ -110,6 +110,7 @@
         methods: {
             //请求list接口
             list() {
+                order_year_data = [0,0,0,0,0,0,0,0,0,0,0,0];
                 let url = "index/get-school-list";
                 this.axios.get(url).then(response => {
                     var Data = response.data;
@@ -152,14 +153,25 @@
                     for (var i=0;i<Data.length;i++){
                         var date1 = new Date(currentDate);
                         var date2 = new Date((Data[i].created_at).substr(0,10));
-                        if (date1.getTime() == date2.getTime())
+                        if (date1.getTime() == date2.getTime() && Data[i].type==10)
                         {
                             this.OrderIsDaySum += Number.parseInt(Data[i].actual_total)
                         }
-                        if(year == date2.getFullYear()){
-                            order_year_data[date2.getMonth()] += Number.parseInt(Data[i].actual_total);
+                        if (date1.getTime() == date2.getTime() && Data[i].type==-10){
+                            this.OrderIsDaySum -= Number.parseInt(Data[i].actual_total)
                         }
-                        this.OrderAllSum += Number.parseInt(Data[i].actual_total)
+                        if(Data[i].type==10){
+                            this.OrderAllSum += Number.parseInt(Data[i].actual_total)
+                            if(year == date2.getFullYear()){
+                                order_year_data[date2.getMonth()] += Number.parseInt(Data[i].actual_total);
+                            }
+                        }else{
+                            this.OrderAllSum -= Number.parseInt(Data[i].actual_total)
+                            if(year == date2.getFullYear()){
+                                order_year_data[date2.getMonth()] -= Number.parseInt(Data[i].actual_total);
+                            }
+                        }
+
                     }
                     for (var j=0;j<12;j++){
                         order_data[j] = order_year_data[j];
