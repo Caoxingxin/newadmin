@@ -5,7 +5,7 @@
                 <el-row class="elRow">
                     <!--搜索框-->
                     <el-col :span="7">
-                        <el-input placeholder="请输入内容" size="small" v-model="searchTeacherMobile" clearable @clear="list(1)">
+                        <el-input placeholder="请输入电话" size="small" v-model="searchTeacherMobile" clearable @clear="list(1)">
                             <el-button slot="append" icon="el-icon-search" @click="list(1)"></el-button>
                         </el-input>
                     </el-col>
@@ -254,6 +254,7 @@ export default {
             if (this.$refs['form'] !== undefined) {
                 this.clearFiles()
             }
+            this.radioStatus = true
             this.list(this.currentPage)
         },
         //请求list接口

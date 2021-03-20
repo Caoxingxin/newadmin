@@ -176,6 +176,9 @@ export default {
                         trigger: ['blur', 'change']
                     }
                 ],
+                gender:[
+                    { required: true, message: '请选择性别', trigger: 'change' }
+                ]
             }
         }
     },
