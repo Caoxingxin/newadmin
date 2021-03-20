@@ -60,7 +60,10 @@ class OrderServices
                 $studentRegister->update(['tuition_paid'=>$studentRegister['tuition_paid']+$order['actual_total']]);
             }
             else{
-                $studentRegister->update(['tuition_paid'=>$studentRegister['tuition_paid']-$order['actual_total']]);
+                $studentRegister->update([
+                    'tuition_paid'=>$studentRegister['tuition_paid']-$order['actual_total'],
+                    'tuition_refund'=>$studentRegister['tuition_refund']+$order['actual_total']
+                ]);
             }
 
             DB::commit();

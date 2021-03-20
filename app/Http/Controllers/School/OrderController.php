@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\School;
 
 
+use App\Exceptions\CommonException;
 use App\Http\Constans\School\OrderPlatform;
 use App\Http\Models\School\Order;
 use App\Http\Services\Head\SchoolOrderServices;
@@ -47,6 +48,9 @@ class OrderController
     public function create(Request $request,SchoolOrderServices $services)
     {
         $data = $request->all();
+        if (empty($data['payment_order']['channel'])){
+            throw new CommonException('Please choose the method of payment');
+        }
         return $services->create(OrderPlatform::BACKSTAGE,$data);
     }
 

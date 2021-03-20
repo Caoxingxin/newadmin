@@ -356,7 +356,7 @@
                                 this.$refs[formName].resetFields();
                                 this.dialogFormVisible = false
                                 this.list(this.currentPage, null, this.schoolValue)
-                                Notification({
+                                this.$notify({
                                     title: '信息提示',
                                     message: '修改成功',
                                     type: "success",
@@ -365,14 +365,14 @@
                             }).catch(error => {
                                 let mes = error.response.data['data'];
                                 if (mes['name']) {
-                                    Notification({
+                                    this.$notify({
                                         title: '验证错误',
                                         message: '课程名不能重复',
                                         type: "error",
                                         duration: 2000
                                     });
                                 } else {
-                                    Notification({
+                                    this.$notify({
                                         title: '验证错误',
                                         message: mes,
                                         type: "error",
@@ -401,7 +401,7 @@
                                 this.$refs[formName].resetFields();
                                 this.dialogFormVisible = false
                                 this.list(this.currentPage, null, this.schoolValue)
-                                Notification({
+                                this.$notify({
                                     title: '信息提示',
                                     message: '添加成功',
                                     type: "success",
@@ -410,14 +410,14 @@
                             }).catch(error => {
                                 let mes = error.response.data['data'];
                                 if (mes['name']) {
-                                    Notification({
+                                    this.$notify({
                                         title: '验证错误',
                                         message: '课程名不能重复',
                                         type: "error",
                                         duration: 2000
                                     });
                                 } else {
-                                    Notification({
+                                    this.$notify({
                                         title: '验证错误',
                                         message: mes,
                                         type: "error",

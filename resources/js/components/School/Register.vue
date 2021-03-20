@@ -316,7 +316,7 @@
                    :close-on-click-modal="false"
                    :before-close="order_handleClose">
 
-            <el-form ref="order_form" :model="order_form" :label-position="labelPosition" label-width="100px">
+            <el-form ref="order_form" :rules="rules_order" :model="order_form" :label-position="labelPosition" label-width="100px">
                 <el-form-item label="学费:">
                     <el-input v-model="ordetTuition" autocomplete="off"
                               style="width: 200px !important;" size="small" >
@@ -327,7 +327,7 @@
                               style="width: 200px !important;" size="small" :disabled="true">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="支付方式:" >
+                <el-form-item label="支付方式:" prop="channel">
                     <el-select v-model="channelValue" @change="changechannelValue(channelValue)">
                         <el-option
                             v-for="item in this.channelData"
@@ -342,7 +342,7 @@
                               style="width: 200px !important;" size="small">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="备注:">
+                <el-form-item label="备注:" prop="remark">
                     <el-input type="textarea"
                               v-model="order_form.order_remark" autocomplete="off"
                               :autosize="{ minRows: 4, maxRows: 6}" size="small">
@@ -466,6 +466,15 @@ export default {
                         trigger: 'blur'
                     }
                 ],
+                gender: [
+                    { required: true, message: '请选择性别', trigger: 'change' }
+                ],
+                semester_id: [
+                    { required: true, message: '请选择学期', trigger: 'change' }
+                ],
+                admin_id: [
+                    { required: true, message: '请选择销售老师', trigger: 'change' }
+                ]
             },
         };
     },
@@ -569,14 +578,14 @@ export default {
                         this.$refs[formName].resetFields();
                         this.dialogFormVisible = false
                         this.list(this.currentPage, null, this.schoolValue)
-                        Notification({
+                        this.$notify({
                             title: '信息提示',
                             message: '添加成功',
                             type: "success",
                             duration: 1000
                         });
                     }).catch(error => {
-                        Notification({
+                        this.$notify({
                             title: '错误提示',
                             message: error.response.data['message'],
                             type: "error",
@@ -601,14 +610,14 @@ export default {
                 this.$refs[formName].resetFields();
                 this.dialogPostponeFormVisible = false;
                 this.list(this.currentPage, null, this.schoolValue);
-                Notification({
+                this.$notify({
                     title: '信息提示',
                     message: '延期成功',
                     type: "success",
                     duration: 1000
                 });
             }).catch(error => {
-                Notification({
+                this.$notify({
                     title: '错误提示',
                     message: error.response.data['message'],
                     type: "error",
@@ -782,7 +791,7 @@ export default {
                     }
                 }).then(response => {
                     this.list(this.currentPage, null, this.schoolValue);
-                    Notification({
+                    this.$notify({
                         title: '信息提示',
                         message: '取消成功',
                         type: "success",
@@ -811,14 +820,14 @@ export default {
                     }
                 }).then(response => {
                     this.list(this.currentPage, null, this.schoolValue);
-                    Notification({
+                    this.$notify({
                         title: '信息提示',
                         message: '报道成功',
                         type: "success",
                         duration: 1000
                     });
                 }).catch(error => {
-                    Notification({
+                    this.$notify({
                         title: '错误提示',
                         message: error.response.data['message'],
                         type: "error",
@@ -884,18 +893,17 @@ export default {
             }).then(res => {
                 this.dialogOrderFormVisible =false
                 this.Deatil(this.studentRegisterValue);
-                Notification({
+                this.$notify({
                     title: '提示',
                     message: '付款成功',
                     type: "success",
                     duration: 2000
                 });
             }).catch(error => {
-                Notification({
+                this.$notify({
                     title: '错误提示',
                     message: error.response.data['message'],
-                    type: "error",
-                    duration: 2000
+                    type: 'error'
                 });
             })
         },
