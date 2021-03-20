@@ -71,11 +71,13 @@
     var servucedata_line = [];
     var order_data = [];
     var order_year_data = [0,0,0,0,0,0,0,0,0,0,0,0];
+    var school_num_pie = [];
     export default {
         name: "Home",
         components: { Notice, Financial, GithubCorner },
         data() {
             return {
+                SchoolNum: '',
                 OrderData:0,
                 OrderIsDaySum:0,
                 OrderAllSum: 0,
@@ -86,6 +88,23 @@
                 myChart_line: '',
                 myChart_bar: '',
                 myChart_coolpie: '',
+                ceshi: [
+                    {
+                        'name':'sss','value':0
+                    },
+                    {
+                        'name':'城西','value':14
+                    },
+                    {
+                        'name':'搜索','value':0
+                    },
+                    {
+                        'name':'ss防辐射服s','value':0
+                    },
+                    {
+                        'name':'负数','value':150
+                    },
+                ]
             }
         },
         methods: {
@@ -105,7 +124,7 @@
                     }
                     this.student_list();
                     this.order_list();
-                    this.piePhoto();
+                    this.school_num();
                     this.barPhoto();
                     this.coolpiePhoto();
                 }).catch(function (error) {
@@ -150,8 +169,27 @@
                     console.log(error);
                 });
             },
+            school_num(){
+                var url = "index/get-school-num"
+                this.axios.get(url).then(response => {
+                    this.SchoolNum = response.data
+                    for (var i=0;i<this.SchoolNum.length;i++){
+                        school_num_pie[i] =  servicedata_pie[i];
+                        school_num_pie[i].value = this.SchoolNum[i].number;
+                        school_num_pie[i].name = this.SchoolNum[i].name;
+                    }
+                    console.log(school_num_pie)
+                    this.piePhoto();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
             piePhoto() {
                 this.myChart_pie.setOption({
+                    title: {
+                        text: '各学校人数统计',
+                        left: 'center'
+                    },
                     tooltip: {
                         trigger: 'item',
                         formatter: '{a} <br/>{b}: {c} ({d}%)',
@@ -159,11 +197,12 @@
                     legend: {
                         orient: 'vertical',
                         left: 10,
-                        data: servicedata_pie
+                        // data: servicedata_pie
+                        data: school_num_pie
                     },
                     series: [
                         {
-                            name: '访问来源',
+                            name: '人数统计',
                             type: 'pie',
                             radius: ['35%', '50%'],
                             avoidLabelOverlap: false,
@@ -181,7 +220,8 @@
                             labelLine: {
                                 show: false
                             },
-                            data: servicedata_pie
+                            // data: servicedata_pie
+                            data: school_num_pie
                         }
                     ]
                 });
@@ -192,8 +232,11 @@
                         trigger: 'axis'
                     },
                     title: {
-                        left: 'center',
+                        left: 'left',
                         text: '今年收益变化趋势',
+                    },
+                    legend: {
+                        data: ['预期收入', '实际收入']
                     },
                     xAxis: {
                         type: 'category',
@@ -230,6 +273,7 @@
                         }
                     },
                     series: [{
+                        name: '实际收入',
                         smooth: true,
                         symbol: 'circle',
                         symbolSize: 8,
@@ -249,7 +293,28 @@
                         data: order_data,
                         // data: [0,6700],
                         type: 'line'
-                    }]
+                    },
+                        {
+                            name: '预期收入',
+                            smooth: true,
+                            symbol: 'circle',
+                            symbolSize: 8,
+                            lineStyle: {
+                                color: 'green',
+                                width: 5,
+                                opacity: 0.6
+                            },
+                            markLine: {
+                                label: { show: false },
+                            },
+                            areaStyle: { color: 'green', opacity: 0.05 },
+                            itemStyle: {
+                                color: "green",
+                            },
+                            data: [20000,30000,40000,20000,30000,60000,70000,30000,25000,40000,35000,20000],
+                            type: 'line'
+                        },
+                    ]
                 });
             },
             barPhoto() {
@@ -294,8 +359,8 @@
             coolpiePhoto() {
                 this.myChart_coolpie.setOption({
                     title: {
-                        text: '南丁格尔玫瑰图',
-                        subtext: '纯属虚构',
+                        text: '学校分布情况',
+                        subtext: '暂定',
                         left: 'center'
                     },
                     tooltip: {
