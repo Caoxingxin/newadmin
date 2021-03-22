@@ -107,7 +107,7 @@
                     </el-table-column>
                     <el-table-column label="操作" width="280px">
                         <template slot-scope="scope">
-                            <a @click="cancel(scope.row.id)"
+                            <a @click="cancels(scope.row.id)"
                                v-if="scope.row.status === 20">
                                 取消
                             </a>
@@ -148,6 +148,8 @@
                                     <p>{{ item.course_name }}</p>
                                     <p>{{ item.start_at }} ~ {{ item.end_at }}</p>
                                     <p>{{ item.teacher_name }}</p>
+                                    <p v-if="item.status == 30" style="position:relative;left: 80px;top:-40px">已取消</p>
+                                    <p v-if="item.status == 20" style="position:relative;left: 80px;top:-40px">未审核</p>
                                 </div>
                             </div>
                         </template>
@@ -159,7 +161,7 @@
 
         <el-dialog title="学生信息" :visible.sync="dialogFormVisible" width="800px" top="20px" :close-on-click-modal="false"
                    :before-close="handleClose">
-            <el-form ref="form" :model="create_form" :label-position="labelPosition" label-width="100px">
+            <el-form ref="form" :rules="rules" :model="create_form" :label-position="labelPosition" label-width="100px">
                 <el-form-item label="课程名称:" prop="course_id">
                     <el-select v-model="create_form.course_id" @change="changeCourseId(create_form.course_id)">
                         <el-option
@@ -302,6 +304,18 @@ export default {
                     return time.getTime() < Date.now() - 8.64e7;
                 }
             },
+            rules: {
+                course_id: [
+                    { required: true, message: '请选择课程', trigger: 'change' }
+                ],
+                teacher_id: [
+                    { required: true, message: '请选择教师', trigger: 'change' }
+                ],
+                classroom_id: [
+                    { required: true, message: '请选择教室', trigger: 'change' }
+                ],
+
+            },
         }
     },
     methods: {
@@ -435,7 +449,7 @@ export default {
                             this.$refs[formName].resetFields();
                             this.dialogFormVisible = false
                             this.list(this.currentPage, null, this.classValue)
-                            Notification({
+                            this.$notify({
                                 title: '信息提示',
                                 message: '修改成功',
                                 type: "success",
@@ -477,7 +491,7 @@ export default {
                             this.$refs[formName].resetFields();
                             this.dialogFormVisible = false
                             this.list(this.currentPage, null, this.classValue)
-                            Notification({
+                            this.$notify({
                                 title: '信息提示',
                                 message: '添加成功',
                                 type: "success",
@@ -543,10 +557,10 @@ export default {
                 this.create_form.startAndEndAt = ''
         },
         page(value) {
-            this.list(value, null, this.schoolValue);
+            this.list(value, null, this.classValue);
         },
         changePageSize(value) {
-            this.list(this.currentPage, value, this.schoolValue);
+            this.list(this.currentPage, value, this.classValue);
         },
         changeSchoolId(value) {
             this.currentPage = 1;
@@ -613,19 +627,19 @@ export default {
                     this.classroomValue = this.classroomData[0]['id'];
                 }
             }).catch(error => {
-                alert('错误4')
+                alert('错误教室')
             });
         },
         //审核
         check(){
             if (this.ids.length == 0) {
-                return
+                return ;
             }
             let url = 'classes/classesCoursePlan-check'
             this.axios.post(url, {
                 ids: this.ids,
             }).then(response => {
-                Notification({
+                this.$notify({
                     title: '信息提示',
                     message: '取消成功',
                     type: "success",
@@ -633,16 +647,24 @@ export default {
                 });
                 this.list(this.currentPage, null, this.classValue)
             }).catch(error => {
-                alert('错误4')
+                console.log('bbbbbbbbbb')
+                console.log(error)
+                this.$notify({
+                    title: '错误提示',
+                    message: error.response.data['message'],
+                    type: "error",
+                    duration: 2000
+                });
+                // alert('错误4')
             });
         },
         //取消课程
-        cancel(id){
+        cancels(id){
             let url = 'classes/classesCoursePlan-cancel'
             this.axios.post(url, {
                 id: id,
             }).then(response => {
-                Notification({
+                this.$notify({
                     title: '信息提示',
                     message: '取消成功',
                     type: "success",
@@ -650,7 +672,9 @@ export default {
                 });
                 this.list(this.currentPage, null, this.classValue)
             }).catch(error => {
-                alert('错误4')
+                console.log('aaaaaaaaaa')
+                console.log(error)
+                // alert('错误取消课程')
             });
         },
         //今天
