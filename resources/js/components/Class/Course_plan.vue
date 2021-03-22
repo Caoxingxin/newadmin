@@ -126,14 +126,14 @@
                 <!--                    </el-table-column>-->
                 <!--                </el-table>-->
                 <div v-else>
-                    <el-button-group>
-                        <el-button @click="preNextBtn('pre')">《</el-button>
-                        <el-button @click="today">今天</el-button>
-                        <el-button @click="preNextBtn('next')">》</el-button>
-                    </el-button-group>
-                    <el-calendar :range="[ this.weekDayTableData[0][1],this.weekDayTableData[0][7]]">
+<!--                    <el-button-group>-->
+<!--                        <el-button @click="preNextBtn('pre')">《</el-button>-->
+<!--                        <el-button @click="today">今天</el-button>-->
+<!--                        <el-button @click="preNextBtn('next')">》</el-button>-->
+<!--                    </el-button-group>-->
+<!--                    <el-calendar :range="[ this.weekDayTableData[0][1],this.weekDayTableData[0][7]]">-->
                         <!--                <el-calendar v-else :range="train_time">-->
-                        <!--                <el-calendar v-else>-->
+                                        <el-calendar >
                         <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
                         <template
                             slot="dateCell"
