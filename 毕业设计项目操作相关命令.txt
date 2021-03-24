@@ -1,14 +1,41 @@
 https://github.com/YuchenJx/fucking-algorithm 学习网站
 http://www.ruanyifeng.com/blog/   扩展网站
+https://docs.laravel-excel.com/3.1/exports/   	laravel excel导入导出
+https://www.php.cn/php-weizijiaocheng-392894.html   服务器基本安装
+http://static.vgee.cn/static/index.html 		前端flex布局
+https://kapeli.com/cheat_sheets/Vim_CN.docset/Contents/Resources/Documents/index	VIM 基本指南
+https://blog.csdn.net/liqingtx/article/details/60330555		Redis基础
+https://blog.csdn.net/huangdj321/article/details/106370292			项目上手指南（准备自钩）
+https://www.mockplus.cn/idoc?home=1  		H5页面设计
+http://www.ruanyifeng.com/blog/2021/03/weekly-issue-149.html		没事看看的博客
+
+Another Redis Desktop Manager(redis桌面工具)
 
 php -S 0.0.0.0:3600 -t public   启动php服务
 然后 npm run watch 启动vue
 
 创建软连接，上传图片并且前端能访问
-php artisan storage:link 
+php artisan storage:link
 
 创建自定义异常类
 php artisan make:exception CommonException
 
 运用echarts.js 图表
 1.npm install echarts --save 或者 npm install echarts@4.9.0（推荐）
+
+生产app_KEY  php artisan key:generate
+
+
+生成ssh
+
+.ssh文件夹不存在
+mkdir .ssh
+ls
+
+生成RSA密匙对
+
+ssh-keygen -t rsa -C "你的邮箱@xxx.com"
+查看公钥
+.pub文件
+复制到github上
+
