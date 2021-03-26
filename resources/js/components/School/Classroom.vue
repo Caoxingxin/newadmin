@@ -123,7 +123,7 @@
                 loading: false,
                 dialogFormVisible: false,
                 formLabelWidth: '120px',
-                tableData: [{}],
+                tableData: [],
                 create_form: {
                     id: '',
                     school_id: '',

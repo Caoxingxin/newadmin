@@ -158,19 +158,7 @@
                 loading: false,
                 dialogFormVisible: false,
                 formLabelWidth: '120px',
-                tableData: [{
-                    id: '',
-                    name: '',
-                    mobile: '',
-                    email: '',
-                    gender: '',
-                    status: '',
-                    degree: '',
-                    company: '',
-                    avatar: '',
-                    remark: '',
-                    introduction: ''
-                }],
+                tableData: [],
                 create_form: {
                     id: '',
                     name: '',

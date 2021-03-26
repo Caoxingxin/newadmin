@@ -10,7 +10,7 @@
                         </el-input>
                     </el-col>
 
-                    <el-col :span="1">
+                    <el-col :span="1" style="margin-left: 20px">
                         <el-button type="primary" size="small" @click="refresh">
                             <i class="el-icon-refresh"></i>
                         </el-button>

@@ -11,11 +11,11 @@
                         </el-input>
                     </el-col>
                     <!--添加-->
-                    <el-col :span="2" style="margin-top: 10px">
+                    <el-col :span="2" style="margin-top: 10px;">
                         <el-button type="primary" size="small" @click="add" icon="el-icon-plus">添加
                         </el-button>
                     </el-col>
-                    <el-col :span="1" style="margin-top: 10px">
+                    <el-col :span="1" style="margin-top: 10px;margin-left: 10px">
                         <el-button
                             type="primary"
                             size="small"

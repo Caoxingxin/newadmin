@@ -160,7 +160,7 @@ export default {
             loading: false,
             dialogFormVisible: false,
             formLabelWidth: '120px',
-            tableData: [{}],
+            tableData: [],
             paymentOrderTableData: [{}],
             create_form: {},
         };

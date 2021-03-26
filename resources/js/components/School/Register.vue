@@ -393,7 +393,7 @@ export default {
             dialogDetailFormVisible: false,
             dialogOrderFormVisible: false,
             formLabelWidth: '120px',
-            tableData: [{}],
+            tableData: [],
             order_tableData:[{}],
             create_form: {
                 id: '',

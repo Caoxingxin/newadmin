@@ -11,7 +11,7 @@
                 </el-option>
             </el-select>
             <el-select v-model="classValue" @change="changeClassId(classValue)"
-                       style="width:200px; position: absolute;left: 15%;">
+                       style="width:200px; position: absolute;left: 18%;">
                 <el-option
                     v-for="item in classData"
                     :key="item.id"
@@ -27,7 +27,7 @@
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
                 value-format="yyyy-MM-dd"
-                style="width:400px; position: absolute;left: 28%;"
+                style="width:400px; position: absolute;left: 35%;"
                 :disabled="!changeModel"
             >
             </el-date-picker>
@@ -39,14 +39,14 @@
                         </el-button>
                     </el-col>
                     <!--搜索框-->
-                    <el-col :span="6" style="margin: 10px 10px 0 0">
+                    <el-col :span="6" style="margin: 10px 10px 0 10px">
                         <el-input placeholder="请输入内容" size="small" v-model="searchCourseName" clearable
                                   @clear="list(1,null,classValue)" :disabled="!changeModel">
                             <el-button slot="append" icon="el-icon-search"
                                        @click="list(1,null,classValue)" :disabled="!changeModel"></el-button>
                         </el-input>
                     </el-col>
-                    <el-col :span="1" style="margin-top: 10px">
+                    <el-col :span="1" style="margin-top: 10px;margin-left: 10px">
                         <el-button
                             type="primary"
                             size="small"
@@ -55,12 +55,12 @@
                         </el-button>
                     </el-col>
                     <!--切换模式-->
-                    <el-col :span="10"></el-col>
+                    <el-col :span="7"></el-col>
                     <el-col :span="2" style="margin-top: 10px">
                         <el-button type="primary" size="small" @click="Change(changeModel)" icon="el-icon-plus">切换模式
                         </el-button>
                     </el-col>
-                    <el-col :span="1" style="margin-top: 10px">
+                    <el-col :span="1" style="margin-top: 10px;margin-left: 30px">
                         <el-button type="primary" size="small" @click="check" icon="el-icon-plus">批量审核
                         </el-button>
                     </el-col>
@@ -589,7 +589,7 @@ export default {
                 this.courseValue = this.courseData[0]['id'];
                 console.log(this.courseData)
             }).catch(error => {
-                alert('错误2')
+                alert('错误获取课程')
             });
         },
         //下拉获取教师
@@ -603,7 +603,7 @@ export default {
                 this.teacherData = response.data
                 this.teacherValue = this.teacherData[0]['id'];
             }).catch(error => {
-                alert('错误3')
+                alert('错误获取教师')
             });
         },
         //下拉获取教室
