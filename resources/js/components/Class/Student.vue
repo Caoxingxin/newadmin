@@ -10,7 +10,7 @@
                 >
                 </el-option>
             </el-select>
-            <el-select v-model="classValue" @change="changeClassId(classValue)" style="width:200px; position: absolute;left: 15%;">
+            <el-select v-model="classValue" @change="changeClassId(classValue)" style="width:200px; position: absolute;left: 20%;">
                 <el-option
                     v-for="item in classData"
                     :key="item.id"

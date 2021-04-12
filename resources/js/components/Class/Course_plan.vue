@@ -328,8 +328,8 @@ export default {
             this.changeModel = !value;
             if (!this.changeModel) {
                 this.train_time = [
-                    this.weekDayTableData[0][1],
-                    this.weekDayTableData[0][7]
+                    // this.weekDayTableData[0][1],
+                    // this.weekDayTableData[0][7]
                     // '2021-02-22',
                     // '2021-02-28'
                 ]

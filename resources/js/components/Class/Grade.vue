@@ -176,10 +176,6 @@ export default {
             setTimeout(() => {
                 this.loading = false
             }, 500);
-            //加这个句话是为了避免$refs没有被渲染的情况
-            if (this.$refs['form'] !== undefined) {
-                this.clearFiles()
-            }
             this.list(this.currentPage,null,this.classValue)
         },
         //请求list接口
@@ -260,9 +256,6 @@ export default {
             this.create_form.course_name = ''
         },
 
-        clearFiles() {
-            this.$refs['myUpload'].clearFiles();
-        },
         page(value) {
             this.list(value,null,this.schoolValue);
         },
@@ -299,12 +292,12 @@ export default {
                 class_id: this.classValue,
                 student_id: data.id,
             }).then(response => {
-                // Notification({
-                //     title: '信息提示',
-                //     message: '审核成功',
-                //     type: "success",
-                //     duration: 1000
-                // });
+                Notification({
+                    title: '信息提示',
+                    message: '审核成功',
+                    type: "success",
+                    duration: 1000
+                });
             }).catch(error => {
                 Notification({
                     title: '错误提示',

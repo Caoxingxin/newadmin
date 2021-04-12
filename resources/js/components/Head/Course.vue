@@ -84,7 +84,7 @@
                     <el-input v-model="create_form.duration" autocomplete="off" style="width: 200px !important;" placeholder="请输入时长" size="small">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="是否考核:" prop="description">
+                <el-form-item label="是否考核:" prop="examine">
                     <el-radio-group v-model="create_form.examine">
                         <el-radio :label="1">是</el-radio>
                         <el-radio :label="0">否</el-radio>
@@ -142,7 +142,7 @@ export default {
                 duration: [
                     { required: true, message: '请输入时长', trigger: 'blur' },
                 ],
-                description: [
+                examine: [
                     { required: true, message: '请选择是否考核', trigger: 'change' }
                 ],
             }

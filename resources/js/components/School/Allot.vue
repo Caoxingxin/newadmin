@@ -82,7 +82,7 @@
                                 </el-input>
                             </el-col>
                             <!--添加-->
-                            <el-col :span="2" style="margin-top: 10px">
+                            <el-col :span="3" style="margin-top: 10px">
                                 <el-button type="primary" size="small" @click="add" icon="el-icon-plus">添加
                                 </el-button>
                             </el-col>
@@ -144,7 +144,7 @@
                         </el-input>
                     </el-col>
                     <!--添加-->
-                    <el-col :span="2" style="margin-top: 10px">
+                    <el-col :span="3" style="margin-top: 10px">
                         <el-button type="primary" size="small" @click="distribute" icon="el-icon-plus">批量添加
                         </el-button>
                     </el-col>

@@ -63,7 +63,7 @@ class StudentDistributeController extends Controller
                 ->leftJoin('student_register','student.id','=','student_register.student_id')
                 ->where('student_register.semester_id','=',$searchData['semester_id'])
                 ->where('student_register.class_id','=',null)
-                ->whereNotIn('student_register.status',[StudentRegisterStatus::CANCELLED,StudentRegisterStatus::COMPLETE])
+                ->where('student_register.status',StudentRegisterStatus::REGISTER)
                 ->where('student_register.student_id','<>',null)
                 ->where('student.mobile', 'like', $searchData['searchStudentMobile'] . '%')
                 ->paginate($page);
@@ -74,7 +74,7 @@ class StudentDistributeController extends Controller
                 ->leftJoin('student_register','student.id','=','student_register.student_id')
                 ->where('student_register.semester_id','=',$searchData['semester_id'])
                 ->where('student_register.class_id','=',null)
-                ->whereNotIn('student_register.status',[StudentRegisterStatus::CANCELLED,StudentRegisterStatus::COMPLETE])
+                ->where('student_register.status',StudentRegisterStatus::REGISTER)
                 ->where('student_register.student_id','<>',null)
                 ->paginate($page);
         }
