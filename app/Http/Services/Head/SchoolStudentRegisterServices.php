@@ -136,7 +136,8 @@ class SchoolStudentRegisterServices
     public function detail($id){
         $studentRegister = StudentRegister::query()->find($id);
         $semester = Semester::query()->find($studentRegister['semester_id']);
-        $student = Student::query()->find($studentRegister['student_id']);
+//        $student = Student::query()->find($studentRegister['student_id']);
+        $student = json_decode(\Redis::hget('student',$studentRegister['student_id']),true);
         $res = array_merge($this->registerCost($id), [
             'id' => $studentRegister['id'],
             'semester_id' => $semester['id'],

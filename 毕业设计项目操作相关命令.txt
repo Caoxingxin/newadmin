@@ -8,6 +8,7 @@ https://blog.csdn.net/liqingtx/article/details/60330555		Redis基础
 https://blog.csdn.net/huangdj321/article/details/106370292			项目上手指南（准备自钩）
 https://www.mockplus.cn/idoc?home=1  		H5页面设计
 http://www.ruanyifeng.com/blog/2021/03/weekly-issue-149.html		没事看看的博客
+http://www.edbiji.com/doccenter/showdoc/209/nav/3736.html  		Redis基本操作
 
 Another Redis Desktop Manager(redis桌面工具)
 
