@@ -22,7 +22,7 @@ class CreatePaymentOrderTable extends Migration
             $table->decimal('amount', 10, 2)->comment('支付金额')->default(0);
             $table->tinyInteger('status')->comment('支付状态:0未支付 8支付中 10支付成功 -10支付失败');
             $table->string('trade_no', 30)->comment('交易号')->nullable();
-            $table->json('extra')->comment('支付信息')->nullable();
+            $table->text('extra')->comment('支付信息')->nullable();
             $table->tinyInteger('platform')->comment('下单渠道:1后台 2小程序 3App');
             $table->timestamps();
         });
