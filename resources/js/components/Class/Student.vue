@@ -94,7 +94,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="图片:" prop="avatar">
-                    <el-upload class="avatar-uploader" action="http://localhost:3600/admin/upload"
+                    <el-upload class="avatar-uploader" action=""
                                :show-file-list="false"
                                :on-success="handleAvatarSuccess"
                                :before-upload="beforeAvatarUpload" ref="myUpload" :disabled="true">
@@ -288,6 +288,7 @@ export default {
         beforeAvatarUpload(file) {
             const isJPG = file.type === 'image/jpeg';
             const isLt2M = file.size / 1024 / 1024 < 2;
+            var imageStatus = true;
 
             if (!isJPG) {
                 this.$message.error('上传头像只能是 JPG 格式!');
@@ -295,7 +296,14 @@ export default {
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
-            return isJPG && isLt2M;
+            this.axios.post('/admin/upload', {
+                'file': file,
+            }).then(response => {
+                imageStatus = true;
+            }).catch(function (error) {
+                imageStatus = false;
+            });
+            return isJPG && isLt2M && imageStatus;
         },
         clearFiles() {
             this.$refs['myUpload'].clearFiles();
