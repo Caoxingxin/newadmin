@@ -18,7 +18,8 @@
 
     <script src="//cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
-    <script src="//cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
+{{--    <script src="//cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>--}}
+    <script src="{{ asset('js/echarts.js') }}"></script>
 
     <script src="//cdn.bootcdn.net/ajax/libs/less.js/3.13.0/less.min.js"></script>
 
@@ -30,6 +31,7 @@
         <script>
             window.postName= "{{ $name  }}"
             window.postId = "{{ $id }}"
+            window.imagePath = "{{ env('ImagePath') }}"
         </script>
 </head>
 <body>

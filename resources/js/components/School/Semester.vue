@@ -98,7 +98,7 @@
                 <el-form-item label="图片:" prop="picture">
                     <el-upload
                         class="avatar-uploader"
-                        action="http://localhost:3600/admin/upload"
+                        action="/admin/upload"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload"
