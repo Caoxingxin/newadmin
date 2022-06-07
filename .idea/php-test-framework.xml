@@ -6,6 +6,7 @@
         <cache>
           <versions>
             <info id="Local" version="7.5.20" />
+            <info id="本地" version="7.5.20" />
           </versions>
         </cache>
       </tool>
