@@ -2,10 +2,12 @@
 
 namespace Tests\Unit;
 
+use App\Events\Ceshi;
 use App\Http\Models\Head\Course;
 use App\Http\Models\Head\School;
 use App\Http\Models\Head\Student;
 use App\Http\Models\Head\Teacher;
+use Caoxin\Test;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
@@ -22,6 +24,11 @@ class ExampleTest extends TestCase
     }
     //课程数据写入redis
     public function testCourseredis(){
+
+        event(new Ceshi(123));
+        dd(44);
+        dd(445*2+468+500+450);
+
         $courseData = Course::query()->get();
         foreach ($courseData as $item) {
             \Redis::hset('course', $item['id'], json_encode($item));

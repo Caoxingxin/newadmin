@@ -18,6 +18,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        //测试事件执行
+        'App\Events\Ceshi' => [
+            'App\Listeners\CeshiListener',
+            'App\Listeners\Ceshi1Listener'
+        ]
     ];
 
     /**
