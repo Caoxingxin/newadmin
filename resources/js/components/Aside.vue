@@ -61,6 +61,12 @@
                     <el-menu-item index="/class/student"><i class="el-icon-user"></i>学员管理</el-menu-item>
                     <el-menu-item index="/class/grade"><i class="el-icon-document"></i>成绩单</el-menu-item>
                 </el-submenu>
+                <el-submenu>
+                    <template slot="title">
+                        <i class="el-icon-guide"></i>
+                        <span style="font-size: 15px">收益管理</span>
+                    </template>
+                </el-submenu>
             </el-menu>
         </el-col>
     </el-row>
